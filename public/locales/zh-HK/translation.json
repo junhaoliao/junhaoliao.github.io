@@ -1,0 +1,132 @@
+{
+  "nav": {
+    "skills": "技能",
+    "projects": "專案",
+    "education": "學歷",
+    "blog": "部落格",
+    "contact": "聯絡",
+    "ictrl": "iCtrl"
+  },
+  "hero": {
+    "name": "廖俊昊",
+    "current": "目前",
+    "previously": "過往",
+    "publications": "學術發表",
+    "cta": "聯絡我",
+    "roles": {
+      "yscope": "開發者 / 高級工程經理，YScope Inc. <loc>加拿大多倫多</loc>",
+      "ictrl_contributor": "<link>iCtrl</link> 貢獻者，一款簡潔的遠端連線應用程式"
+    },
+    "previous_roles": {
+      "uber": "軟體工程合約工，Uber Technologies, Inc. <loc>（遠端）美國西雅圖</loc>",
+      "qualcomm": "汽車顯示軟體工程師，Qualcomm Canada ULC <loc>加拿大萬錦市</loc>",
+      "ta": "助教，ECE297 2021 & 2022 冬季學期 <loc>多倫多大學</loc>",
+      "student": "電腦工程學士生 <loc>多倫多大學</loc>"
+    },
+    "publication": "Liao, J., Zhang, H., Li, J., Xu, Y., & Timorabadi, H. (2022年8月). WIP - iCtrl - A Remote Login Software Application. 發表於 2022 ASEE Annual Conference & Exposition，明尼阿波利斯，明尼蘇達州。"
+  },
+  "skills": {
+    "title": "技能",
+    "focus": "專注",
+    "also": "其他技能",
+    "items": {
+      "cpp": {
+        "name": "C / C++",
+        "tags": ["系統程式設計", "多執行緒", "效能最佳化", "CMake", "Bazel", "Emscripten", "Boost", "C++20 STL"]
+      },
+      "rust": {
+        "name": "Rust",
+        "tags": ["非同步執行時 (Tokio)", "Cargo", "系統程式設計", "記憶體安全", "Serde"]
+      },
+      "web": {
+        "name": "Web 開發",
+        "tags": ["TypeScript", "React", "Next.js", "Vite.js", "Node.js", "Tailwind CSS", "Material UI", "Electron", "MongoDB", "MySQL"]
+      }
+    },
+    "categories": {
+      "languages": {
+        "title": "程式語言",
+        "items": ["Python (FastAPI、Flask、腳本)", "Go", "Java (物件導向)", "FFI 繫結 (C/Go/Python/JS)"]
+      },
+      "infrastructure": {
+        "title": "基礎設施",
+        "items": ["Docker / Kubernetes / Helm", "CI/CD / GitHub Actions", "Linux / Nginx / Apache"]
+      },
+      "hardware": {
+        "title": "硬體與嵌入式",
+        "items": ["ARM 組合語言 (V7/V8)", "Intel FPGA Verilog"]
+      }
+    }
+  },
+  "projects": {
+    "title": "專案",
+    "view_github": "GitHub",
+    "view_link": "前往",
+    "items": {
+      "ictrl": {
+        "name": "iCtrl",
+        "description": "簡潔的遠端連線應用程式。輕鬆連接至多倫多大學本科實驗室伺服器，將繁瑣的過程簡化為 5 秒。"
+      },
+      "github": {
+        "name": "GitHub 上的其他專案",
+        "description": "擁抱開源社群，在這裡查看更多專案。"
+      },
+      "ict": {
+        "name": "Junhao 的 ICT 網站",
+        "description": "享受建造機器人的樂趣。"
+      }
+    }
+  },
+  "education": {
+    "title": "學歷",
+    "items": {
+      "uoft": {
+        "name": "多倫多大學",
+        "degree": "應用科學學士 + PEY",
+        "years": "2017 – 2022",
+        "location": "加拿大安大略省",
+        "details": "電腦工程\n輔修：商業"
+      },
+      "bodwell": {
+        "name": "博德威爾高中",
+        "degree": "楓葉文憑",
+        "years": "2014 – 2016",
+        "location": "加拿大不列顛哥倫比亞省",
+        "details": "不列顛哥倫比亞省頒發的課程"
+      },
+      "gdsyzx": {
+        "name": "廣東省實驗中學",
+        "degree": "",
+        "years": "2013 – 2014",
+        "location": "中國廣東省",
+        "details": "中國中學課程"
+      }
+    }
+  },
+  "blog": {
+    "title": "部落格",
+    "subtitle": "專案、技巧與生活片段",
+    "read_more": "閱讀更多",
+    "all_posts": "所有文章",
+    "back_to_blog": "返回部落格",
+    "published": "發表於",
+    "no_posts": "目前沒有部落格文章。"
+  },
+  "contact": {
+    "title": "聯絡我",
+    "location": "加拿大安大略省萬錦市",
+    "email": "junhao@junhao.ca",
+    "wechat": "微信：junhao_ca",
+    "wechat_qr_hint": "滑鼠懸停顯示 QR Code",
+    "linkedin": "領英",
+    "github": "GitHub"
+  },
+  "footer": {
+    "copyright": "© {{year}} 廖俊昊。保留所有權利。",
+    "links": {
+      "ictrl": "iCtrl",
+      "blog": "部落格",
+      "contact": "聯絡"
+    }
+  }
+}

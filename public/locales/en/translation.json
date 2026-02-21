@@ -1,0 +1,132 @@
+{
+  "nav": {
+    "skills": "Skills",
+    "projects": "Projects",
+    "education": "Education",
+    "blog": "Blog",
+    "contact": "Contact",
+    "ictrl": "iCtrl"
+  },
+  "hero": {
+    "name": "Junhao Liao",
+    "current": "Current",
+    "previously": "Previously",
+    "publications": "Publications",
+    "cta": "Get in Touch",
+    "roles": {
+      "yscope": "Developer / Senior Engineering Manager, YScope Inc. <loc>Toronto, Canada</loc>",
+      "ictrl_contributor": "Contributor of <link>iCtrl</link>, a Simple Remote Connection Web Application"
+    },
+    "previous_roles": {
+      "uber": "Software Engineering Contractor, Uber Technologies, Inc. <loc>(Remote) Seattle, United States</loc>",
+      "qualcomm": "Automotive Display Software Engineer, Qualcomm Canada ULC <loc>Markham, Canada</loc>",
+      "ta": "Teaching Assistant, ECE297 Winter 2021 & 2022 <loc>University of Toronto</loc>",
+      "student": "Computer Engineering Undergraduate Student <loc>University of Toronto</loc>"
+    },
+    "publication": "Liao, J., Zhang, H., Li, J., Xu, Y., & Timorabadi, H. (2022, August). WIP - iCtrl - A Remote Login Software Application. Paper presented at 2022 ASEE Annual Conference & Exposition, Minneapolis, MN."
+  },
+  "skills": {
+    "title": "Skills",
+    "focus": "Focus",
+    "also": "Also Experienced With",
+    "items": {
+      "cpp": {
+        "name": "C / C++",
+        "tags": ["System Programming", "Multithreading", "Performance Optimization", "CMake", "Bazel", "Emscripten", "Boost", "C++20 STL"]
+      },
+      "rust": {
+        "name": "Rust",
+        "tags": ["Async Runtime (Tokio)", "Cargo", "Systems Programming", "Memory Safety", "Serde"]
+      },
+      "web": {
+        "name": "Web Development",
+        "tags": ["TypeScript", "React", "Next.js", "Vite.js", "Node.js", "Tailwind CSS", "Material UI", "Electron", "MongoDB", "MySQL"]
+      }
+    },
+    "categories": {
+      "languages": {
+        "title": "Languages",
+        "items": ["Python (FastAPI, Flask, Scripting)", "Go", "Java (OOP)", "FFI Bindings (C/Go/Python/JS)"]
+      },
+      "infrastructure": {
+        "title": "Infrastructure",
+        "items": ["Docker / Kubernetes / Helm", "CI/CD / GitHub Actions", "Linux / Nginx / Apache"]
+      },
+      "hardware": {
+        "title": "Hardware & Embedded",
+        "items": ["ARM Assembly (V7/V8)", "Intel FPGA Verilog"]
+      }
+    }
+  },
+  "projects": {
+    "title": "Projects",
+    "view_github": "GitHub",
+    "view_link": "Visit",
+    "items": {
+      "ictrl": {
+        "name": "iCtrl",
+        "description": "A simple remote connection web application. Easily connect to the UofT undergraduate lab server — simplifies the tedious process down to 5 seconds."
+      },
+      "github": {
+        "name": "Other Projects on GitHub",
+        "description": "Embrace the open-source community. Check out more projects here."
+      },
+      "ict": {
+        "name": "Junhao's ICT Website",
+        "description": "Have fun building robotics."
+      }
+    }
+  },
+  "education": {
+    "title": "Education",
+    "items": {
+      "uoft": {
+        "name": "University of Toronto",
+        "degree": "Bachelor of Applied Science + PEY",
+        "years": "2017 – 2022",
+        "location": "Ontario, Canada",
+        "details": "Computer Engineering\nMinor: Business"
+      },
+      "bodwell": {
+        "name": "Bodwell High School",
+        "degree": "Dogwood Diploma",
+        "years": "2014 – 2016",
+        "location": "British Columbia, Canada",
+        "details": "Curriculum issued by The Province of British Columbia"
+      },
+      "gdsyzx": {
+        "name": "Guangdong Experimental High School",
+        "degree": "",
+        "years": "2013 – 2014",
+        "location": "Guangdong, China",
+        "details": "Chinese Secondary School Curriculum"
+      }
+    }
+  },
+  "blog": {
+    "title": "Blog",
+    "subtitle": "Projects, Tips and Life Moments",
+    "read_more": "Read more",
+    "all_posts": "All Posts",
+    "back_to_blog": "Back to Blog",
+    "published": "Published",
+    "no_posts": "No blog posts yet."
+  },
+  "contact": {
+    "title": "Get in Touch",
+    "location": "Markham, Ontario, Canada",
+    "email": "junhao@junhao.ca",
+    "wechat": "WeChat: junhao_ca",
+    "wechat_qr_hint": "Hover to show QR code",
+    "linkedin": "LinkedIn",
+    "github": "GitHub"
+  },
+  "footer": {
+    "copyright": "© {{year}} Junhao Liao. All rights reserved.",
+    "links": {
+      "ictrl": "iCtrl",
+      "blog": "Blog",
+      "contact": "Contact"
+    }
+  }
+}
