@@ -150,3 +150,30 @@ export async function getAllLocaleVariants(slug: string): Promise<Record<string,
 
   return variants;
 }
+
+/**
+ * Build a locale-indexed post listing for the home page.
+ * Each entry maps locale → PostMeta so the client component can pick the
+ * active language at render time. Sorted by date descending.
+ */
+export async function getLocalizedPostIndex(limit?: number): Promise<Record<string, PostMeta>[]> {
+  const slugs = getAllSlugs();
+  const index = await Promise.all(
+    slugs.map(async (slug) => {
+      const variants = await getAllLocaleVariants(slug);
+      const metaMap: Record<string, PostMeta> = {};
+      for (const [locale, { contentHtml: _, ...meta }] of Object.entries(variants)) {
+        metaMap[locale] = meta;
+      }
+      return metaMap;
+    }),
+  );
+
+  index.sort((a, b) => {
+    const dateA = (a["default"] ?? Object.values(a)[0]).date;
+    const dateB = (b["default"] ?? Object.values(b)[0]).date;
+    return dateA < dateB ? 1 : -1;
+  });
+
+  return limit ? index.slice(0, limit) : index;
+}

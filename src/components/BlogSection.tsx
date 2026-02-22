@@ -15,11 +15,16 @@ import type { PostMeta } from "@/lib/blog";
 gsap.registerPlugin(useGSAP, ScrollTrigger);
 
 interface BlogSectionProps {
-  posts: PostMeta[];
+  posts: Record<string, PostMeta>[];
 }
 
-export default function BlogSection({ posts }: BlogSectionProps) {
-  const { t } = useTranslation();
+export default function BlogSection({ posts: localizedPosts }: BlogSectionProps) {
+  const { t, i18n } = useTranslation();
+
+  // Pick the right locale variant for each post
+  const posts = localizedPosts.map((variants) =>
+    variants[i18n.language] ?? variants["default"] ?? Object.values(variants)[0],
+  );
   const container = useRef<HTMLElement>(null);
 
   useGSAP(

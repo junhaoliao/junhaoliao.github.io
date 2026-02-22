@@ -1,4 +1,4 @@
-import { getAllPosts } from "@/lib/blog";
+import { getLocalizedPostIndex } from "@/lib/blog";
 import Navbar from "@/components/Navbar";
 import HeroSection from "@/components/HeroSection";
 import SkillsSection from "@/components/SkillsSection";
@@ -9,8 +9,7 @@ import ContactSection from "@/components/ContactSection";
 import Footer from "@/components/Footer";
 
 export default async function Home() {
-  // Fetch 3 latest posts at build time (default locale — content shown as-is)
-  const posts = (await getAllPosts()).slice(0, 3);
+  const posts = await getLocalizedPostIndex(3);
 
   return (
     <main>
