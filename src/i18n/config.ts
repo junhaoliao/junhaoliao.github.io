@@ -2,13 +2,14 @@
 
 import i18n from "i18next";
 import { initReactI18next } from "react-i18next";
-import LanguageDetector from "i18next-browser-languagedetector";
 
 // Import translations at build time — no HTTP backend, no network requests
 import en from "../../public/locales/en/translation.json";
 import fr from "../../public/locales/fr/translation.json";
 import zhCN from "../../public/locales/zh-CN/translation.json";
 import zhHK from "../../public/locales/zh-HK/translation.json";
+
+export const SUPPORTED_LANGS = ["en", "fr", "zh-CN", "zh-HK"] as const;
 
 const resources = {
   en: { translation: en },
@@ -17,23 +18,18 @@ const resources = {
   "zh-HK": { translation: zhHK },
 };
 
+// Initialize with a fixed language ("en") so SSG HTML always matches the first
+// client render. Language detection happens after hydration in I18nProvider.
 if (!i18n.isInitialized) {
-  i18n
-    .use(LanguageDetector)
-    .use(initReactI18next)
-    .init({
-      resources,
-      fallbackLng: "en",
-      supportedLngs: ["en", "fr", "zh-CN", "zh-HK"],
-      ns: ["translation"],
-      defaultNS: "translation",
-      interpolation: { escapeValue: false },
-      detection: {
-        order: ["localStorage", "navigator", "htmlTag"],
-        lookupLocalStorage: "junhao-lang",
-        caches: ["localStorage"],
-      },
-    });
+  i18n.use(initReactI18next).init({
+    resources,
+    lng: "en",
+    fallbackLng: "en",
+    supportedLngs: SUPPORTED_LANGS as unknown as string[],
+    ns: ["translation"],
+    defaultNS: "translation",
+    interpolation: { escapeValue: false },
+  });
 }
 
 export default i18n;

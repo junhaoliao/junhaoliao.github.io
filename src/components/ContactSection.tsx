@@ -54,7 +54,7 @@ export default function ContactSection() {
     {
       icon: <MessageCircle className="h-5 w-5 shrink-0" />,
       label: t("contact.wechat"),
-      href: "/images/wechat-qr.png",
+      href: "/images/wechat-qr.webp",
       extra: (
         <HoverCard>
           <HoverCardTrigger
@@ -62,7 +62,7 @@ export default function ContactSection() {
             closeDelay={100}
             render={
               <button
-                onClick={() => window.open("/images/wechat-qr.png", "_blank")}
+                onClick={() => window.open("/images/wechat-qr.webp", "_blank")}
                 className="flex items-center gap-3 text-white/90 hover:text-white transition-colors group"
                 aria-label="WeChat QR code"
               />
@@ -77,7 +77,7 @@ export default function ContactSection() {
             className="w-48 p-2 border-0 shadow-xl"
           >
             <Image
-              src="/images/wechat-qr.png"
+              src="/images/wechat-qr.webp"
               alt="WeChat QR code"
               width={176}
               height={176}

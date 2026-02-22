@@ -5,6 +5,7 @@ import { useTranslation } from "react-i18next";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { useGSAP } from "@gsap/react";
+import Image from "next/image";
 import { MapPin, CalendarDays } from "lucide-react";
 
 gsap.registerPlugin(useGSAP, ScrollTrigger);
@@ -13,14 +14,17 @@ const SCHOOLS = [
   {
     key: "uoft",
     url: "https://www.utoronto.ca/",
+    logo: "/images/uoft-crest.svg",
   },
   {
     key: "bodwell",
     url: "https://bodwell.edu/",
+    logo: "/images/bodwell-crest.webp",
   },
   {
     key: "gdsyzx",
     url: "http://www.gdsyzx.edu.cn/",
+    logo: "/images/gdsyzx-logo.webp",
   },
 ] as const;
 
@@ -60,14 +64,22 @@ export default function EducationSection() {
           <div className="absolute left-6 top-2 bottom-2 w-0.5 bg-border hidden sm:block" />
 
           <div className="space-y-10">
-            {SCHOOLS.map(({ key, url }) => {
+            {SCHOOLS.map(({ key, url, logo }) => {
               const degree = t(`education.items.${key}.degree`);
               const details = t(`education.items.${key}.details`);
               return (
                 <div key={key} className="edu-item flex gap-6">
-                  {/* Timeline dot */}
+                  {/* School logo */}
                   <div className="hidden sm:flex flex-col items-center">
-                    <div className="w-3 h-3 rounded-full bg-primary mt-2 shrink-0 z-10" />
+                    <a href={url} target="_blank" rel="noopener noreferrer" className="shrink-0 z-10">
+                      <Image
+                        src={logo}
+                        alt={t(`education.items.${key}.name`)}
+                        width={48}
+                        height={48}
+                        className="w-12 h-12 object-contain"
+                      />
+                    </a>
                   </div>
 
                   {/* Content */}
