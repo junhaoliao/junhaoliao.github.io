@@ -1,5 +1,6 @@
 "use client";
 
+import { useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
 import {
   DropdownMenu,
@@ -19,10 +20,23 @@ const LANGUAGES = [
 export default function LanguageSwitcher() {
   const { i18n } = useTranslation();
   const current = LANGUAGES.find((l) => l.code === i18n.language) ?? LANGUAGES[0];
+  const [open, setOpen] = useState(false);
+  const closeTimer = useRef<ReturnType<typeof setTimeout>>(null);
+
+  const handleMouseEnter = () => {
+    if (closeTimer.current) clearTimeout(closeTimer.current);
+    setOpen(true);
+  };
+
+  const handleMouseLeave = () => {
+    closeTimer.current = setTimeout(() => setOpen(false), 150);
+  };
 
   return (
-    <DropdownMenu>
+    <DropdownMenu open={open} onOpenChange={setOpen}>
       <DropdownMenuTrigger
+        onMouseEnter={handleMouseEnter}
+        onMouseLeave={handleMouseLeave}
         render={
           <Button
             variant="ghost"
@@ -34,7 +48,11 @@ export default function LanguageSwitcher() {
       >
         <span className="text-sm font-medium">{current.short}</span>
       </DropdownMenuTrigger>
-      <DropdownMenuContent align="end">
+      <DropdownMenuContent
+        align="end"
+        onMouseEnter={handleMouseEnter}
+        onMouseLeave={handleMouseLeave}
+      >
         {LANGUAGES.map((lang) => (
           <DropdownMenuItem
             key={lang.code}
