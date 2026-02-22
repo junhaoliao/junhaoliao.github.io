@@ -3,7 +3,7 @@ import Navbar from "@/components/Navbar";
 import HeroSection from "@/components/HeroSection";
 import SkillsSection from "@/components/SkillsSection";
 import ProjectsSection from "@/components/ProjectsSection";
-import EducationSection from "@/components/EducationSection";
+import TimelineSection from "@/components/TimelineSection";
 import BlogSection from "@/components/BlogSection";
 import ContactSection from "@/components/ContactSection";
 import Footer from "@/components/Footer";
@@ -16,9 +16,9 @@ export default async function Home() {
     <main>
       <Navbar />
       <HeroSection />
+      <TimelineSection />
       <SkillsSection />
       <ProjectsSection />
-      <EducationSection />
       <BlogSection posts={posts} />
       <ContactSection />
       <Footer />

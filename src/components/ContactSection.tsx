@@ -1,6 +1,6 @@
 "use client";
 
-import { useRef } from "react";
+import { Fragment, useRef } from "react";
 import Image from "next/image";
 import { useTranslation } from "react-i18next";
 import gsap from "gsap";
@@ -24,11 +24,24 @@ export default function ContactSection() {
 
   useGSAP(
     () => {
+      // Parallax background
+      gsap.to(".contact-bg", {
+        yPercent: 15,
+        ease: "none",
+        scrollTrigger: {
+          trigger: container.current,
+          start: "top bottom",
+          end: "bottom top",
+          scrub: true,
+        },
+      });
+
+      // Contact items staggered entrance
       gsap.from(".contact-item", {
         opacity: 0,
         y: 25,
         stagger: 0.1,
-        duration: 0.6,
+        duration: 0.7,
         ease: "power2.out",
         scrollTrigger: {
           trigger: container.current,
@@ -54,7 +67,6 @@ export default function ContactSection() {
     {
       icon: <MessageCircle className="h-5 w-5 shrink-0" />,
       label: t("contact.wechat"),
-      href: "/images/wechat-qr.webp",
       extra: (
         <HoverCard>
           <HoverCardTrigger
@@ -63,7 +75,7 @@ export default function ContactSection() {
             render={
               <button
                 onClick={() => window.open("/images/wechat-qr.webp", "_blank")}
-                className="flex items-center gap-3 text-white/90 hover:text-white transition-colors group"
+                className="contact-item flex items-center gap-3 text-white/85 hover:text-white transition-colors"
                 aria-label="WeChat QR code"
               />
             }
@@ -100,47 +112,60 @@ export default function ContactSection() {
   ];
 
   return (
-    <section id="contact" ref={container} className="relative py-32 overflow-hidden">
-      {/* Background */}
-      <div className="absolute inset-0 z-0">
+    <section id="contact" ref={container} className="relative py-40 lg:py-48 overflow-hidden">
+      {/* Background — parallax */}
+      <div className="contact-bg absolute -inset-y-16 inset-x-0 z-0 will-change-transform">
         <Image
           src="/images/contact-bg.webp"
           alt=""
           fill
-          className="object-cover"
+          className="object-cover scale-110"
           sizes="100vw"
         />
         {/* Theme-aware overlay */}
-        <div className="absolute inset-0 bg-black/55 dark:bg-black/40" />
+        <div className="absolute inset-0 bg-black/0 dark:bg-black/40" />
       </div>
 
-      <div className="relative z-10 max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="max-w-md">
-          <h2 className="contact-item text-3xl sm:text-4xl font-bold text-white mb-10">
-            {t("contact.title")}
-          </h2>
+      <div className="relative z-10 max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+        <h2 className="contact-item text-4xl sm:text-5xl lg:text-6xl font-bold text-white tracking-tight mb-12 sm:mb-16">
+          {t("contact.title")}
+        </h2>
 
-          <ul className="space-y-5">
-            {items.map((item, i) =>
+        <div className="space-y-5">
+          {/* Row 1: Location, Email, WeChat */}
+          <div className="flex flex-col sm:flex-row justify-center items-center gap-5 sm:gap-8">
+            {items.slice(0, 3).map((item, i) =>
               item.extra ? (
-                <li key={i} className="contact-item">
-                  {item.extra}
-                </li>
+                <Fragment key={i}>{item.extra}</Fragment>
               ) : (
-                <li key={i} className="contact-item">
-                  <a
-                    href={item.href}
-                    target={item.href?.startsWith("http") ? "_blank" : undefined}
-                    rel={item.href?.startsWith("http") ? "noopener noreferrer" : undefined}
-                    className="flex items-center gap-3 text-white/85 hover:text-white transition-colors"
-                  >
-                    {item.icon}
-                    <span>{item.label}</span>
-                  </a>
-                </li>
+                <a
+                  key={i}
+                  href={item.href}
+                  target={item.href?.startsWith("http") ? "_blank" : undefined}
+                  rel={item.href?.startsWith("http") ? "noopener noreferrer" : undefined}
+                  className="contact-item flex items-center gap-3 text-white/85 hover:text-white transition-colors"
+                >
+                  {item.icon}
+                  <span>{item.label}</span>
+                </a>
               ),
             )}
-          </ul>
+          </div>
+          {/* Row 2: LinkedIn, GitHub */}
+          <div className="flex flex-col sm:flex-row justify-center items-center gap-5 sm:gap-8">
+            {items.slice(3).map((item, i) => (
+              <a
+                key={i}
+                href={item.href}
+                target={item.href?.startsWith("http") ? "_blank" : undefined}
+                rel={item.href?.startsWith("http") ? "noopener noreferrer" : undefined}
+                className="contact-item flex items-center gap-3 text-white/85 hover:text-white transition-colors"
+              >
+                {item.icon}
+                <span>{item.label}</span>
+              </a>
+            ))}
+          </div>
         </div>
       </div>
     </section>

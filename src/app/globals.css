@@ -130,6 +130,17 @@
   }
 }
 
+/* Typography utilities */
+.text-display {
+  font-weight: 700;
+  letter-spacing: -0.03em;
+  line-height: 1.05;
+}
+
+.section-label {
+  @apply text-xs font-semibold uppercase tracking-[0.2em] text-muted-foreground;
+}
+
 /* Prose styles for blog content */
 .prose {
   @apply text-foreground max-w-none;

@@ -11,24 +11,39 @@
     "name": "廖俊昊",
     "current": "目前",
     "previously": "過往",
-    "publications": "學術發表",
+    "publications_label": "學術發表",
+    "tagline": "<link>iCtrl</link> 開發者，一款簡潔的遠端連線應用程式",
     "cta": "聯絡我",
     "roles": {
-      "yscope": "開發者 / 高級工程經理，YScope Inc. <loc>加拿大多倫多</loc>",
-      "ictrl_contributor": "<link>iCtrl</link> 貢獻者，一款簡潔的遠端連線應用程式"
+      "yscope_mgr": "高級工程經理，YScope Inc. <loc>加拿大多倫多</loc>",
+      "yscope_dev": "軟體開發工程師，YScope Inc. <loc>加拿大多倫多</loc>",
+      "ictrl_contributor": "<link>iCtrl</link> 開發者，一款簡潔的遠端連線應用程式"
     },
     "previous_roles": {
       "uber": "軟體工程合約工，Uber Technologies, Inc. <loc>（遠端）美國西雅圖</loc>",
-      "qualcomm": "汽車顯示軟體工程師，Qualcomm Canada ULC <loc>加拿大萬錦市</loc>",
-      "ta": "助教，ECE297 2021 & 2022 冬季學期 <loc>多倫多大學</loc>",
+      "qualcomm_ft": "汽車顯示軟體工程師，Qualcomm Canada ULC <loc>加拿大萬錦市</loc>",
+      "qualcomm_intern": "汽車顯示軟體工程師（PEY 實習），Qualcomm Canada ULC <loc>加拿大萬錦市</loc>",
+      "ta_2022": "助教，ECE297 2022 冬季學期 <loc>多倫多大學</loc>",
+      "ta_2021": "助教，ECE297 2021 冬季學期 <loc>多倫多大學</loc>",
       "student": "電腦工程學士生 <loc>多倫多大學</loc>"
     },
-    "publication": "Liao, J., Zhang, H., Li, J., Xu, Y., & Timorabadi, H. (2022年8月). WIP - iCtrl - A Remote Login Software Application. 發表於 2022 ASEE Annual Conference & Exposition，明尼阿波利斯，明尼蘇達州。"
+    "highlights": {
+      "yscope_dev": "為開源和專有項目開發新功能並維護現有程式碼庫。",
+      "uber": "整合 YScope 技術以提升可觀測性，兼具儲存效率和高效能。",
+      "qualcomm_ft": "RTOS 顯示驅動開發（DSI、DP SST/MST）。符合 ISO 26262 的軟體開發。跨 IP 與 SoC 功能開發和驗證。",
+      "ta_2022": "獲得助教獎 — 2022 年春季。",
+      "ta_2021": "獲得助教獎 — 2021 年春季。指導 4 個學生小組完成 GIS 專案。超過 1,200 條 Piazza 貢獻，在所有講師中排名第二。",
+      "qualcomm_intern": "新 DP 功能開發。使用 Parasoft 改進程式碼覆蓋率基礎設施（+10%）。解決靜態分析問題以符合 MISRA C 標準。"
+    },
+    "publications": {
+      "asee": "Liao, J., Zhang, H., Li, J., Xu, Y., & Timorabadi, H. (2022年8月). WIP - iCtrl - A Remote Login Software Application. 發表於 2022 ASEE Annual Conference & Exposition，明尼阿波利斯，明尼蘇達州。"
+    }
   },
   "skills": {
     "title": "技能",
     "focus": "專注",
     "also": "其他技能",
+    "experience_label": "工作經歷",
     "items": {
       "cpp": {
         "name": "C / C++",
@@ -50,22 +65,27 @@
       },
       "infrastructure": {
         "title": "基礎設施",
-        "items": ["Docker / Kubernetes / Helm", "CI/CD / GitHub Actions", "Linux / Nginx / Apache"]
+        "items": ["Docker / Kubernetes / Helm", "CI/CD / GitHub Actions", "Linux / Nginx / Apache", "PostgreSQL", "Git / REST APIs"]
       },
       "hardware": {
         "title": "硬體與嵌入式",
-        "items": ["ARM 組合語言 (V7/V8)", "Intel FPGA Verilog"]
+        "items": ["ARM 組合語言 (V7/V8)", "Intel FPGA Verilog", "QNX RTOS", "ISO 26262 功能安全", "DisplayPort (DP)"]
+      },
+      "spoken": {
+        "title": "語言能力",
+        "items": ["英語", "法語", "中文 — 廣東話與普通話（口語），簡體與繁體（書寫）"]
       }
     }
   },
   "projects": {
     "title": "專案",
+    "featured_label": "精選作品",
     "view_github": "GitHub",
     "view_link": "前往",
     "items": {
       "ictrl": {
         "name": "iCtrl",
-        "description": "簡潔的遠端連線應用程式。輕鬆連接至多倫多大學本科實驗室伺服器，將繁瑣的過程簡化為 5 秒。"
+        "description": "截至 2026 年 2 月，已有超過 70,200 次下載。輕鬆連接至多倫多大學本科實驗室伺服器，將繁瑣的過程簡化為 5 秒。"
       },
       "github": {
         "name": "GitHub 上的其他專案",
@@ -77,6 +97,9 @@
       }
     }
   },
+  "timeline": {
+    "title": "工作經歷 & 學歷"
+  },
   "education": {
     "title": "學歷",
     "items": {
@@ -85,14 +108,14 @@
         "degree": "應用科學學士 + PEY",
         "years": "2017 – 2022",
         "location": "加拿大安大略省",
-        "details": "電腦工程\n輔修：商業"
+        "details": "電腦工程，輔修：商業\n\n榮譽：助教獎（2021、2022），Select Equity Group 設計獎（$16,853/4），Betz 入學獎學金"
       },
       "bodwell": {
         "name": "博德威爾高中",
         "degree": "楓葉文憑",
         "years": "2014 – 2016",
         "location": "加拿大不列顛哥倫比亞省",
-        "details": "不列顛哥倫比亞省頒發的課程"
+        "details": "不列顛哥倫比亞省頒發的課程\n\nVEX 機器人社團社長（第 8 名），同儕輔導小組組長"
       },
       "gdsyzx": {
         "name": "廣東省實驗中學",

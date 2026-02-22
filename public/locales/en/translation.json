@@ -11,24 +11,39 @@
     "name": "Junhao Liao",
     "current": "Current",
     "previously": "Previously",
-    "publications": "Publications",
+    "publications_label": "Publications",
+    "tagline": "Contributor of <link>iCtrl</link>, a Simple Remote Connection Web Application",
     "cta": "Get in Touch",
     "roles": {
-      "yscope": "Developer / Senior Engineering Manager, YScope Inc. <loc>Toronto, Canada</loc>",
+      "yscope_mgr": "Senior Engineering Manager, YScope Inc. <loc>Toronto, Canada</loc>",
+      "yscope_dev": "Software Developer, YScope Inc. <loc>Toronto, Canada</loc>",
       "ictrl_contributor": "Contributor of <link>iCtrl</link>, a Simple Remote Connection Web Application"
     },
     "previous_roles": {
       "uber": "Software Engineering Contractor, Uber Technologies, Inc. <loc>(Remote) Seattle, United States</loc>",
-      "qualcomm": "Automotive Display Software Engineer, Qualcomm Canada ULC <loc>Markham, Canada</loc>",
-      "ta": "Teaching Assistant, ECE297 Winter 2021 & 2022 <loc>University of Toronto</loc>",
+      "qualcomm_ft": "Automotive Display Software Engineer, Qualcomm Canada ULC <loc>Markham, Canada</loc>",
+      "qualcomm_intern": "Automotive Display Software Engineer (PEY Co-op), Qualcomm Canada ULC <loc>Markham, Canada</loc>",
+      "ta_2022": "Teaching Assistant, ECE297 Winter 2022 <loc>University of Toronto</loc>",
+      "ta_2021": "Teaching Assistant, ECE297 Winter 2021 <loc>University of Toronto</loc>",
       "student": "Computer Engineering Undergraduate Student <loc>University of Toronto</loc>"
     },
-    "publication": "Liao, J., Zhang, H., Li, J., Xu, Y., & Timorabadi, H. (2022, August). WIP - iCtrl - A Remote Login Software Application. Paper presented at 2022 ASEE Annual Conference & Exposition, Minneapolis, MN."
+    "highlights": {
+      "yscope_dev": "Develop new features and maintain existing codebase for open-source and proprietary projects.",
+      "uber": "Integrated YScope's technologies to enhance observability with storage efficiency and high performance.",
+      "qualcomm_ft": "RTOS Display Driver Development (DSI, DP SST/MST). ISO 26262 compliant software development. Cross-IP & SoC feature development & validation.",
+      "ta_2022": "Received Teaching Assistant Award — Spring 2022.",
+      "ta_2021": "Received Teaching Assistant Award — Spring 2021. Supervised 4 student groups on GIS projects. Over 1,200 Piazza contributions, 2nd highest among all instructors.",
+      "qualcomm_intern": "New DP features development. Improved code coverage infrastructure with Parasoft (+10%). Resolved static analysis issues to conform with MISRA C."
+    },
+    "publications": {
+      "asee": "Liao, J., Zhang, H., Li, J., Xu, Y., & Timorabadi, H. (2022, August). WIP - iCtrl - A Remote Login Software Application. Paper presented at 2022 ASEE Annual Conference & Exposition, Minneapolis, MN."
+    }
   },
   "skills": {
     "title": "Skills",
     "focus": "Focus",
     "also": "Also Experienced With",
+    "experience_label": "Experience",
     "items": {
       "cpp": {
         "name": "C / C++",
@@ -50,22 +65,27 @@
       },
       "infrastructure": {
         "title": "Infrastructure",
-        "items": ["Docker / Kubernetes / Helm", "CI/CD / GitHub Actions", "Linux / Nginx / Apache"]
+        "items": ["Docker / Kubernetes / Helm", "CI/CD / GitHub Actions", "Linux / Nginx / Apache", "PostgreSQL", "Git / REST APIs"]
       },
       "hardware": {
         "title": "Hardware & Embedded",
-        "items": ["ARM Assembly (V7/V8)", "Intel FPGA Verilog"]
+        "items": ["ARM Assembly (V7/V8)", "Intel FPGA Verilog", "QNX RTOS", "ISO 26262 Functional Safety", "DisplayPort (DP)"]
+      },
+      "spoken": {
+        "title": "Spoken & Written",
+        "items": ["English", "French", "Chinese — Cantonese & Mandarin (spoken), Simplified & Traditional (written)"]
       }
     }
   },
   "projects": {
     "title": "Projects",
+    "featured_label": "Featured Work",
     "view_github": "GitHub",
     "view_link": "Visit",
     "items": {
       "ictrl": {
         "name": "iCtrl",
-        "description": "A simple remote connection web application. Easily connect to the UofT undergraduate lab server — simplifies the tedious process down to 5 seconds."
+        "description": "70,200+ downloads as of Feb 2026. Easily connect to the UofT undergraduate lab server — simplifies the tedious process down to 5 seconds."
       },
       "github": {
         "name": "Other Projects on GitHub",
@@ -77,6 +97,9 @@
       }
     }
   },
+  "timeline": {
+    "title": "Experience & Education"
+  },
   "education": {
     "title": "Education",
     "items": {
@@ -85,14 +108,14 @@
         "degree": "Bachelor of Applied Science + PEY",
         "years": "2017 – 2022",
         "location": "Ontario, Canada",
-        "details": "Computer Engineering\nMinor: Business"
+        "details": "Computer Engineering, Minor: Business\n\nAwards: TA Award (2021, 2022), Select Equity Group Design Prize ($16,853/4), Betz Entrance Scholarship"
       },
       "bodwell": {
         "name": "Bodwell High School",
         "degree": "Dogwood Diploma",
         "years": "2014 – 2016",
         "location": "British Columbia, Canada",
-        "details": "Curriculum issued by The Province of British Columbia"
+        "details": "Curriculum issued by The Province of British Columbia\n\nVEX Robotics Club Leader (8th place), Peer Tutoring Group Leader"
       },
       "gdsyzx": {
         "name": "Guangdong Experimental High School",

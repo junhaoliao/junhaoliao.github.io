@@ -24,15 +24,28 @@ export default function BlogSection({ posts }: BlogSectionProps) {
 
   useGSAP(
     () => {
-      gsap.from(".blog-card", {
+      gsap.from(".section-heading", {
         opacity: 0,
         y: 30,
-        stagger: 0.12,
-        duration: 0.6,
-        ease: "power2.out",
+        duration: 0.7,
+        ease: "power3.out",
         scrollTrigger: {
           trigger: container.current,
-          start: "top 80%",
+          start: "top 85%",
+          toggleActions: "play none none reverse",
+        },
+      });
+
+      gsap.from(".blog-card", {
+        opacity: 0,
+        y: 50,
+        scale: 0.95,
+        stagger: 0.12,
+        duration: 0.7,
+        ease: "power2.out",
+        scrollTrigger: {
+          trigger: ".blog-card",
+          start: "top 85%",
           toggleActions: "play none none reverse",
         },
       });
@@ -41,13 +54,13 @@ export default function BlogSection({ posts }: BlogSectionProps) {
   );
 
   return (
-    <section id="blog" ref={container} className="py-24 bg-muted/40">
+    <section id="blog" ref={container} className="py-32 lg:py-40 bg-muted/40">
       <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-14">
-          <h2 className="text-3xl sm:text-4xl font-bold tracking-tight mb-3">
+          <h2 className="section-heading text-3xl sm:text-4xl font-bold tracking-tight mb-3">
             {t("blog.title")}
           </h2>
-          <p className="text-muted-foreground">{t("blog.subtitle")}</p>
+          <p className="section-heading text-muted-foreground">{t("blog.subtitle")}</p>
         </div>
 
         {posts.length === 0 ? (
@@ -55,8 +68,8 @@ export default function BlogSection({ posts }: BlogSectionProps) {
         ) : (
           <>
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 mb-10">
-              {posts.map((post) => (
-                <Link key={post.slug} href={`/blog/${post.slug}/`} className="block">
+              {posts.map((post, i) => (
+                <Link key={post.slug} href={`/blog/${post.slug}/`} className={`block ${i === 0 ? "lg:col-span-2" : ""}`}>
                   <Card className="blog-card h-full hover:shadow-lg transition-shadow duration-300 group">
                     <CardHeader>
                       <div className="flex items-center gap-2 text-xs text-muted-foreground mb-2">
