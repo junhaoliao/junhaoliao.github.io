@@ -83,6 +83,7 @@ export default function HeroSection() {
                         target="_blank"
                         rel="noopener noreferrer"
                         className="underline underline-offset-2 hover:text-blue-300 transition-colors"
+                        aria-label="iCtrl"
                       />
                     ),
                   }}

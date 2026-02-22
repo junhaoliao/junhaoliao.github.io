@@ -7,7 +7,7 @@ import { useTranslation } from "react-i18next";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { useGSAP } from "@gsap/react";
-import { Menu, X, ExternalLink } from "lucide-react";
+import { Menu, ExternalLink } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import { Separator } from "@/components/ui/separator";
@@ -31,8 +31,9 @@ export default function Navbar() {
   const pathname = usePathname();
   const isHome = pathname === "/";
   const navRef = useRef<HTMLElement>(null);
-  const [isScrolled, setIsScrolled] = useState(!isHome);
+  const [scrollPastHero, setScrollPastHero] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
+  const isScrolled = !isHome || scrollPastHero;
 
   useGSAP(
     () => {
@@ -40,8 +41,8 @@ export default function Navbar() {
       ScrollTrigger.create({
         trigger: "#hero",
         start: "bottom 80px",
-        onEnterBack: () => setIsScrolled(false),
-        onLeave: () => setIsScrolled(true),
+        onEnterBack: () => setScrollPastHero(false),
+        onLeave: () => setScrollPastHero(true),
       });
     },
     { scope: navRef, dependencies: [isHome] },
@@ -49,11 +50,8 @@ export default function Navbar() {
 
   // Fallback: listen to scroll for home page
   useEffect(() => {
-    if (!isHome) {
-      setIsScrolled(true);
-      return;
-    }
-    const handler = () => setIsScrolled(window.scrollY > 80);
+    if (!isHome) return;
+    const handler = () => setScrollPastHero(window.scrollY > 80);
     window.addEventListener("scroll", handler, { passive: true });
     return () => window.removeEventListener("scroll", handler);
   }, [isHome]);
@@ -63,7 +61,7 @@ export default function Navbar() {
     if (isHome) {
       setTimeout(() => smoothScrollTo(id), 50);
     } else {
-      window.location.href = `/#${id}`;
+      window.location.assign(`/#${id}`);
     }
   };
 
@@ -169,10 +167,6 @@ export default function Navbar() {
                   {t("nav.ictrl")}
                   <ExternalLink className="h-3.5 w-3.5" />
                 </a>
-                <Separator className="my-2" />
-                <div className="px-4">
-                  <LanguageSwitcher />
-                </div>
               </div>
             </SheetContent>
           </Sheet>

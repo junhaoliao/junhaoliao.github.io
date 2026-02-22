@@ -28,7 +28,7 @@ export default function LanguageSwitcher() {
             variant="ghost"
             size="sm"
             className="gap-1 px-2"
-            aria-label="Change language"
+            aria-label={`${current.short} — Change language`}
           />
         }
       >
