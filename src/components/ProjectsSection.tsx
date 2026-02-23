@@ -35,44 +35,29 @@ export default function ProjectsSection() {
 
   useGSAP(
     () => {
-      gsap.from(".section-heading", {
-        opacity: 0,
-        y: 30,
-        duration: 0.7,
-        ease: "power3.out",
-        scrollTrigger: {
-          trigger: container.current,
-          start: "top 85%",
-          toggleActions: "play none none reverse",
+      gsap.fromTo(".section-heading",
+        { opacity: 0, y: 30 },
+        {
+          opacity: 1, y: 0, duration: 0.7, ease: "power3.out",
+          scrollTrigger: { trigger: container.current, start: "top 85%", toggleActions: "play none none reverse" },
         },
-      });
+      );
 
-      gsap.from(".featured-card", {
-        opacity: 0,
-        y: 40,
-        scale: 0.97,
-        duration: 0.8,
-        ease: "power2.out",
-        scrollTrigger: {
-          trigger: ".featured-card",
-          start: "top 85%",
-          toggleActions: "play none none reverse",
+      gsap.fromTo(".featured-card",
+        { opacity: 0, y: 40, scale: 0.97 },
+        {
+          opacity: 1, y: 0, scale: 1, duration: 0.8, ease: "power2.out",
+          scrollTrigger: { trigger: ".featured-card", start: "top 85%", toggleActions: "play none none reverse" },
         },
-      });
+      );
 
-      gsap.from(".project-card", {
-        opacity: 0,
-        y: 40,
-        scale: 0.95,
-        stagger: 0.12,
-        duration: 0.7,
-        ease: "power2.out",
-        scrollTrigger: {
-          trigger: ".project-card",
-          start: "top 85%",
-          toggleActions: "play none none reverse",
+      gsap.fromTo(".project-card",
+        { opacity: 0, y: 40, scale: 0.95 },
+        {
+          opacity: 1, y: 0, scale: 1, stagger: 0.12, duration: 0.7, ease: "power2.out",
+          scrollTrigger: { trigger: ".project-card", start: "top 85%", toggleActions: "play none none reverse" },
         },
-      });
+      );
     },
     { scope: container },
   );
@@ -80,7 +65,7 @@ export default function ProjectsSection() {
   return (
     <section id="projects" ref={container} className="py-32 lg:py-40 bg-background">
       <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="section-heading mb-10 sm:mb-14">
+        <div className="section-heading opacity-0 mb-10 sm:mb-14">
           <p className="text-xs font-semibold uppercase tracking-[0.2em] text-muted-foreground mb-3">
             {t("projects.featured_label")}
           </p>
@@ -89,7 +74,7 @@ export default function ProjectsSection() {
           </h2>
         </div>
 
-        <div className="featured-card mb-8 rounded-2xl ring-1 ring-foreground/10 bg-card shadow-xs overflow-hidden">
+        <div className="featured-card opacity-0 mb-8 rounded-2xl ring-1 ring-foreground/10 bg-card shadow-xs overflow-hidden">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-0">
             <div className="p-8 sm:p-10 lg:p-12 flex flex-col justify-center">
               <div className="flex items-center gap-3 mb-4">
@@ -138,7 +123,7 @@ export default function ProjectsSection() {
             return (
               <Card
                 key={project.key}
-                className="project-card flex flex-col"
+                className="project-card opacity-0 flex flex-col"
               >
                 <CardHeader>
                   <div className="flex items-center gap-3">

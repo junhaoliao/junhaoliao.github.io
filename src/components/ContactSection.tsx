@@ -22,7 +22,7 @@ function ContactLink({ item }: { item: ContactItem }) {
       href={item.href}
       target={item.href?.startsWith("http") ? "_blank" : undefined}
       rel={item.href?.startsWith("http") ? "noopener noreferrer" : undefined}
-      className="contact-item flex items-center gap-3 text-white/85 hover:text-white transition-colors"
+      className="contact-item opacity-0 flex items-center gap-3 text-white/85 hover:text-white transition-colors"
     >
       {item.icon}
       <span>{item.label}</span>
@@ -47,18 +47,13 @@ export default function ContactSection() {
         },
       });
 
-      gsap.from(".contact-item", {
-        opacity: 0,
-        y: 25,
-        stagger: 0.1,
-        duration: 0.7,
-        ease: "power2.out",
-        scrollTrigger: {
-          trigger: container.current,
-          start: "top 75%",
-          toggleActions: "play none none reverse",
+      gsap.fromTo(".contact-item",
+        { opacity: 0, y: 25 },
+        {
+          opacity: 1, y: 0, stagger: 0.1, duration: 0.7, ease: "power2.out",
+          scrollTrigger: { trigger: container.current, start: "top 75%", toggleActions: "play none none reverse" },
         },
-      });
+      );
     },
     { scope: container },
   );
@@ -88,7 +83,7 @@ export default function ContactSection() {
             render={
               <button
                 onClick={() => window.open("/images/wechat-qr.webp", "_blank")}
-                className="contact-item flex items-center gap-3 text-white/85 hover:text-white transition-colors"
+                className="contact-item opacity-0 flex items-center gap-3 text-white/85 hover:text-white transition-colors"
                 aria-label="WeChat QR code"
               />
             }
@@ -140,7 +135,7 @@ export default function ContactSection() {
       </div>
 
       <div className="relative z-10 max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-        <h2 className="contact-item text-4xl sm:text-5xl lg:text-6xl font-bold text-white tracking-tight mb-12 sm:mb-16">
+        <h2 className="contact-item opacity-0 text-4xl sm:text-5xl lg:text-6xl font-bold text-white tracking-tight mb-12 sm:mb-16">
           {t("contact.title")}
         </h2>
 

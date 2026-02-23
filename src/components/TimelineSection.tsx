@@ -68,17 +68,13 @@ export default function TimelineSection() {
 
   useGSAP(
     () => {
-      gsap.from(".timeline-heading", {
-        opacity: 0,
-        y: 30,
-        duration: 0.7,
-        ease: "power3.out",
-        scrollTrigger: {
-          trigger: container.current,
-          start: "top 85%",
-          toggleActions: "play none none reverse",
+      gsap.fromTo(".timeline-heading",
+        { opacity: 0, y: 30 },
+        {
+          opacity: 1, y: 0, duration: 0.7, ease: "power3.out",
+          scrollTrigger: { trigger: container.current, start: "top 85%", toggleActions: "play none none reverse" },
         },
-      });
+      );
 
       if (lineRef.current) {
         gsap.fromTo(
@@ -97,30 +93,21 @@ export default function TimelineSection() {
         );
       }
 
-      gsap.from(".tl-item", {
-        opacity: 0,
-        x: -30,
-        stagger: 0.15,
-        duration: 0.7,
-        ease: "power2.out",
-        scrollTrigger: {
-          trigger: container.current,
-          start: "top 75%",
-          toggleActions: "play none none reverse",
+      gsap.fromTo(".tl-item",
+        { opacity: 0, x: -30 },
+        {
+          opacity: 1, x: 0, stagger: 0.15, duration: 0.7, ease: "power2.out",
+          scrollTrigger: { trigger: container.current, start: "top 75%", toggleActions: "play none none reverse" },
         },
-      });
+      );
 
-      gsap.from(".tl-publication", {
-        opacity: 0,
-        y: 20,
-        duration: 0.6,
-        ease: "power2.out",
-        scrollTrigger: {
-          trigger: ".tl-publication",
-          start: "top 90%",
-          toggleActions: "play none none reverse",
+      gsap.fromTo(".tl-publication",
+        { opacity: 0, y: 20 },
+        {
+          opacity: 1, y: 0, duration: 0.6, ease: "power2.out",
+          scrollTrigger: { trigger: ".tl-publication", start: "top 90%", toggleActions: "play none none reverse" },
         },
-      });
+      );
     },
     { scope: container },
   );
@@ -133,7 +120,7 @@ export default function TimelineSection() {
     >
       <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-16 sm:mb-20">
-          <h2 className="timeline-heading text-3xl sm:text-4xl lg:text-5xl font-bold tracking-tight">
+          <h2 className="timeline-heading opacity-0 text-3xl sm:text-4xl lg:text-5xl font-bold tracking-tight">
             {t("timeline.title")}
           </h2>
         </div>
@@ -150,7 +137,7 @@ export default function TimelineSection() {
                 return (
                   <div
                     key={item.i18nKey}
-                    className="tl-item relative flex items-start gap-5 sm:gap-6 pl-14 sm:pl-18"
+                    className="tl-item opacity-0 relative flex items-start gap-5 sm:gap-6 pl-14 sm:pl-18"
                   >
                     <div className="absolute left-0 sm:left-1 top-0 w-9 h-9 sm:w-11 sm:h-11 rounded-full bg-white flex items-center justify-center shadow-md ring-2 ring-border overflow-hidden">
                       <Image
@@ -191,7 +178,7 @@ export default function TimelineSection() {
               return (
                 <div
                   key={key}
-                  className="tl-item relative flex items-start gap-5 sm:gap-6 pl-14 sm:pl-18"
+                  className="tl-item opacity-0 relative flex items-start gap-5 sm:gap-6 pl-14 sm:pl-18"
                 >
                   <a
                     href={url}
@@ -247,7 +234,7 @@ export default function TimelineSection() {
           </div>
         </div>
 
-        <div className="tl-publication mt-12 pt-8 border-t border-border">
+        <div className="tl-publication opacity-0 mt-12 pt-8 border-t border-border">
           <p className="text-xs font-semibold uppercase tracking-[0.2em] opacity-50 mb-4">
             {t("hero.publications_label")}
           </p>
