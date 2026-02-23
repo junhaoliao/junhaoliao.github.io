@@ -29,6 +29,7 @@ if (!i18n.isInitialized) {
     ns: ["translation"],
     defaultNS: "translation",
     interpolation: { escapeValue: false },
+    showSupportNotice: false,
   });
 }
 
