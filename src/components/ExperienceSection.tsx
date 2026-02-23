@@ -14,6 +14,7 @@ type TimelineItem =
       logo: string;
       logoClassName?: string;
       highlightKey?: string;
+      url: string;
     }
   | {
       type: "education";
@@ -29,19 +30,19 @@ const LOGO_CREST = "w-7 h-7 sm:w-9 sm:h-9 object-contain";
 const LOGO_WIDE = "w-8 h-4 sm:w-9 sm:h-5 object-contain";
 
 const TIMELINE_ITEMS: TimelineItem[] = [
-  { type: "experience", i18nKey: "hero.roles.yscope_mgr", dates: "Jan 2026 – Present", logo: "/images/yscope-logo.webp" },
-  { type: "experience", i18nKey: "hero.previous_roles.uber", dates: "May 2024 – Jun 2025", logo: "/images/uber-logo.webp", highlightKey: "uber" },
-  { type: "experience", i18nKey: "hero.roles.yscope_dev", dates: "Jan 2024 – Present", logo: "/images/yscope-logo.webp", highlightKey: "yscope_dev" },
-  { type: "experience", i18nKey: "hero.previous_roles.qualcomm_ft", dates: "Sep 2022 – Dec 2023", logo: "/images/qualcomm-logo.svg", logoClassName: LOGO_WIDE, highlightKey: "qualcomm_ft" },
+  { type: "experience", i18nKey: "hero.roles.yscope_mgr", dates: "Jan 2026 – Present", logo: "/images/yscope-logo.webp", url: "https://yscope.com/" },
+  { type: "experience", i18nKey: "hero.previous_roles.uber", dates: "May 2024 – Jun 2025", logo: "/images/uber-logo.webp", highlightKey: "uber", url: "https://www.uber.com/" },
+  { type: "experience", i18nKey: "hero.roles.yscope_dev", dates: "Jan 2024 – Present", logo: "/images/yscope-logo.webp", highlightKey: "yscope_dev", url: "https://yscope.com/" },
+  { type: "experience", i18nKey: "hero.previous_roles.qualcomm_ft", dates: "Sep 2022 – Dec 2023", logo: "/images/qualcomm-logo.svg", logoClassName: LOGO_WIDE, highlightKey: "qualcomm_ft", url: "https://www.qualcomm.com/" },
   {
     type: "education",
     educationKey: "uoft",
     logo: "/images/uoft-crest.svg",
     url: "https://www.utoronto.ca/",
   },
-  { type: "experience", i18nKey: "hero.previous_roles.ta_2022", dates: "Jan 2022 – May 2022", logo: "/images/uoft-crest.svg", logoClassName: LOGO_CREST, highlightKey: "ta_2022" },
-  { type: "experience", i18nKey: "hero.previous_roles.qualcomm_intern", dates: "May 2020 – May 2021", logo: "/images/qualcomm-logo.svg", logoClassName: LOGO_WIDE, highlightKey: "qualcomm_intern" },
-  { type: "experience", i18nKey: "hero.previous_roles.ta_2021", dates: "Jan 2021 – May 2021", logo: "/images/uoft-crest.svg", logoClassName: LOGO_CREST, highlightKey: "ta_2021" },
+  { type: "experience", i18nKey: "hero.previous_roles.ta_2022", dates: "Jan 2022 – May 2022", logo: "/images/uoft-crest.svg", logoClassName: LOGO_CREST, highlightKey: "ta_2022", url: "https://www.utoronto.ca/" },
+  { type: "experience", i18nKey: "hero.previous_roles.qualcomm_intern", dates: "May 2020 – May 2021", logo: "/images/qualcomm-logo.svg", logoClassName: LOGO_WIDE, highlightKey: "qualcomm_intern", url: "https://www.qualcomm.com/" },
+  { type: "experience", i18nKey: "hero.previous_roles.ta_2021", dates: "Jan 2021 – May 2021", logo: "/images/uoft-crest.svg", logoClassName: LOGO_CREST, highlightKey: "ta_2021", url: "https://www.utoronto.ca/" },
   {
     type: "education",
     educationKey: "bodwell",
@@ -139,7 +140,12 @@ export default function ExperienceSection() {
                     key={item.i18nKey}
                     className="tl-item opacity-0 relative flex items-start gap-5 sm:gap-6 pl-14 sm:pl-18"
                   >
-                    <div className="absolute left-0 sm:left-1 top-0 w-9 h-9 sm:w-11 sm:h-11 rounded-full bg-white flex items-center justify-center shadow-md ring-2 ring-border overflow-hidden">
+                    <a
+                      href={item.url}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="absolute left-0 sm:left-1 top-0 w-9 h-9 sm:w-11 sm:h-11 rounded-full bg-white flex items-center justify-center shadow-md ring-2 ring-border overflow-hidden"
+                    >
                       <Image
                         src={item.logo}
                         alt=""
@@ -147,7 +153,7 @@ export default function ExperienceSection() {
                         height={28}
                         className={item.logoClassName ?? LOGO_FILL}
                       />
-                    </div>
+                    </a>
 
                     <div className="flex-1 min-w-0">
                       <p className="text-base sm:text-lg leading-relaxed">
