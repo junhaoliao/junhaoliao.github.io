@@ -61,7 +61,7 @@ const PUBLICATION = {
   url: "https://peer.asee.org/40631",
 };
 
-export default function TimelineSection() {
+export default function ExperienceSection() {
   const { t } = useTranslation();
   const container = useRef<HTMLElement>(null);
   const lineRef = useRef<HTMLDivElement>(null);
@@ -114,7 +114,7 @@ export default function TimelineSection() {
 
   return (
     <section
-      id="education"
+      id="experience"
       ref={container}
       className="py-32 lg:py-40 bg-background text-foreground"
     >

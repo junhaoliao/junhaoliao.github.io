@@ -13,7 +13,7 @@ import { Separator } from "@/components/ui/separator";
 import ThemeToggle from "@/components/ThemeToggle";
 import LanguageSwitcher from "@/components/LanguageSwitcher";
 
-const NAV_SECTIONS = ["skills", "projects", "education", "blog", "contact"] as const;
+const NAV_SECTIONS = ["experience", "skills", "projects", "blog", "contact"] as const;
 
 export default function Navbar() {
   const { t } = useTranslation();
