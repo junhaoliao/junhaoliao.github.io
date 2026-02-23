@@ -3,16 +3,12 @@
 import { useRef } from "react";
 import Link from "next/link";
 import { useTranslation } from "react-i18next";
-import gsap from "gsap";
-import { ScrollTrigger } from "gsap/ScrollTrigger";
-import { useGSAP } from "@gsap/react";
+import { gsap, useGSAP } from "@/lib/gsap";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { ArrowRight, CalendarDays } from "lucide-react";
 import type { PostMeta } from "@/lib/blog";
-
-gsap.registerPlugin(useGSAP, ScrollTrigger);
 
 interface BlogSectionProps {
   posts: Record<string, PostMeta>[];
@@ -20,12 +16,11 @@ interface BlogSectionProps {
 
 export default function BlogSection({ posts: localizedPosts }: BlogSectionProps) {
   const { t, i18n } = useTranslation();
+  const container = useRef<HTMLElement>(null);
 
-  // Pick the right locale variant for each post
   const posts = localizedPosts.map((variants) =>
     variants[i18n.language] ?? variants["default"] ?? Object.values(variants)[0],
   );
-  const container = useRef<HTMLElement>(null);
 
   useGSAP(
     () => {

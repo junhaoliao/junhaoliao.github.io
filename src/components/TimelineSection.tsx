@@ -2,13 +2,9 @@
 
 import { useRef } from "react";
 import { useTranslation, Trans } from "react-i18next";
-import gsap from "gsap";
-import { ScrollTrigger } from "gsap/ScrollTrigger";
-import { useGSAP } from "@gsap/react";
+import { gsap, useGSAP } from "@/lib/gsap";
 import Image from "next/image";
 import { MapPin, CalendarDays } from "lucide-react";
-
-gsap.registerPlugin(useGSAP, ScrollTrigger);
 
 type TimelineItem =
   | {
@@ -72,7 +68,6 @@ export default function TimelineSection() {
 
   useGSAP(
     () => {
-      // Animate section heading
       gsap.from(".timeline-heading", {
         opacity: 0,
         y: 30,
@@ -85,7 +80,6 @@ export default function TimelineSection() {
         },
       });
 
-      // Animate timeline line drawing in via scrub
       if (lineRef.current) {
         gsap.fromTo(
           lineRef.current,
@@ -103,7 +97,6 @@ export default function TimelineSection() {
         );
       }
 
-      // Stagger timeline items
       gsap.from(".tl-item", {
         opacity: 0,
         x: -30,
@@ -117,7 +110,6 @@ export default function TimelineSection() {
         },
       });
 
-      // Publication
       gsap.from(".tl-publication", {
         opacity: 0,
         y: 20,
@@ -140,31 +132,26 @@ export default function TimelineSection() {
       className="py-32 lg:py-40 bg-background text-foreground"
     >
       <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-        {/* Section heading */}
         <div className="text-center mb-16 sm:mb-20">
           <h2 className="timeline-heading text-3xl sm:text-4xl lg:text-5xl font-bold tracking-tight">
             {t("timeline.title")}
           </h2>
         </div>
 
-        {/* Timeline */}
         <div className="relative">
-          {/* Vertical line */}
           <div
             ref={lineRef}
             className="absolute left-4 sm:left-6 top-0 bottom-0 w-0.5 bg-border origin-top"
           />
 
-          {/* Timeline items */}
           <div className="space-y-8 sm:space-y-10">
-            {TIMELINE_ITEMS.map((item, idx) => {
+            {TIMELINE_ITEMS.map((item) => {
               if (item.type === "experience") {
                 return (
                   <div
                     key={item.i18nKey}
                     className="tl-item relative flex items-start gap-5 sm:gap-6 pl-14 sm:pl-18"
                   >
-                    {/* Logo */}
                     <div className="absolute left-0 sm:left-1 top-0 w-9 h-9 sm:w-11 sm:h-11 rounded-full bg-white flex items-center justify-center shadow-md ring-2 ring-border overflow-hidden">
                       <Image
                         src={item.logo}
@@ -175,7 +162,6 @@ export default function TimelineSection() {
                       />
                     </div>
 
-                    {/* Content */}
                     <div className="flex-1 min-w-0">
                       <p className="text-base sm:text-lg leading-relaxed">
                         <Trans
@@ -198,7 +184,6 @@ export default function TimelineSection() {
                 );
               }
 
-              // Education item
               const { educationKey: key, logo, logoClassName = LOGO_CREST, url } = item;
               const degree = t(`education.items.${key}.degree`);
               const details = t(`education.items.${key}.details`);
@@ -208,7 +193,6 @@ export default function TimelineSection() {
                   key={key}
                   className="tl-item relative flex items-start gap-5 sm:gap-6 pl-14 sm:pl-18"
                 >
-                  {/* Logo */}
                   <a
                     href={url}
                     target="_blank"
@@ -224,7 +208,6 @@ export default function TimelineSection() {
                     />
                   </a>
 
-                  {/* Content */}
                   <div className="flex-1 min-w-0 p-5 sm:p-6 rounded-xl bg-muted/60 dark:bg-muted/40">
                     <a
                       href={url}
@@ -264,7 +247,6 @@ export default function TimelineSection() {
           </div>
         </div>
 
-        {/* Publication */}
         <div className="tl-publication mt-12 pt-8 border-t border-border">
           <p className="text-xs font-semibold uppercase tracking-[0.2em] opacity-50 mb-4">
             {t("hero.publications_label")}

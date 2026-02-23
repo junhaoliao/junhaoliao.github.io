@@ -25,7 +25,7 @@ if (!i18n.isInitialized) {
     resources,
     lng: "en",
     fallbackLng: "en",
-    supportedLngs: SUPPORTED_LANGS as unknown as string[],
+    supportedLngs: [...SUPPORTED_LANGS],
     ns: ["translation"],
     defaultNS: "translation",
     interpolation: { escapeValue: false },

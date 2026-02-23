@@ -4,9 +4,8 @@ import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useTranslation } from "react-i18next";
-import gsap from "gsap";
-import { ScrollTrigger } from "gsap/ScrollTrigger";
-import { useGSAP } from "@gsap/react";
+import { ScrollTrigger, useGSAP } from "@/lib/gsap";
+import { smoothScrollTo } from "@/lib/utils";
 import { Menu, ExternalLink } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
@@ -14,17 +13,7 @@ import { Separator } from "@/components/ui/separator";
 import ThemeToggle from "@/components/ThemeToggle";
 import LanguageSwitcher from "@/components/LanguageSwitcher";
 
-gsap.registerPlugin(useGSAP, ScrollTrigger);
-
 const NAV_SECTIONS = ["skills", "projects", "education", "blog", "contact"] as const;
-
-function smoothScrollTo(id: string) {
-  const el = document.getElementById(id);
-  if (el) {
-    el.scrollIntoView({ behavior: "smooth" });
-    window.history.replaceState(null, "", "/");
-  }
-}
 
 export default function Navbar() {
   const { t } = useTranslation();
@@ -48,7 +37,7 @@ export default function Navbar() {
     { scope: navRef, dependencies: [isHome] },
   );
 
-  // Fallback: listen to scroll for home page
+  // Eager scroll listener so the navbar is styled before ScrollTrigger initializes
   useEffect(() => {
     if (!isHome) return;
     const handler = () => setScrollPastHero(window.scrollY > 80);
@@ -75,7 +64,6 @@ export default function Navbar() {
       }`}
     >
       <nav className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
-        {/* Logo */}
         <Link
           href="/"
           onClick={(e) => {

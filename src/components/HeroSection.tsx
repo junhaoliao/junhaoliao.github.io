@@ -3,18 +3,10 @@
 import { useRef } from "react";
 import Image from "next/image";
 import { useTranslation, Trans } from "react-i18next";
-import gsap from "gsap";
-import { useGSAP } from "@gsap/react";
+import { gsap, useGSAP } from "@/lib/gsap";
+import { smoothScrollTo } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
 import { ChevronDown } from "lucide-react";
-
-import { ScrollTrigger } from "gsap/ScrollTrigger";
-
-gsap.registerPlugin(useGSAP, ScrollTrigger);
-
-function smoothScrollTo(id: string) {
-  document.getElementById(id)?.scrollIntoView({ behavior: "smooth" });
-}
 
 export default function HeroSection() {
   const { t } = useTranslation();
@@ -29,7 +21,6 @@ export default function HeroSection() {
         .from(".hero-cta", { opacity: 0, y: 20, duration: 0.6 }, "-=0.3")
         .from(".hero-scroll", { opacity: 0, duration: 0.5 }, "-=0.2");
 
-      // Parallax: background image drifts up slower than scroll
       gsap.to(".hero-bg", {
         yPercent: 20,
         ease: "none",
@@ -41,7 +32,6 @@ export default function HeroSection() {
         },
       });
 
-      // Fade out hero content as user scrolls away
       gsap.to(".hero-content", {
         opacity: 0,
         y: -40,
@@ -63,7 +53,6 @@ export default function HeroSection() {
       ref={container}
       className="relative min-h-svh flex flex-col items-center justify-center overflow-hidden"
     >
-      {/* Background image — parallax target */}
       <div className="hero-bg absolute inset-0 z-0 will-change-transform">
         <Image
           src="/images/hero.webp"
@@ -76,9 +65,7 @@ export default function HeroSection() {
         <div className="absolute inset-0 bg-black/50" />
       </div>
 
-      {/* Content */}
       <div className="hero-content relative z-10 flex flex-col items-center text-center px-4 sm:px-6 [text-shadow:0_1px_8px_rgba(0,0,0,0.6)]">
-        {/* Portrait */}
         <div className="hero-portrait relative w-28 h-28 sm:w-32 sm:h-32 md:w-36 md:h-36 mb-6 sm:mb-8">
           <Image
             src="/images/portrait.webp"
@@ -90,12 +77,10 @@ export default function HeroSection() {
           />
         </div>
 
-        {/* Name */}
         <h1 className="hero-name text-6xl sm:text-7xl md:text-8xl lg:text-[6.5rem] font-bold text-white tracking-tighter leading-none [text-shadow:0_2px_12px_rgba(0,0,0,0.5)]">
           {t("hero.name")}
         </h1>
 
-        {/* Tagline */}
         <p className="hero-tagline mt-4 sm:mt-6 text-lg sm:text-xl md:text-2xl text-white/75 font-light tracking-wide max-w-2xl">
           <Trans
             i18nKey="hero.tagline"
@@ -113,7 +98,6 @@ export default function HeroSection() {
           />
         </p>
 
-        {/* CTA */}
         <div className="hero-cta mt-8 sm:mt-10">
           <Button
             size="lg"
@@ -125,7 +109,6 @@ export default function HeroSection() {
         </div>
       </div>
 
-      {/* Scroll indicator */}
       <div className="hero-scroll absolute bottom-8 left-1/2 -translate-x-1/2 z-10 animate-bounce">
         <ChevronDown className="h-6 w-6 text-white/50" />
       </div>

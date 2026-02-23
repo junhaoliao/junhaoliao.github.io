@@ -2,15 +2,11 @@
 
 import { useRef } from "react";
 import { useTranslation } from "react-i18next";
-import gsap from "gsap";
-import { ScrollTrigger } from "gsap/ScrollTrigger";
-import { useGSAP } from "@gsap/react";
+import { gsap, useGSAP } from "@/lib/gsap";
 import Image from "next/image";
 import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Github, ExternalLink } from "lucide-react";
-
-gsap.registerPlugin(useGSAP, ScrollTrigger);
 
 const FEATURED_PROJECT = {
   key: "ictrl",
@@ -84,7 +80,6 @@ export default function ProjectsSection() {
   return (
     <section id="projects" ref={container} className="py-32 lg:py-40 bg-background">
       <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-        {/* Left-aligned heading for variety */}
         <div className="section-heading mb-10 sm:mb-14">
           <p className="text-xs font-semibold uppercase tracking-[0.2em] text-muted-foreground mb-3">
             {t("projects.featured_label")}
@@ -94,10 +89,8 @@ export default function ProjectsSection() {
           </h2>
         </div>
 
-        {/* Featured project — full-width hero card */}
         <div className="featured-card mb-8 rounded-2xl ring-1 ring-foreground/10 bg-card shadow-xs overflow-hidden">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-0">
-            {/* Text side */}
             <div className="p-8 sm:p-10 lg:p-12 flex flex-col justify-center">
               <div className="flex items-center gap-3 mb-4">
                 <Image
@@ -126,7 +119,6 @@ export default function ProjectsSection() {
               </div>
             </div>
 
-            {/* Visual side — screenshot with overlay */}
             <div className="relative min-h-[200px] lg:min-h-0">
               <Image
                 src={FEATURED_PROJECT.screenshot}
@@ -140,7 +132,6 @@ export default function ProjectsSection() {
           </div>
         </div>
 
-        {/* Secondary projects — 2-column grid */}
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
           {SECONDARY_PROJECTS.map((project) => {
             const desc = t(`projects.items.${project.key}.description`);

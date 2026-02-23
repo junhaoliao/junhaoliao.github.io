@@ -47,7 +47,6 @@ export default async function BlogPostPage({ params }: Props) {
             <ArrowLeft className="h-4 w-4" />
             Back to Blog
           </Link>
-          {/* Client component handles locale-aware content display */}
           <BlogPostClient variants={variants} />
         </div>
       </main>

@@ -1,21 +1,33 @@
 "use client";
 
-import { Fragment, useRef } from "react";
+import { useRef } from "react";
 import Image from "next/image";
 import { useTranslation } from "react-i18next";
-import gsap from "gsap";
-import { ScrollTrigger } from "gsap/ScrollTrigger";
-import { useGSAP } from "@gsap/react";
+import { gsap, useGSAP } from "@/lib/gsap";
 import { HoverCard, HoverCardContent, HoverCardTrigger } from "@/components/ui/hover-card";
 import { MapPin, Mail, MessageCircle, Linkedin, Github } from "lucide-react";
 
-gsap.registerPlugin(useGSAP, ScrollTrigger);
-
 interface ContactItem {
+  id: string;
   icon: React.ReactNode;
   label: string;
   href?: string;
   extra?: React.ReactNode;
+}
+
+function ContactLink({ item }: { item: ContactItem }) {
+  if (item.extra) return item.extra;
+  return (
+    <a
+      href={item.href}
+      target={item.href?.startsWith("http") ? "_blank" : undefined}
+      rel={item.href?.startsWith("http") ? "noopener noreferrer" : undefined}
+      className="contact-item flex items-center gap-3 text-white/85 hover:text-white transition-colors"
+    >
+      {item.icon}
+      <span>{item.label}</span>
+    </a>
+  );
 }
 
 export default function ContactSection() {
@@ -24,7 +36,6 @@ export default function ContactSection() {
 
   useGSAP(
     () => {
-      // Parallax background
       gsap.to(".contact-bg", {
         yPercent: 15,
         ease: "none",
@@ -36,7 +47,6 @@ export default function ContactSection() {
         },
       });
 
-      // Contact items staggered entrance
       gsap.from(".contact-item", {
         opacity: 0,
         y: 25,
@@ -55,16 +65,19 @@ export default function ContactSection() {
 
   const items: ContactItem[] = [
     {
+      id: "location",
       icon: <MapPin className="h-5 w-5 shrink-0" />,
       label: t("contact.location"),
       href: "https://maps.app.goo.gl/k12U9Lre5H9hfVfAA",
     },
     {
+      id: "email",
       icon: <Mail className="h-5 w-5 shrink-0" />,
       label: t("contact.email"),
       href: "mailto:junhao@junhao.ca",
     },
     {
+      id: "wechat",
       icon: <MessageCircle className="h-5 w-5 shrink-0" />,
       label: t("contact.wechat"),
       extra: (
@@ -100,11 +113,13 @@ export default function ContactSection() {
       ),
     },
     {
+      id: "linkedin",
       icon: <Linkedin className="h-5 w-5 shrink-0" />,
       label: t("contact.linkedin"),
       href: "https://www.linkedin.com/in/junhaoliao/",
     },
     {
+      id: "github",
       icon: <Github className="h-5 w-5 shrink-0" />,
       label: t("contact.github"),
       href: "https://github.com/junhaoliao",
@@ -113,7 +128,6 @@ export default function ContactSection() {
 
   return (
     <section id="contact" ref={container} className="relative py-40 lg:py-48 overflow-hidden">
-      {/* Background — parallax */}
       <div className="contact-bg absolute -inset-y-16 inset-x-0 z-0 will-change-transform">
         <Image
           src="/images/contact-bg.webp"
@@ -122,7 +136,6 @@ export default function ContactSection() {
           className="object-cover scale-110"
           sizes="100vw"
         />
-        {/* Theme-aware overlay */}
         <div className="absolute inset-0 bg-black/0 dark:bg-black/40" />
       </div>
 
@@ -132,38 +145,14 @@ export default function ContactSection() {
         </h2>
 
         <div className="space-y-5">
-          {/* Row 1: Location, Email, WeChat */}
           <div className="flex flex-col sm:flex-row justify-center items-center gap-5 sm:gap-8">
-            {items.slice(0, 3).map((item, i) =>
-              item.extra ? (
-                <Fragment key={i}>{item.extra}</Fragment>
-              ) : (
-                <a
-                  key={i}
-                  href={item.href}
-                  target={item.href?.startsWith("http") ? "_blank" : undefined}
-                  rel={item.href?.startsWith("http") ? "noopener noreferrer" : undefined}
-                  className="contact-item flex items-center gap-3 text-white/85 hover:text-white transition-colors"
-                >
-                  {item.icon}
-                  <span>{item.label}</span>
-                </a>
-              ),
-            )}
+            {items.slice(0, 3).map((item) => (
+              <ContactLink key={item.id} item={item} />
+            ))}
           </div>
-          {/* Row 2: LinkedIn, GitHub */}
           <div className="flex flex-col sm:flex-row justify-center items-center gap-5 sm:gap-8">
-            {items.slice(3).map((item, i) => (
-              <a
-                key={i}
-                href={item.href}
-                target={item.href?.startsWith("http") ? "_blank" : undefined}
-                rel={item.href?.startsWith("http") ? "noopener noreferrer" : undefined}
-                className="contact-item flex items-center gap-3 text-white/85 hover:text-white transition-colors"
-              >
-                {item.icon}
-                <span>{item.label}</span>
-              </a>
+            {items.slice(3).map((item) => (
+              <ContactLink key={item.id} item={item} />
             ))}
           </div>
         </div>

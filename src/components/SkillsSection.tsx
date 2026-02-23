@@ -2,13 +2,9 @@
 
 import { useRef } from "react";
 import { useTranslation } from "react-i18next";
-import gsap from "gsap";
-import { ScrollTrigger } from "gsap/ScrollTrigger";
-import { useGSAP } from "@gsap/react";
+import { gsap, useGSAP } from "@/lib/gsap";
 import { Badge } from "@/components/ui/badge";
 import { Code2, Globe, Cog } from "lucide-react";
-
-gsap.registerPlugin(useGSAP, ScrollTrigger);
 
 const FEATURED_SKILLS = [
   { key: "cpp", icon: <Code2 className="h-8 w-8" />, color: "text-rose-500" },
@@ -24,7 +20,6 @@ export default function SkillsSection() {
 
   useGSAP(
     () => {
-      // Section heading
       gsap.from(".section-heading", {
         opacity: 0,
         y: 30,
@@ -37,7 +32,6 @@ export default function SkillsSection() {
         },
       });
 
-      // Skill rows slide in from alternating sides
       gsap.utils.toArray<HTMLElement>(".skill-row").forEach((row, i) => {
         gsap.from(row, {
           opacity: 0,
@@ -52,7 +46,6 @@ export default function SkillsSection() {
         });
       });
 
-      // Categories fade in
       gsap.from(".category-grid", {
         opacity: 0,
         y: 30,
@@ -77,7 +70,6 @@ export default function SkillsSection() {
           </h2>
         </div>
 
-        {/* Zone A: Featured skills — alternating full-width rows */}
         <div className="space-y-12 sm:space-y-16 mb-16 sm:mb-20">
           {FEATURED_SKILLS.map(({ key, icon, color }, index) => (
             <div
@@ -109,7 +101,6 @@ export default function SkillsSection() {
           ))}
         </div>
 
-        {/* Zone B: Additional skills — compact 4-column grid */}
         <div className="category-grid border-t border-border/50 pt-16">
           <p className="text-xs font-semibold uppercase tracking-[0.2em] text-muted-foreground mb-8">
             {t("skills.also")}
