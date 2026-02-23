@@ -133,6 +133,8 @@
     "all_posts": "所有文章",
     "back_to_blog": "返回部落格",
     "published": "發表於",
+    "updated": "更新於",
+    "translations": "翻譯",
     "no_posts": "目前沒有部落格文章。"
   },
   "contact": {

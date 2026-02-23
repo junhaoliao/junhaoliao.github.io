@@ -133,6 +133,8 @@
     "all_posts": "Tous les articles",
     "back_to_blog": "Retour au blog",
     "published": "Publié le",
+    "updated": "Mis à jour le",
+    "translations": "Traductions",
     "no_posts": "Aucun article de blog pour l'instant."
   },
   "contact": {

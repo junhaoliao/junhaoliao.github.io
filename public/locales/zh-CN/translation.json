@@ -133,6 +133,8 @@
     "all_posts": "所有文章",
     "back_to_blog": "返回博客",
     "published": "发布于",
+    "updated": "更新于",
+    "translations": "翻译",
     "no_posts": "暂无博客文章。"
   },
   "contact": {
