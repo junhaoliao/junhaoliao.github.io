@@ -15,9 +15,7 @@ export default function HeroSection() {
   useGSAP(
     () => {
       const tl = gsap.timeline({ defaults: { ease: "power3.out" } });
-      tl.from(".hero-portrait", { opacity: 0, scale: 0.8, duration: 1.2 })
-        .from(".hero-name", { opacity: 0, y: 60, duration: 0.9 }, "-=0.6")
-        .from(".hero-tagline", { opacity: 0, y: 30, duration: 0.7 }, "-=0.4")
+      tl.from(".hero-tagline", { opacity: 0, y: 30, duration: 0.7 })
         .from(".hero-cta", { opacity: 0, y: 20, duration: 0.6 }, "-=0.3")
         .from(".hero-scroll", { opacity: 0, duration: 0.5 }, "-=0.2");
 
