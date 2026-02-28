@@ -45,19 +45,18 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" suppressHydrationWarning className={inter.variable}>
-      <head>
+      <head />
+      <body>
         <Script
           src="https://www.googletagmanager.com/gtag/js?id=G-2LPTE0G465"
-          strategy="afterInteractive"
+          strategy="lazyOnload"
         />
-        <Script id="gtag-init" strategy="afterInteractive">
+        <Script id="gtag-init" strategy="lazyOnload">
           {`window.dataLayer = window.dataLayer || [];
 function gtag(){dataLayer.push(arguments);}
 gtag('js', new Date());
 gtag('config', 'G-2LPTE0G465');`}
         </Script>
-      </head>
-      <body>
         <ThemeProvider
           attribute="class"
           defaultTheme="system"

@@ -4,7 +4,6 @@ import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useTranslation } from "react-i18next";
-import { ScrollTrigger, useGSAP } from "@/lib/gsap";
 import { smoothScrollTo } from "@/lib/utils";
 import { parseLocalePath } from "@/lib/locales";
 import { Menu, ExternalLink } from "lucide-react";
@@ -26,23 +25,10 @@ export default function Navbar() {
   const [mobileOpen, setMobileOpen] = useState(false);
   const isScrolled = !isHome || scrollPastHero;
 
-  useGSAP(
-    () => {
-      if (!isHome) return;
-      ScrollTrigger.create({
-        trigger: "#hero",
-        start: "bottom 80px",
-        onEnterBack: () => setScrollPastHero(false),
-        onLeave: () => setScrollPastHero(true),
-      });
-    },
-    { scope: navRef, dependencies: [isHome] },
-  );
-
-  // Eager scroll listener so the navbar is styled before ScrollTrigger initializes
   useEffect(() => {
     if (!isHome) return;
     const handler = () => setScrollPastHero(window.scrollY > 80);
+    handler();
     window.addEventListener("scroll", handler, { passive: true });
     return () => window.removeEventListener("scroll", handler);
   }, [isHome]);
