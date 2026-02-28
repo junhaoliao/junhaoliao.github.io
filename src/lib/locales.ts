@@ -43,8 +43,3 @@ export function parseLocalePath(pathname: string): {
   const isHome = pathname === `/${urlLocale}` || pathname === `/${urlLocale}/`;
   return { urlLocale, isHome };
 }
-
-/** Convert an i18n code to the blog content key ("default" for English). */
-export function i18nToContentKey(i18nCode: string): string {
-  return i18nCode === "en" ? "default" : i18nCode;
-}

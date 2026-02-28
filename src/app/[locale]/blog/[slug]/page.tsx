@@ -2,7 +2,7 @@ import { notFound } from "next/navigation";
 import Link from "next/link";
 import { ArrowLeft } from "lucide-react";
 import { getAllSlugs, getAllLocaleVariants } from "@/lib/blog";
-import { URL_LOCALES, URL_TO_I18N, i18nToContentKey, type UrlLocale } from "@/lib/locales";
+import { URL_LOCALES, URL_TO_I18N, type UrlLocale } from "@/lib/locales";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import BlogPostClient from "./BlogPostClient";
@@ -19,7 +19,7 @@ export async function generateStaticParams() {
   for (const slug of slugs) {
     const variants = await getAllLocaleVariants(slug);
     for (const urlLocale of URL_LOCALES) {
-      if (variants[i18nToContentKey(URL_TO_I18N[urlLocale])]) {
+      if (variants[URL_TO_I18N[urlLocale]]) {
         params.push({ locale: urlLocale, slug });
       }
     }
@@ -32,12 +32,12 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { locale, slug } = await params;
   const i18nCode = URL_TO_I18N[locale as UrlLocale] ?? "en";
   const variants = await getAllLocaleVariants(slug);
-  const post = variants[i18nToContentKey(i18nCode)] ?? variants["default"];
+  const post = variants[i18nCode];
   if (!post) return {};
 
   const languages: Record<string, string> = {};
   for (const urlLoc of URL_LOCALES) {
-    if (variants[i18nToContentKey(URL_TO_I18N[urlLoc])]) {
+    if (variants[URL_TO_I18N[urlLoc]]) {
       languages[URL_TO_I18N[urlLoc]] = `/${urlLoc}/blog/${slug}/`;
     }
   }
@@ -55,7 +55,7 @@ export default async function LocalizedBlogPostPage({ params }: Props) {
   const { locale, slug } = await params;
   const i18nCode = URL_TO_I18N[locale as UrlLocale] ?? "en";
   const variants = await getAllLocaleVariants(slug);
-  const post = variants[i18nToContentKey(i18nCode)];
+  const post = variants[i18nCode];
 
   if (!post) {
     notFound();
@@ -63,7 +63,7 @@ export default async function LocalizedBlogPostPage({ params }: Props) {
 
   const availableUrlLocales: string[] = [];
   for (const urlLoc of URL_LOCALES) {
-    if (variants[i18nToContentKey(URL_TO_I18N[urlLoc])]) {
+    if (variants[URL_TO_I18N[urlLoc]]) {
       availableUrlLocales.push(urlLoc);
     }
   }

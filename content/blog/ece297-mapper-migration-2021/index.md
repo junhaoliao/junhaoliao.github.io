@@ -24,23 +24,26 @@ Since the course files will be modified during this summer, many of us might wan
 
 **[Approach A, Recommended] Install Linux directly on your computer.**
 To achieve a similar working environment with the lab machines, I installed Debian Buster with the Mate Desktop Environment. The installation of the Debian system is not covered here, but feel free to post a followup if you want me to write the steps down.
-Please go to the official website below and download the installation image corresponding to the architecture of your machine. "amd64" is the name for 64-bit processors, both Intel and AMD.
-https://www.debian.org/distrib/netinst
+Please go to the official website below and download the installation image correspond with the architecture of your machine. "amd64" is the name for 64-bit processors, both Intel and AMD. Direct link: https://www.debian.org/distrib/netinst
 
 **[Approach A Variant] Create Your Own VM and Install Linux**
 Steps are not covered here. Feel free to post a followup if you want me to write the steps down.
 
 **[Approach B] Use the course VM**
-You may use the VM image provided by the course instructors, which has most of the dependencies installed (so you can skip the "Setting up dependencies" section) and the `ece297update` command integrated (so you can skip the "Copying all the 'public' source files" section, and use `ece297update` instead). However, for performance and VM stability reasons, [Approach A] is recommended over [Approach B]. You don't have to worry about VM configurations if you install Linux directly on your computer.
+You may use the VM image provided by the course instructors, which has most the dependencies installed(so you can skip the "Setting up dependencies" section) and the "ece297update" command integrated (so you can skip the "Copying all the 'public' source files" section, and use "ece297update" instead). However, for performance and VM stability reasons, [Approach A] is recommended over [Approach B]. You don't have to worry about VM configurations if you install Linux directly on your computer.
+Direct download links:
+Vaughn: https://www.eecg.utoronto.ca/~vaughn/ece297/ECE297VM.ova
+or
+My Mirror: http://jm.junhao.ca:88/VMs/ece297/2021_01_29/ECE297VM.ova
 
-- Basic knowledge of git. You should be comfortable working with the command line as well.
+- Basic knowledges of git. You should be comfortable working with the command line as well.
 
 ## Steps
 
-1. (Skippable if you use the VM) Setting up the dependencies on the new Linux installation
+1. (Skippable if you use the VM) Setting up the dependencies on the new Linux Installation
 2. Copying all the "public" source files
 3. Copying all your mapper source files
-4. (Optional, skippable if you use the VM) Running the unit tests
+4. (Optional, Skippable if you use the VM) Running the unit tests
 
 ## 1. Setting up dependencies
 
@@ -66,7 +69,7 @@ It is not necessary to install all of them if you only want to run your mapper w
 
 You can try one of the following two approaches:
 
-### Approach A. With Root Access (no need to modify your code, but less convenient for portable development)
+### Approach A. With Root Access (no need to modify your code, but less convenient for portable developments)
 
 ```
 # create /cad2/ece297s/ so that "rsync" doesn't complain about the missing directories
@@ -92,13 +95,13 @@ rsync -avhLzP -e ssh YOUR_EECG_USERNAME@ug251.eecg.utoronto.ca:/cad2/ece297s/pub
 
 ## 3. Copying all your mapper source files
 
-There are two ways to copy your mapper source files onto your own computer: Use Git, or copy manually using `rsync`.
+There are two ways to copy your mapper sources files onto your own computer: Use Git, or copy manually using "rsync"
 
 ### Approach A. Use Git to backup your source files and clone it onto your computer
 
-You are strongly recommended to backup your source files in a GitHub **private** repository, so that you don't have to worry about losing your files in 2 or 3 years.
+You are strongly recommended to backup your source files in a GitHub **private** repository, so that you don't have to worry about losing your files in 2 or 3 years: [https://junhao.ca/2021/04/09/import-an-existing-git-repository-onto-github/](/en/blog/import-an-existing-git-repository-onto-github/)
 
-Once you have done the importation, clone the repo on your own computer:
+Once you have done the importation, clone the repo on your own computer
 
 ```
 # the link can be found in the "Code" green button on the main page of your GitHub repo

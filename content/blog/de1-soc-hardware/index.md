@@ -1,35 +1,36 @@
 ---
-title: "DE1-SoC Hardware"
+title: "DE1-SoC 硬件笔记"
+lang: "zh-CN"
 date: "2020-03-15"
 lastModified: "2026-02-24"
-description: "Notes on DE1-SoC hardware for ECE243: GIC, interval timer, CPSR, stack pointer, banked registers, interrupt procedure, program counter, and VGA."
+description: "ECE243 DE1-SoC 硬件笔记：GIC、间隔定时器、CPSR、堆栈指针、分组寄存器、中断流程、程序计数器和 VGA。"
 tags: ["ece243", "arm", "de1-soc", "notes"]
 ---
 
-## General Interrupt Controller
+## 通用中断控制器 (GIC)
 
-Polling: keep waiting, waste of resources
+轮询 (Polling)：一直等待，浪费资源
 
-Interrupt: keep doing other things until interruption
+中断 (Interrupt)：继续做其他事情，直到被中断
 
-Manual: ftp://192.198.164.82/pub/fpgaup/pub/Intel_Material/15.0/Tutorials/Using_GIC.pdf
+手册：ftp://192.198.164.82/pub/fpgaup/pub/Intel_Material/15.0/Tutorials/Using_GIC.pdf
 
-- **ICCICR**: must be set to 1 so that interrupt can happen
-- **ICCPMR**: priority — 0 has the highest priority; only if the hardware has a priority level higher than ICCPMR, this interrupt would be triggered.
-- **ICCIAR**: stores interrupt ID (who triggers interrupt)
-- **ICCEOIR**: write the interrupt ID back to reset interrupt status
+- **ICCICR**：必须设为 1 才能触发中断
+- **ICCPMR**：优先级——0 为最高优先级；只有硬件的优先级高于 ICCPMR 时，才会触发中断
+- **ICCIAR**：存储中断 ID（谁触发了中断）
+- **ICCEOIR**：将中断 ID 写回以重置中断状态
 
 <image-lost-placeholder-gic-register>
 
-**Push Button (KEY) manual:** http://www-ug.eecg.toronto.edu/msl/nios_devices/dev_pushbuttons.html
+**按键 (KEY) 手册：** http://www-ug.eecg.toronto.edu/msl/nios_devices/dev_pushbuttons.html
 
-## Interval Timer
+## 间隔定时器 (Interval Timer)
 
-**Interval Timer manual:** http://www-ug.eecg.toronto.edu/msl/nios_devices/dev_timer.html
+**间隔定时器手册：** http://www-ug.eecg.toronto.edu/msl/nios_devices/dev_timer.html
 
-Q: How to use Periodl (base+8) and Periodh (base+12)?
+Q：Periodl (base+8) 和 Periodh (base+12) 怎样用？
 
-A: For example, if you want to load the decimal number 25000000, put the lower 16 bits into Periodl and the upper 16 bits (0x0d381) into Periodh — essentially split the 32-bit value into two halves.
+A：譬如你想放十进制为 25000000 的数进去，低 16 位放 Periodl，高 16 位（0x0d381）放 Periodh——就是把 32 位的值分成两半。
 
 <image-lost-placeholder-interval-timer-left>
 
@@ -37,71 +38,71 @@ A: For example, if you want to load the decimal number 25000000, put the lower 1
 
 ## CPSR
 
-**CPSR (ARM):** https://developer.arm.com/docs/ddi0595/b/aarch32-system-registers/cpsr
+**CPSR (ARM)：** https://developer.arm.com/docs/ddi0595/b/aarch32-system-registers/cpsr
 
-Masked = Disabled
+Masked = 禁用
 
-### [7] Interrupt Disable
+### [7] 中断禁用位
 
-Interrupt should be set to disabled (I=1) until all hardware you use (KEYs, Timers) has enabled interrupt-trigger.
+在所有你使用的硬件（KEY、Timer）都启用中断触发之前，中断应设为禁用 (I=1)。
 
-| I | Meaning |
-|---|---------|
-| 0x0 | Exception not masked |
-| 0b1 | Exception masked |
+| I | 含义 |
+|---|------|
+| 0x0 | 异常未屏蔽 |
+| 0b1 | 异常已屏蔽 |
 
-### [6] Fast Interrupt Disable
+### [6] 快速中断禁用位
 
-| F | Meaning |
-|---|---------|
-| 0x0 | Exception not masked |
-| **0b1** | Exception masked (set to 1 in ECE243) |
+| F | 含义 |
+|---|------|
+| 0x0 | 异常未屏蔽 |
+| **0b1** | 异常已屏蔽（ECE243 中设为 1） |
 
-### [5] Thumb Enable
+### [5] Thumb 使能位
 
-| T | Meaning |
-|---|---------|
-| **0x0** | Thumb mode disabled (set to 0 in ECE243) |
-| 0b1 | Thumb mode enabled |
+| T | 含义 |
+|---|------|
+| **0x0** | Thumb 模式禁用（ECE243 中设为 0） |
+| 0b1 | Thumb 模式启用 |
 
-### [4:0] Mode Bits
+### [4:0] 模式位
 
-| Mode | Bits | Description |
-|------|------|-------------|
-| **User** | 10000 | Normal program execution, no privileges |
-| FIQ | 10001 | Fast interrupt handling |
-| **IRQ** | 10010 | Normal interrupt handling |
-| **Supervisor** | 10011 | Privileged mode for the operating system |
-| Abort | 10111 | For virtual memory and memory protection |
-| Undefined | 11011 | Facilitates emulation of co-processors in hardware |
-| System | 11111 | Runs programs with some privileges |
+| 模式 | 位 | 描述 |
+|------|-----|------|
+| **User** | 10000 | 正常程序执行，无特权 |
+| FIQ | 10001 | 快速中断处理 |
+| **IRQ** | 10010 | 普通中断处理 |
+| **Supervisor** | 10011 | 操作系统的特权模式 |
+| Abort | 10111 | 虚拟内存和内存保护 |
+| Undefined | 11011 | 协处理器硬件仿真 |
+| System | 11111 | 以部分特权运行程序 |
 
-## Stack Pointer
+## 堆栈指针 (SP)
 
-You can modify SP at any time. You can even treat SP as a regular register if you don't need a stack in your program (which is usually a bad programming style and thus not recommended).
+你可以随时修改 SP。如果程序中不需要栈，你甚至可以把 SP 当作普通寄存器来用（但这通常是不好的编程习惯，不推荐）。
 
-Regular operations are shown below (assume each snippet is from an independent program):
+常规操作如下（假设每个代码片段来自独立的程序）：
 
 ```armasm
-// backup and restore R0
+// 备份和恢复 R0
 PUSH {R0}
 ...
 POP {R0}
 
-// backup R0, and restore its backup value into R1
+// 备份 R0，将备份值恢复到 R1
 PUSH {R0}
 ...
 POP {R1}
 
-// backup LR, and restore its backup value into PC
-// Think again. What exactly is this doing?
-BL someSubroutine // LR gets the address of "here"
+// 备份 LR，将备份值恢复到 PC
+// 想想看，这到底在做什么？
+BL someSubroutine // LR 获取 "here" 的地址
 here: ...
 
 someSubroutine:
 PUSH {LR}
 ...
-BL anotherSubroutine // LR gets the address of "there"
+BL anotherSubroutine // LR 获取 "there" 的地址
 there:
 ...
 POP {PC} // POP {LR}; MOV PC, LR
@@ -110,16 +111,16 @@ anotherSubroutine:
 ...
 BX LR
 
-// When the system starts, the default value of SP
-//  on our DE1-SOC machine is 0x1 0000 0000
-// (Well you can say it is 0x0000 0000 if you want)
-// What if I want to modify it? Try step into each of below instructions
+// 系统启动时，DE1-SOC 机器上 SP 的默认值
+//  为 0x1 0000 0000
+// （你也可以说是 0x0000 0000）
+// 如果我想修改它呢？尝试单步执行以下指令
 LDR SP,=256 // 256=0x100
 MOV R0,#1
-PUSH {R0} // What is the content at 0x100-4
-POP {R0} // What is the content at 0x100-4
+PUSH {R0} // 0x100-4 处的内容是什么
+POP {R0} // 0x100-4 处的内容是什么
 
-// What is the value of R1, R2 and R3?
+// R1、R2 和 R3 的值分别是多少？
 MOV R1, #1
 MOV R2, #2
 MOV R3, #3
@@ -130,73 +131,75 @@ POP {R2,R3,R1}
 // 3 => R2
 // 2 => R3
 // 1 => R1
-// initial stack pointer => end stack pointer
+// 初始栈指针 => 结束栈指针
 ```
 
-## Banked Registers
+## 分组寄存器 (Banked Registers)
 
-Helps you to switch between modes.
+帮助你在不同模式之间切换。
 
 ### SPSR
 
-1. What is SPSR?
-2. How many SPSRs are in the diagram below? Who doesn't have an SPSR?
-3. Why do we need so many SPSRs?
+1. 什么是 SPSR？
+2. 下图有多少个 SPSR？谁没有 SPSR？
+3. 为什么需要这么多个 SPSR？
 
-**Answers:**
+**答案：**
 
-1. Saved CPSR: Holds the saved process state for the current mode.
-2. 5 SPSRs. User mode does not need an SPSR.
-3. Copying SPSR to CPSR restores the mode before the switch. If User mode switches to IRQ mode, then to SVC mode: SVC mode can copy SPSR_svc to CPSR to restore IRQ mode, and IRQ mode can copy SPSR_irq to CPSR to restore User mode.
+1. Saved CPSR：保存当前模式的处理器状态。
+2. 5 个 SPSR，User mode 并不需要 SPSR。
+3. 将 SPSR 复制到 CPSR 即可还原到切换前的 mode。如果 User mode 切换到 IRQ mode 后，又被切换到 SVC mode；那 SVC mode 下可将 SPSR_svc 复制到 CPSR 来还原到 IRQ mode，IRQ mode 下可将 SPSR_irq 复制到 CPSR 来还原到 User mode。
 
-### SP, LR, PC
+### SP、LR、PC
 
-1. After switching from User mode to IRQ mode, is the current SP still User mode's SP?
-2. After switching from User mode to IRQ mode, is the current LR still User mode's LR?
-3. After switching from User mode to IRQ mode, is the current PC still User mode's PC?
-4. After switching from User mode to IRQ mode, are the current General Registers (R0-12) still User mode's General Registers?
-5. Since CPULator doesn't support User mode, replace "User mode" with "SVC mode" and answer again.
+1. 从 User mode 切换到 IRQ mode 后，当前执行程序的 SP 还是 User mode 的 SP 吗？
+2. 从 User mode 切换到 IRQ mode 后，当前执行程序的 LR 还是 User mode 的 LR 吗？
+3. 从 User mode 切换到 IRQ mode 后，当前执行程序的 PC 还是 User mode 的 PC 吗？
+4. 从 User mode 切换到 IRQ mode 后，当前执行程序的 General Registers (R0-12) 还是 User mode 的 General Registers 吗？
+5. 事实上 CPULator 并不支持 User mode，所以前面的题把 User mode 换成 SVC mode 再答一遍。
 
-**Answers:**
+**答案：**
 
-1. No. It is now IRQ mode's SP.
-2. No. It is now IRQ mode's LR. When first switched to IRQ mode, LR_irq gets the address of the unexecuted instruction in User mode + 4.
-3. Yes. Each (single-core) processor has only one PC, pointing to the next unexecuted instruction.
-4. Yes. Each (single-core) processor has only one set of General Registers. Any mode can modify their values.
-5. Replacing User mode with SVC mode, the answers remain the same.
+1. 不是，这时是 IRQ mode 的 SP。
+2. 不是，这时是 IRQ mode 的 LR。刚被切换到 IRQ mode 时，LR_irq 会获得 User mode 里还没执行的指令的地址 + 4。
+3. 是的，每个（单核心）处理器 PC 只有一个，指向下一个还未执行的指令的地址。
+4. 是的，每个（单核心）处理器只有一套 General Registers，任意 mode 都可以更改它们的值。
+5. 把以上答案中 User mode 换成 SVC mode，答案一样。
 
 <image-lost-placeholder-banked-registers>
 
-## Interrupt Procedure
+## 中断流程
 
-Prerequisites for a hardware device to trigger an interrupt:
+如果想要某硬件能触发 interrupt，必要条件：
 
-1. The program has a `.vector` section (also called "exception table")
-2. The instruction at address 0x18 in the `.vector` section is `B SERVICE_IRQ`, ensuring the processor correctly enters the IRQ handler when an interrupt occurs
-3. The GIC is correctly configured, and the hardware device has interrupt-trigger enabled
-4. The `SERVICE_IRQ` subroutine has corresponding ISR handlers for each hardware device
-5. The Interrupt Service Routine does what needs to be done and correctly returns to the IRQ handler
+1. 程序中有 `.vector` 这个 section（也称 "exception table"）
+2. `.vector` section 中 0x18 这行地址的指令为 `B SERVICE_IRQ`，确保能在 interrupt 发生时正确进入 IRQ handler
+3. GIC 有正确设置，且该硬件设置了会触发 interrupt
+4. `SERVICE_IRQ` 的 subroutine 里，各硬件有对应的 ISR handler
+5. Interrupt Service Routine 里做想做的事，并能够正确返回到 IRQ handler
 
-When an interrupt occurs (assuming ICCIAR value is 72, i.e., a KEY press triggered the interrupt):
+所以当某个 interrupt 发生时（假设 ICCIAR 里值为 72，即按下了某 KEY 触发了 interrupt）：
 
-1. The processor immediately stops the current work. The GIC saves the current mode's special registers (SP, PC, CPSR), switches to IRQ_MODE, and sets PC to 0x18.
-2. At 0x18 is `B SERVICE_IRQ` — we enter the SERVICE_IRQ subroutine.
-3. In SERVICE_IRQ, first backup data registers (R0-R10, or however many you use), read ICCIAR into R5 (or another register), and compare against a series of interrupt IDs.
-4. If R5 equals 73, enter the KEY_ISR subroutine.
-5. After KEY_ISR finishes, return to SERVICE_IRQ, restore the backed-up data registers, and write the interrupt ID (R5) back to ICCEOIR to reset the interrupt status (otherwise, after exiting IRQ, the GIC will immediately trigger the interrupt again).
-6. Exit interrupt. The GIC restores SP, PC, and CPSR.
+1. 处理器会马上停下现在做的事，GIC 会保存好当前 mode 的特殊 register (SP, PC, CPSR)，切换 mode 为 IRQ_MODE，PC 值变为 0x18
+2. 0x18 正正是 `B SERVICE_IRQ`，我们会进入 SERVICE_IRQ 这个 label 所对应的 subroutine
+3. 在 SERVICE_IRQ 里，先备份好数据 register (R0-R10)，读取 ICCIAR 到 R5，并与一系列 interrupt id 对比
+4. 如果 R5 的值为 73，则进入 KEY_ISR 这个 subroutine
+5. KEY_ISR 做完想做的事之后，返回 SERVICE_IRQ 里，还原之前备份的数据 register，通过将 interrupt id (R5) 写回 ICCEOIR 的方式重置 interrupt status（如果不这样做，退出 IRQ 之后 GIC 马上又会激活 interrupt）
+6. 退出 interrupt，GIC 帮忙还原 SP、PC、CPSR
 
-## Program Counter
+## 程序计数器 (PC)
 
-**Key points about PC:**
+**核心观点：**
 
-- As a register, PC stores the address of the next instruction to be executed (fetched but not yet executed).
-- When PC appears as op2 in an instruction (e.g., `MOV R0, PC`), PC represents an address equal to (this instruction's address + 8).
+关于 PC：
 
-**Key points about LR:**
+- PC 作为 register 存储的是下一个要跑的 instruction（要执行但还未执行的 instruction）的地址
+- PC 作为 op2 在 instruction 里出现时（`MOV R0, PC`），则 PC 代表一个地址，为（这一行 instruction 的地址 + 8）
 
-- When executing `BL someLabel`, before branching into someLabel, the address of the BL instruction + 4 is stored in LR.
-- During normal execution, if an interrupt occurs, the address of the first unexecuted instruction + 4 is stored in IRQ mode's LR.
+关于 LR：
+
+- 在执行 `BL someLabel` 时，在 branch into someLabel 之前，BL someLabel 这一行 opcode 的地址 + 4 被储存在 LR 中
+- 在执行普通程序时，如果发生 interrupt，第一个未执行的指令的地址 + 4 被储存在 IRQ mode 的 LR 中
 
 ## VGA
 
@@ -205,7 +208,7 @@ http://www-ug.eecg.utoronto.ca/desl/nios_devices_SoC/dev_vga.html
 ```armasm
 .global _start
 _start:
-	// using this address to write directly to the buffer
+	// 使用此地址直接写入缓冲区
 	ldr r7,=0xc8000000
 	ldr r0,=0b11111
 

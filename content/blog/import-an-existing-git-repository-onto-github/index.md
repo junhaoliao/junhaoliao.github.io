@@ -1,7 +1,6 @@
 ---
 title: "Import an Existing Git Repository onto GitHub"
 date: "2021-04-09"
-lastModified: "2026-02-24"
 description: "A guide to import Git repositories stored on school servers onto GitHub, with tips for fixing common issues."
 tags: ["tutorial", "git", "github", "ece297"]
 ---

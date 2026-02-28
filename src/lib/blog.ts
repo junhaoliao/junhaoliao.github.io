@@ -32,25 +32,22 @@ const LOCALE_SUFFIXES: Record<string, string> = {
   "zh-HK": ".zh-HK",
 };
 
-/** Returns the file path to try for a given slug + locale, in order. */
-function candidatePaths(slug: string, locale?: string): Array<{ file: string; locale: string }> {
-  const dir = path.join(BLOG_DIR, slug);
-  const candidates: Array<{ file: string; locale: string }> = [];
-
-  if (locale && LOCALE_SUFFIXES[locale]) {
-    candidates.push({
-      file: path.join(dir, `index${LOCALE_SUFFIXES[locale]}.md`),
-      locale,
-    });
-  }
-
-  candidates.push({ file: path.join(dir, "index.md"), locale: "default" });
-
-  return candidates;
+/** Parse frontmatter only (no markdown rendering). */
+function parseFrontmatter(filePath: string) {
+  const raw = fs.readFileSync(filePath, "utf8");
+  const { data } = matter(raw);
+  return {
+    title: (data.title as string) ?? "Untitled",
+    date: (data.date as string) ?? "",
+    lastModified: data.lastModified as string | undefined,
+    description: (data.description as string) ?? "",
+    tags: (data.tags as string[]) ?? [],
+    lang: data.lang as string | undefined,
+  };
 }
 
 /** Parse and render a single markdown file. */
-async function parseFile(filePath: string): Promise<{ meta: Omit<PostMeta, "slug" | "locale">; contentHtml: string }> {
+async function parseFile(filePath: string): Promise<{ meta: Omit<PostMeta, "slug" | "locale"> & { lang?: string }; contentHtml: string }> {
   const raw = fs.readFileSync(filePath, "utf8");
   const { data, content } = matter(raw);
 
@@ -69,6 +66,7 @@ async function parseFile(filePath: string): Promise<{ meta: Omit<PostMeta, "slug
       lastModified: data.lastModified,
       description: data.description ?? "",
       tags: data.tags ?? [],
+      lang: data.lang,
     },
     contentHtml: processed.toString(),
   };
@@ -84,56 +82,105 @@ export function getAllSlugs(): string[] {
     .map((entry) => entry.name);
 }
 
-/** Get all posts' metadata sorted by date descending. */
+/** Get all posts' metadata sorted by date descending. Prefers the given locale, falls back to any available. */
 export async function getAllPosts(locale?: string): Promise<PostMeta[]> {
   const slugs = getAllSlugs();
-  const posts: PostMeta[] = [];
+  const key = locale ?? "en";
 
-  for (const slug of slugs) {
-    const candidates = candidatePaths(slug, locale);
-    for (const { file, locale: resolvedLocale } of candidates) {
+  const posts = await Promise.all(
+    slugs.map(async (slug) => {
+      const meta = getPostMeta(slug, key) ?? getPostMeta(slug);
+      if (!meta) return null;
+      return meta;
+    }),
+  );
+
+  return posts
+    .filter((p): p is PostMeta => p !== null)
+    .sort((a, b) => (a.date < b.date ? 1 : -1));
+}
+
+/**
+ * Get metadata for a single post in a specific locale, using frontmatter only (no markdown rendering).
+ * If locale is omitted, returns the original language (index.md).
+ */
+function getPostMeta(slug: string, locale?: string): PostMeta | null {
+  const dir = path.join(BLOG_DIR, slug);
+
+  if (locale) {
+    // Try the suffixed file first
+    const suffix = LOCALE_SUFFIXES[locale];
+    if (suffix) {
+      const file = path.join(dir, `index${suffix}.md`);
       if (fs.existsSync(file)) {
-        const { meta } = await parseFile(file);
-        posts.push({ slug, locale: resolvedLocale, ...meta });
-        break;
+        const { lang: _, ...meta } = parseFrontmatter(file);
+        return { slug, locale, ...meta };
       }
     }
-  }
 
-  return posts.sort((a, b) => (a.date < b.date ? 1 : -1));
-}
-
-/** Get a single post by slug, with locale fallback. */
-export async function getPostBySlug(slug: string, locale?: string): Promise<Post | null> {
-  const candidates = candidatePaths(slug, locale);
-  for (const { file, locale: resolvedLocale } of candidates) {
-    if (fs.existsSync(file)) {
-      const { meta, contentHtml } = await parseFile(file);
-      return { slug, locale: resolvedLocale, contentHtml, ...meta };
+    // Check if index.md's lang matches the requested locale
+    const defaultFile = path.join(dir, "index.md");
+    if (fs.existsSync(defaultFile)) {
+      const fm = parseFrontmatter(defaultFile);
+      const originalLang = fm.lang ?? "en";
+      if (originalLang === locale) {
+        const { lang: _, ...meta } = fm;
+        return { slug, locale: originalLang, ...meta };
+      }
     }
+
+    return null;
   }
+
+  // No locale specified — return index.md in its original language
+  const defaultFile = path.join(dir, "index.md");
+  if (fs.existsSync(defaultFile)) {
+    const fm = parseFrontmatter(defaultFile);
+    const originalLang = fm.lang ?? "en";
+    const { lang: _, ...meta } = fm;
+    return { slug, locale: originalLang, ...meta };
+  }
+
   return null;
 }
+
+// Build-time cache for getAllLocaleVariants (keyed by slug).
+const variantsCache = new Map<string, Promise<Record<string, Post>>>();
 
 /**
  * Get all available locale variants for a slug.
  * Used at build time to embed all translations in the static page.
+ * Results are cached per slug for the lifetime of the build process.
  */
-export async function getAllLocaleVariants(slug: string): Promise<Record<string, Post>> {
+export function getAllLocaleVariants(slug: string): Promise<Record<string, Post>> {
+  let cached = variantsCache.get(slug);
+  if (!cached) {
+    cached = getAllLocaleVariantsUncached(slug);
+    variantsCache.set(slug, cached);
+  }
+  return cached;
+}
+
+async function getAllLocaleVariantsUncached(slug: string): Promise<Record<string, Post>> {
   const dir = path.join(BLOG_DIR, slug);
   const variants: Record<string, Post> = {};
 
+  // index.md is the original language. Its `lang` frontmatter field declares
+  // which language it is (defaults to "en" if absent).
   const defaultFile = path.join(dir, "index.md");
   if (fs.existsSync(defaultFile)) {
     const { meta, contentHtml } = await parseFile(defaultFile);
-    variants["default"] = { slug, locale: "default", contentHtml, ...meta };
+    const originalLang = meta.lang ?? "en";
+    const { lang: _, ...rest } = meta;
+    variants[originalLang] = { slug, locale: originalLang, contentHtml, ...rest };
   }
 
   for (const [locale, suffix] of Object.entries(LOCALE_SUFFIXES)) {
     const file = path.join(dir, `index${suffix}.md`);
     if (fs.existsSync(file)) {
       const { meta, contentHtml } = await parseFile(file);
-      variants[locale] = { slug, locale, contentHtml, ...meta };
+      const { lang: _, ...rest } = meta;
+      variants[locale] = { slug, locale, contentHtml, ...rest };
     }
   }
 
@@ -159,8 +206,8 @@ export async function getLocalizedPostIndex(limit?: number): Promise<Record<stri
   );
 
   index.sort((a, b) => {
-    const dateA = (a["default"] ?? Object.values(a)[0]).date;
-    const dateB = (b["default"] ?? Object.values(b)[0]).date;
+    const dateA = Object.values(a)[0].date;
+    const dateB = Object.values(b)[0].date;
     return dateA < dateB ? 1 : -1;
   });
 

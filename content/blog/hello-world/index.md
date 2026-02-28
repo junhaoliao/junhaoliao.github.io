@@ -1,8 +1,8 @@
 ---
-title: "Hello World 2026"
-date: "2026-02-22"
-description: "Welcome to my new site."
+title: "Hello World"
+date: "2019-05-31"
+description: "My first blog post."
 tags: ["meta", "intro"]
 ---
 
-Welcome to my new personal website! This is the first post on the newly rebuilt site.
+Hi, this is my first blog here. I will be posting project updates, helpful tips, and life moments on this site.
