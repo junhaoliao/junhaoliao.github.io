@@ -9,12 +9,7 @@ interface Props {
   params: Promise<{ locale: string }>;
 }
 
-export function generateStaticParams() {
-  return URL_LOCALES.map((locale) => ({ locale }));
-}
-
-export async function generateMetadata({ params }: Props): Promise<Metadata> {
-  const { locale } = await params;
+export function generateMetadata(): Metadata {
   const languages: Record<string, string> = {};
   for (const loc of URL_LOCALES) {
     languages[URL_TO_I18N[loc]] = `/${loc}/blog/`;

@@ -12,20 +12,24 @@ interface Props {
   params: Promise<{ locale: string; slug: string }>;
 }
 
-export async function generateStaticParams() {
+export async function generateStaticParams({
+  params,
+}: {
+  params: { locale: string };
+}) {
+  const { locale } = params;
+  const i18nCode = URL_TO_I18N[locale as UrlLocale] ?? "en";
   const slugs = getAllSlugs();
-  const params: { locale: string; slug: string }[] = [];
+  const result: { slug: string }[] = [];
 
   for (const slug of slugs) {
     const variants = await getAllLocaleVariants(slug);
-    for (const urlLocale of URL_LOCALES) {
-      if (variants[URL_TO_I18N[urlLocale]]) {
-        params.push({ locale: urlLocale, slug });
-      }
+    if (variants[i18nCode]) {
+      result.push({ slug });
     }
   }
 
-  return params;
+  return result;
 }
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
@@ -46,7 +50,13 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     title: `${post.title} — Junhao Liao`,
     description: post.description,
     alternates: {
+      canonical: `/${locale}/blog/${slug}/`,
       languages,
+    },
+    openGraph: {
+      type: "article",
+      title: post.title,
+      description: post.description,
     },
   };
 }

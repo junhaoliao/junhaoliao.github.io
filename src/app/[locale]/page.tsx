@@ -1,5 +1,5 @@
 import { getLocalizedPostIndex } from "@/lib/blog";
-import { URL_LOCALES, URL_TO_I18N, type UrlLocale } from "@/lib/locales";
+import { URL_LOCALES, URL_TO_I18N } from "@/lib/locales";
 import Navbar from "@/components/Navbar";
 import HeroSection from "@/components/HeroSection";
 import SkillsSection from "@/components/SkillsSection";
@@ -10,16 +10,7 @@ import ContactSection from "@/components/ContactSection";
 import Footer from "@/components/Footer";
 import type { Metadata } from "next";
 
-export function generateStaticParams() {
-  return URL_LOCALES.map((locale) => ({ locale }));
-}
-
-export async function generateMetadata({
-  params,
-}: {
-  params: Promise<{ locale: string }>;
-}): Promise<Metadata> {
-  const { locale } = await params;
+export function generateMetadata(): Metadata {
   const languages: Record<string, string> = {};
   for (const loc of URL_LOCALES) {
     languages[URL_TO_I18N[loc]] = `/${loc}/`;

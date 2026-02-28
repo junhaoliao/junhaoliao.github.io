@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://junhaoliao.github.io/sitemap.xml
