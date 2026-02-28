@@ -1,36 +1,23 @@
 "use client";
 
+import Link from "next/link";
 import { useTranslation } from "react-i18next";
 import { Badge } from "@/components/ui/badge";
 import { CalendarDays, Languages } from "lucide-react";
+import { LOCALE_LABELS, type UrlLocale } from "@/lib/locales";
 import type { Post } from "@/lib/blog";
 
-const LOCALE_LABELS: Record<string, string> = {
-  default: "English",
-  en: "English",
-  fr: "Français",
-  "zh-CN": "简体中文",
-  "zh-HK": "繁體中文",
-};
-
 interface Props {
-  variants: Record<string, Post>;
+  post: Post;
+  urlLocale: string;
+  slug: string;
+  availableUrlLocales: string[];
 }
 
-export default function BlogPostClient({ variants }: Props) {
-  const { i18n, t } = useTranslation();
+export default function BlogPostClient({ post, urlLocale, slug, availableUrlLocales }: Props) {
+  const { t } = useTranslation();
 
-  // Try current language, then "default"
-  const post =
-    variants[i18n.language] ??
-    variants["default"] ??
-    Object.values(variants)[0];
-
-  if (!post) return null;
-
-  const availableLocales = Object.keys(variants).filter(
-    (locale) => locale !== post.locale,
-  );
+  const otherLocales = availableUrlLocales.filter((l) => l !== urlLocale);
 
   return (
     <article>
@@ -50,20 +37,20 @@ export default function BlogPostClient({ variants }: Props) {
           )}
         </div>
 
-        {availableLocales.length > 0 && (
+        {otherLocales.length > 0 && (
           <div className="flex flex-wrap items-center gap-2 text-sm text-muted-foreground mb-4">
             <span className="flex items-center gap-1.5">
               <Languages className="h-4 w-4" />
               {t("blog.translations")}:
             </span>
-            {availableLocales.map((locale) => (
-              <button
-                key={locale}
-                onClick={() => i18n.changeLanguage(locale === "default" ? "en" : locale)}
+            {otherLocales.map((otherUrlLocale) => (
+              <Link
+                key={otherUrlLocale}
+                href={`/${otherUrlLocale}/blog/${slug}/`}
                 className="underline underline-offset-2 hover:opacity-80 transition-opacity"
               >
-                {LOCALE_LABELS[locale] ?? locale}
-              </button>
+                {LOCALE_LABELS[otherUrlLocale as UrlLocale] ?? otherUrlLocale}
+              </Link>
             ))}
           </div>
         )}

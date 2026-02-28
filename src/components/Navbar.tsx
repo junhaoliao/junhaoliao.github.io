@@ -6,6 +6,7 @@ import { usePathname } from "next/navigation";
 import { useTranslation } from "react-i18next";
 import { ScrollTrigger, useGSAP } from "@/lib/gsap";
 import { smoothScrollTo } from "@/lib/utils";
+import { parseLocalePath } from "@/lib/locales";
 import { Menu, ExternalLink } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
@@ -18,7 +19,8 @@ const NAV_SECTIONS = ["experience", "skills", "projects", "blog", "contact"] as 
 export default function Navbar() {
   const { t } = useTranslation();
   const pathname = usePathname();
-  const isHome = pathname === "/";
+  const { urlLocale, isHome } = parseLocalePath(pathname);
+
   const navRef = useRef<HTMLElement>(null);
   const [scrollPastHero, setScrollPastHero] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
@@ -50,7 +52,7 @@ export default function Navbar() {
     if (isHome) {
       setTimeout(() => smoothScrollTo(id), 50);
     } else {
-      window.location.assign(`/#${id}`);
+      window.location.assign(`/${urlLocale}/#${id}`);
     }
   };
 
@@ -65,7 +67,7 @@ export default function Navbar() {
     >
       <nav className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
         <Link
-          href="/"
+          href={`/${urlLocale}/`}
           onClick={(e) => {
             if (isHome) {
               e.preventDefault();

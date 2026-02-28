@@ -4,6 +4,7 @@ import { useRef } from "react";
 import Link from "next/link";
 import { useTranslation } from "react-i18next";
 import { gsap, useGSAP } from "@/lib/gsap";
+import { I18N_TO_URL } from "@/lib/locales";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -17,6 +18,7 @@ interface BlogSectionProps {
 export default function BlogSection({ posts: localizedPosts }: BlogSectionProps) {
   const { t, i18n } = useTranslation();
   const container = useRef<HTMLElement>(null);
+  const urlLocale = I18N_TO_URL[i18n.language] ?? "en";
 
   const posts = localizedPosts.map((variants) =>
     variants[i18n.language] ?? variants["default"] ?? Object.values(variants)[0],
@@ -59,7 +61,7 @@ export default function BlogSection({ posts: localizedPosts }: BlogSectionProps)
           <>
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 mb-10">
               {posts.map((post, i) => (
-                <Link key={post.slug} href={`/blog/${post.slug}/`} className={`block ${i === 0 ? "lg:col-span-2" : ""}`}>
+                <Link key={post.slug} href={`/${urlLocale}/blog/${post.slug}/`} className={`block ${i === 0 ? "lg:col-span-2" : ""}`}>
                   <Card className="blog-card opacity-0 h-full hover:shadow-lg transition-shadow duration-300 group">
                     <CardHeader>
                       <div className="flex items-center gap-2 text-xs text-muted-foreground mb-2">
@@ -90,7 +92,7 @@ export default function BlogSection({ posts: localizedPosts }: BlogSectionProps)
             </div>
 
             <div className="text-center">
-              <Button variant="outline" nativeButton={false} render={<Link href="/blog/" />} className="inline-flex items-center gap-2">
+              <Button variant="outline" nativeButton={false} render={<Link href={`/${urlLocale}/blog/`} />} className="inline-flex items-center gap-2">
                 {t("blog.all_posts")}
                 <ArrowRight className="h-4 w-4" />
               </Button>

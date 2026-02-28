@@ -1,7 +1,7 @@
 "use client";
 
 import { useRef, useState } from "react";
-import { useTranslation } from "react-i18next";
+import { usePathname, useRouter } from "next/navigation";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -9,17 +9,32 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { Button } from "@/components/ui/button";
+import { URL_LOCALES, LOCALE_LABELS, LOCALE_RE, parseLocalePath, type UrlLocale } from "@/lib/locales";
 
-const LANGUAGES = [
-  { code: "en", short: "EN", label: "English" },
-  { code: "fr", short: "FR", label: "Français" },
-  { code: "zh-CN", short: "CN 简", label: "简体中文" },
-  { code: "zh-HK", short: "CN 繁", label: "繁體中文" },
-] as const;
+const SHORT_LABELS: Record<UrlLocale, string> = {
+  en: "EN",
+  fr: "FR",
+  zh: "\u7b80",
+  "zh-Hant": "\u7e41",
+};
+
+const HOME_SECTIONS = ["contact", "blog", "projects", "skills", "experience", "hero"] as const;
+
+function getCurrentSection(): string | null {
+  for (const id of HOME_SECTIONS) {
+    const el = document.getElementById(id);
+    if (el && el.getBoundingClientRect().top < window.innerHeight / 2) {
+      return id === "hero" ? null : id;
+    }
+  }
+  return null;
+}
 
 export default function LanguageSwitcher() {
-  const { i18n } = useTranslation();
-  const current = LANGUAGES.find((l) => l.code === i18n.language) ?? LANGUAGES[0];
+  const pathname = usePathname();
+  const router = useRouter();
+  const { urlLocale: currentUrlLocale, isHome } = parseLocalePath(pathname);
+
   const [open, setOpen] = useState(false);
   const closeTimer = useRef<ReturnType<typeof setTimeout>>(null);
 
@@ -32,6 +47,16 @@ export default function LanguageSwitcher() {
     closeTimer.current = setTimeout(() => setOpen(false), 150);
   };
 
+  const switchLocale = (target: UrlLocale) => {
+    let newPath = pathname.replace(LOCALE_RE, `/${target}$2`);
+    if (isHome) {
+      const section = getCurrentSection();
+      if (section) newPath += `#${section}`;
+    }
+    router.push(newPath);
+    setOpen(false);
+  };
+
   return (
     <DropdownMenu open={open} onOpenChange={setOpen}>
       <DropdownMenuTrigger
@@ -42,24 +67,24 @@ export default function LanguageSwitcher() {
             variant="ghost"
             size="sm"
             className="gap-1 px-2"
-            aria-label={`${current.short} — Change language`}
+            aria-label={`${SHORT_LABELS[currentUrlLocale]} — Change language`}
           />
         }
       >
-        <span className="text-sm font-medium">{current.short}</span>
+        <span className="text-sm font-medium">{SHORT_LABELS[currentUrlLocale]}</span>
       </DropdownMenuTrigger>
       <DropdownMenuContent
         align="end"
         onMouseEnter={handleMouseEnter}
         onMouseLeave={handleMouseLeave}
       >
-        {LANGUAGES.map((lang) => (
+        {URL_LOCALES.map((loc) => (
           <DropdownMenuItem
-            key={lang.code}
-            onClick={() => i18n.changeLanguage(lang.code)}
-            className={i18n.language === lang.code ? "font-semibold bg-accent" : ""}
+            key={loc}
+            onClick={() => switchLocale(loc)}
+            className={currentUrlLocale === loc ? "font-semibold bg-accent" : ""}
           >
-            {lang.label}
+            {LOCALE_LABELS[loc]}
           </DropdownMenuItem>
         ))}
       </DropdownMenuContent>
