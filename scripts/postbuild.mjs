@@ -11,7 +11,7 @@ import matter from "gray-matter";
 
 const BLOG_DIR = path.join(process.cwd(), "content", "blog");
 const OUT_DIR = path.join(process.cwd(), "out");
-const BASE_URL = "https://junhaoliao.github.io";
+const BASE_URL = "https://junhao.ca";
 
 // Keep in sync with src/lib/locales.ts
 const URL_LOCALES = ["en", "fr", "zh", "zh-Hant"];

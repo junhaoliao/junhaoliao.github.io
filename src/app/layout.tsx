@@ -16,7 +16,7 @@ export const metadata: Metadata = {
   description: "Junhao Liao — Software Developer at YScope Inc. Based in Toronto, Canada.",
   // metadataBase is required for resolving relative OG image URLs
   // Using a relative URL works at deploy time; this avoids hardcoding a domain.
-  metadataBase: new URL("https://junhaoliao.github.io"),
+  metadataBase: new URL("https://junhao.ca"),
   openGraph: {
     type: "website",
     title: "Junhao Liao - Junhao's Personal Website",
