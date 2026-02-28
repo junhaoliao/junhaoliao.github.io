@@ -36,7 +36,7 @@ export async function generateMetadata({
 }
 
 export default async function LocaleHome() {
-  const posts = await getLocalizedPostIndex(3);
+  const posts = await getLocalizedPostIndex(5);
 
   return (
     <main>
