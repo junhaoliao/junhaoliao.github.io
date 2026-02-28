@@ -6,7 +6,9 @@ const nextConfig: NextConfig = {
   images: {
     unoptimized: true,
   },
-  // Disable Next.js telemetry at project level too
+  experimental: {
+    inlineCss: true,
+  },
   env: {
     NEXT_TELEMETRY_DISABLED: "1",
   },
