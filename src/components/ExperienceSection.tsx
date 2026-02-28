@@ -12,6 +12,7 @@ type TimelineItem =
       i18nKey: string;
       dates: string;
       logo: string;
+      logoAlt: string;
       logoClassName?: string;
       highlightKey?: string;
       url: string;
@@ -30,19 +31,19 @@ const LOGO_CREST = "w-7 h-7 sm:w-9 sm:h-9 object-contain";
 const LOGO_WIDE = "w-8 h-4 sm:w-9 sm:h-5 object-contain";
 
 const TIMELINE_ITEMS: TimelineItem[] = [
-  { type: "experience", i18nKey: "hero.roles.yscope_mgr", dates: "Jan 2026 – Present", logo: "/images/yscope-logo.webp", url: "https://yscope.com/" },
-  { type: "experience", i18nKey: "hero.previous_roles.uber", dates: "May 2024 – Jun 2025", logo: "/images/uber-logo.webp", highlightKey: "uber", url: "https://www.uber.com/" },
-  { type: "experience", i18nKey: "hero.roles.yscope_dev", dates: "Jan 2024 – Present", logo: "/images/yscope-logo.webp", highlightKey: "yscope_dev", url: "https://yscope.com/" },
-  { type: "experience", i18nKey: "hero.previous_roles.qualcomm_ft", dates: "Sep 2022 – Dec 2023", logo: "/images/qualcomm-logo.svg", logoClassName: LOGO_WIDE, highlightKey: "qualcomm_ft", url: "https://www.qualcomm.com/" },
+  { type: "experience", i18nKey: "hero.roles.yscope_mgr", dates: "Jan 2026 – Present", logo: "/images/yscope-logo.webp", logoAlt: "YScope", url: "https://yscope.com/" },
+  { type: "experience", i18nKey: "hero.previous_roles.uber", dates: "May 2024 – Jun 2025", logo: "/images/uber-logo.webp", logoAlt: "Uber", highlightKey: "uber", url: "https://www.uber.com/" },
+  { type: "experience", i18nKey: "hero.roles.yscope_dev", dates: "Jan 2024 – Present", logo: "/images/yscope-logo.webp", logoAlt: "YScope", highlightKey: "yscope_dev", url: "https://yscope.com/" },
+  { type: "experience", i18nKey: "hero.previous_roles.qualcomm_ft", dates: "Sep 2022 – Dec 2023", logo: "/images/qualcomm-logo.svg", logoAlt: "Qualcomm", logoClassName: LOGO_WIDE, highlightKey: "qualcomm_ft", url: "https://www.qualcomm.com/" },
   {
     type: "education",
     educationKey: "uoft",
     logo: "/images/uoft-crest.svg",
     url: "https://www.utoronto.ca/",
   },
-  { type: "experience", i18nKey: "hero.previous_roles.ta_2022", dates: "Jan 2022 – May 2022", logo: "/images/uoft-crest.svg", logoClassName: LOGO_CREST, highlightKey: "ta_2022", url: "https://www.utoronto.ca/" },
-  { type: "experience", i18nKey: "hero.previous_roles.qualcomm_intern", dates: "May 2020 – May 2021", logo: "/images/qualcomm-logo.svg", logoClassName: LOGO_WIDE, highlightKey: "qualcomm_intern", url: "https://www.qualcomm.com/" },
-  { type: "experience", i18nKey: "hero.previous_roles.ta_2021", dates: "Jan 2021 – May 2021", logo: "/images/uoft-crest.svg", logoClassName: LOGO_CREST, highlightKey: "ta_2021", url: "https://www.utoronto.ca/" },
+  { type: "experience", i18nKey: "hero.previous_roles.ta_2022", dates: "Jan 2022 – May 2022", logo: "/images/uoft-crest.svg", logoAlt: "University of Toronto", logoClassName: LOGO_CREST, highlightKey: "ta_2022", url: "https://www.utoronto.ca/" },
+  { type: "experience", i18nKey: "hero.previous_roles.qualcomm_intern", dates: "May 2020 – May 2021", logo: "/images/qualcomm-logo.svg", logoAlt: "Qualcomm", logoClassName: LOGO_WIDE, highlightKey: "qualcomm_intern", url: "https://www.qualcomm.com/" },
+  { type: "experience", i18nKey: "hero.previous_roles.ta_2021", dates: "Jan 2021 – May 2021", logo: "/images/uoft-crest.svg", logoAlt: "University of Toronto", logoClassName: LOGO_CREST, highlightKey: "ta_2021", url: "https://www.utoronto.ca/" },
   {
     type: "education",
     educationKey: "bodwell",
@@ -144,11 +145,12 @@ export default function ExperienceSection() {
                       href={item.url}
                       target="_blank"
                       rel="noopener noreferrer"
+                      aria-label={item.logoAlt}
                       className="absolute left-0 sm:left-1 top-0 w-9 h-9 sm:w-11 sm:h-11 rounded-full bg-white flex items-center justify-center shadow-md ring-2 ring-border overflow-hidden"
                     >
                       <Image
                         src={item.logo}
-                        alt=""
+                        alt={item.logoAlt}
                         width={28}
                         height={28}
                         className={item.logoClassName ?? LOGO_FILL}
@@ -190,6 +192,7 @@ export default function ExperienceSection() {
                     href={url}
                     target="_blank"
                     rel="noopener noreferrer"
+                    aria-label={t(`education.items.${key}.name`)}
                     className="absolute left-0 sm:left-1 top-0 w-9 h-9 sm:w-11 sm:h-11 rounded-full bg-white flex items-center justify-center shadow-md ring-2 ring-border overflow-hidden"
                   >
                     <Image
