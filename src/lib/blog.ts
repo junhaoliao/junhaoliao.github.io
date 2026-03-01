@@ -7,6 +7,7 @@ import remarkRehype from "remark-rehype";
 import rehypeHighlight from "rehype-highlight";
 import rehypeSlug from "rehype-slug";
 import rehypeStringify from "rehype-stringify";
+import { LOCALE_SUFFIXES } from "@/lib/locales";
 
 const BLOG_DIR = path.join(process.cwd(), "content", "blog");
 
@@ -24,13 +25,6 @@ export interface PostMeta {
 export interface Post extends PostMeta {
   contentHtml: string;
 }
-
-const LOCALE_SUFFIXES: Record<string, string> = {
-  "en": ".en",
-  "fr": ".fr",
-  "zh-CN": ".zh-CN",
-  "zh-HK": ".zh-HK",
-};
 
 /** Parse frontmatter only (no markdown rendering). */
 function parseFrontmatter(filePath: string) {

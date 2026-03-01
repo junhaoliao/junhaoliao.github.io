@@ -2,6 +2,7 @@
 
 import i18n from "i18next";
 import { initReactI18next } from "react-i18next";
+import { URL_TO_I18N } from "@/lib/locales";
 
 // Import translations at build time — no HTTP backend, no network requests
 import en from "../../public/locales/en/translation.json";
@@ -9,7 +10,7 @@ import fr from "../../public/locales/fr/translation.json";
 import zhCN from "../../public/locales/zh-CN/translation.json";
 import zhHK from "../../public/locales/zh-HK/translation.json";
 
-export const SUPPORTED_LANGS = ["en", "fr", "zh-CN", "zh-HK"] as const;
+export const SUPPORTED_LANGS = Object.values(URL_TO_I18N);
 
 const resources = {
   en: { translation: en },

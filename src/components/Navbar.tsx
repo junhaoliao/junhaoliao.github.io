@@ -5,15 +5,13 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useTranslation } from "react-i18next";
 import { smoothScrollTo } from "@/lib/utils";
-import { parseLocalePath } from "@/lib/locales";
+import { parseLocalePath, NAV_SECTIONS } from "@/lib/locales";
 import { Menu, ExternalLink } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import { Separator } from "@/components/ui/separator";
 import ThemeToggle from "@/components/ThemeToggle";
 import LanguageSwitcher from "@/components/LanguageSwitcher";
-
-const NAV_SECTIONS = ["experience", "skills", "projects", "blog", "contact"] as const;
 
 export default function Navbar() {
   const { t } = useTranslation();

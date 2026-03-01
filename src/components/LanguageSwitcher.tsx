@@ -9,7 +9,7 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { Button } from "@/components/ui/button";
-import { URL_LOCALES, LOCALE_LABELS, LOCALE_RE, parseLocalePath, type UrlLocale } from "@/lib/locales";
+import { URL_LOCALES, LOCALE_LABELS, LOCALE_RE, NAV_SECTIONS, parseLocalePath, type UrlLocale } from "@/lib/locales";
 
 const SHORT_LABELS: Record<UrlLocale, string> = {
   en: "EN",
@@ -18,7 +18,8 @@ const SHORT_LABELS: Record<UrlLocale, string> = {
   "zh-Hant": "\u7e41",
 };
 
-const HOME_SECTIONS = ["contact", "blog", "projects", "skills", "experience", "hero"] as const;
+/** NAV_SECTIONS reversed (bottom-up) + "hero" for viewport detection. */
+const HOME_SECTIONS = [...[...NAV_SECTIONS].reverse(), "hero"] as const;
 
 function getCurrentSection(): string | null {
   for (const id of HOME_SECTIONS) {

@@ -27,6 +27,17 @@ export const LOCALE_LABELS: Record<UrlLocale, string> = {
   "zh-Hant": "\u7e41\u9ad4\u4e2d\u6587",
 };
 
+/** Map i18n code to the file-name suffix used in content/blog. */
+export const LOCALE_SUFFIXES: Record<string, string> = {
+  en: ".en",
+  fr: ".fr",
+  "zh-CN": ".zh-CN",
+  "zh-HK": ".zh-HK",
+};
+
+/** Section IDs on the home page (in display order). */
+export const NAV_SECTIONS = ["experience", "skills", "projects", "blog", "contact"] as const;
+
 export const STORAGE_KEY = "junhao-lang";
 
 /** Regex to extract the locale prefix from a pathname. Longer slugs first. */

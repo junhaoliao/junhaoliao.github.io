@@ -8,17 +8,18 @@
 import fs from "fs";
 import path from "path";
 import matter from "gray-matter";
+import {
+  URL_LOCALES,
+  URL_TO_I18N,
+  LOCALE_SUFFIXES,
+  type UrlLocale,
+} from "../src/lib/locales.ts";
 
 const BLOG_DIR = path.join(process.cwd(), "content", "blog");
 const OUT_DIR = path.join(process.cwd(), "out");
 const BASE_URL = "https://junhao.ca";
 
-// Keep in sync with src/lib/locales.ts
-const URL_LOCALES = ["en", "fr", "zh", "zh-Hant"];
-const URL_TO_I18N = { en: "en", fr: "fr", zh: "zh-CN", "zh-Hant": "zh-HK" };
-const LOCALE_SUFFIXES = { en: ".en", fr: ".fr", "zh-CN": ".zh-CN", "zh-HK": ".zh-HK" };
-
-function redirectHtml(targetPath) {
+function redirectHtml(targetPath: string): string {
   const absUrl = `${BASE_URL}${targetPath}`;
   return `<!DOCTYPE html>
 <html>
@@ -41,7 +42,7 @@ function redirectHtml(targetPath) {
  * /{YYYY}/{MM}/{DD}/{slug}/ -> /en/blog/{slug}/
  * /zh/{YYYY}/{MM}/{DD}/{slug}/ -> /zh/blog/{slug}/
  */
-function generateRedirects(slugs) {
+function generateRedirects(slugs: string[]): void {
   let count = 0;
 
   for (const slug of slugs) {
@@ -77,8 +78,8 @@ function generateRedirects(slugs) {
 }
 
 /** Generate sitemap.xml listing all locale-prefixed pages. */
-function generateSitemap(slugs) {
-  const urls = [];
+function generateSitemap(slugs: string[]): void {
+  const urls: string[] = [];
 
   for (const locale of URL_LOCALES) {
     urls.push(`${BASE_URL}/${locale}/`);
@@ -91,11 +92,11 @@ function generateSitemap(slugs) {
     let originalLang = "en";
     if (fs.existsSync(indexFile)) {
       const { data } = matter(fs.readFileSync(indexFile, "utf8"));
-      originalLang = data.lang ?? "en";
+      originalLang = (data.lang as string) ?? "en";
     }
 
     for (const locale of URL_LOCALES) {
-      const i18nCode = URL_TO_I18N[locale];
+      const i18nCode = URL_TO_I18N[locale as UrlLocale];
       const suffix = LOCALE_SUFFIXES[i18nCode];
       if (suffix && fs.existsSync(path.join(dir, `index${suffix}.md`))) {
         urls.push(`${BASE_URL}/${locale}/blog/${slug}/`);
@@ -113,7 +114,7 @@ ${urls.map((u) => `  <url><loc>${u}</loc></url>`).join("\n")}
   console.log(`Generated sitemap.xml with ${urls.length} URLs.`);
 }
 
-function main() {
+function main(): void {
   if (!fs.existsSync(OUT_DIR)) {
     console.error("Error: out/ directory not found. Run `next build` first.");
     process.exit(1);
