@@ -15,7 +15,7 @@ interface BlogSectionProps {
   posts: Record<string, PostMeta>[];
 }
 
-export default function BlogSection({ posts: localizedPosts }: BlogSectionProps) {
+const BlogSection = ({ posts: localizedPosts }: BlogSectionProps) => {
   const { t, i18n } = useTranslation();
   const container = useRef<HTMLElement>(null);
   const urlLocale = I18N_TO_URL[i18n.language] ?? "en";
@@ -105,4 +105,6 @@ export default function BlogSection({ posts: localizedPosts }: BlogSectionProps)
       </div>
     </section>
   );
-}
+};
+
+export default BlogSection;

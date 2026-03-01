@@ -21,7 +21,7 @@ const SHORT_LABELS: Record<UrlLocale, string> = {
 /** NAV_SECTIONS reversed (bottom-up) + "hero" for viewport detection. */
 const HOME_SECTIONS = [...[...NAV_SECTIONS].reverse(), "hero"] as const;
 
-function getCurrentSection(): string | null {
+const getCurrentSection = (): string | null => {
   for (const id of HOME_SECTIONS) {
     const el = document.getElementById(id);
     if (el && el.getBoundingClientRect().top < window.innerHeight / 2) {
@@ -29,9 +29,9 @@ function getCurrentSection(): string | null {
     }
   }
   return null;
-}
+};
 
-export default function LanguageSwitcher() {
+const LanguageSwitcher = () => {
   const pathname = usePathname();
   const router = useRouter();
   const { urlLocale: currentUrlLocale, isHome } = parseLocalePath(pathname);
@@ -91,4 +91,6 @@ export default function LanguageSwitcher() {
       </DropdownMenuContent>
     </DropdownMenu>
   );
-}
+};
+
+export default LanguageSwitcher;

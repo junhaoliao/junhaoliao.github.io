@@ -63,7 +63,7 @@ const PUBLICATION = {
   url: "https://peer.asee.org/40631",
 };
 
-export default function ExperienceSection() {
+const ExperienceSection = () => {
   const { t } = useTranslation();
   const container = useRef<HTMLElement>(null);
   const lineRef = useRef<HTMLDivElement>(null);
@@ -262,4 +262,6 @@ export default function ExperienceSection() {
       </div>
     </section>
   );
-}
+};
+
+export default ExperienceSection;

@@ -38,11 +38,11 @@ export const metadata: Metadata = {
   },
 };
 
-export default function RootLayout({
+const RootLayout = ({
   children,
 }: Readonly<{
   children: React.ReactNode;
-}>) {
+}>) => {
   return (
     <html lang="en" suppressHydrationWarning className={inter.variable}>
       <head />
@@ -68,4 +68,6 @@ gtag('config', 'G-2LPTE0G465');`}
       </body>
     </html>
   );
-}
+};
+
+export default RootLayout;

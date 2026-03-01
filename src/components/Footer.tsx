@@ -2,7 +2,7 @@
 
 import { useTranslation } from "react-i18next";
 
-export default function Footer() {
+const Footer = () => {
   const { t } = useTranslation();
   const year = new Date().getFullYear();
 
@@ -15,4 +15,6 @@ export default function Footer() {
       </div>
     </footer>
   );
-}
+};
+
+export default Footer;

@@ -2,7 +2,7 @@ import { notFound } from "next/navigation";
 import Link from "next/link";
 import { ArrowLeft } from "lucide-react";
 import { getAllSlugs, getAllLocaleVariants } from "@/lib/blog";
-import { URL_LOCALES, URL_TO_I18N, type UrlLocale } from "@/lib/locales";
+import { DEFAULT_LOCALE, URL_LOCALES, URL_TO_I18N, buildLanguageAlternates, type UrlLocale } from "@/lib/locales";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import BlogPostClient from "./BlogPostClient";
@@ -12,13 +12,13 @@ interface Props {
   params: Promise<{ locale: string; slug: string }>;
 }
 
-export async function generateStaticParams({
+export const generateStaticParams = async ({
   params,
 }: {
   params: { locale: string };
-}) {
+}) => {
   const { locale } = params;
-  const i18nCode = URL_TO_I18N[locale as UrlLocale] ?? "en";
+  const i18nCode = URL_TO_I18N[locale as UrlLocale] ?? DEFAULT_LOCALE;
   const slugs = getAllSlugs();
   const result: { slug: string }[] = [];
 
@@ -30,28 +30,23 @@ export async function generateStaticParams({
   }
 
   return result;
-}
+};
 
-export async function generateMetadata({ params }: Props): Promise<Metadata> {
+export const generateMetadata = async ({ params }: Props): Promise<Metadata> => {
   const { locale, slug } = await params;
-  const i18nCode = URL_TO_I18N[locale as UrlLocale] ?? "en";
+  const i18nCode = URL_TO_I18N[locale as UrlLocale] ?? DEFAULT_LOCALE;
   const variants = await getAllLocaleVariants(slug);
   const post = variants[i18nCode];
   if (!post) return {};
 
-  const languages: Record<string, string> = {};
-  for (const urlLoc of URL_LOCALES) {
-    if (variants[URL_TO_I18N[urlLoc]]) {
-      languages[URL_TO_I18N[urlLoc]] = `/${urlLoc}/blog/${slug}/`;
-    }
-  }
+  const available = new Set(Object.keys(variants));
 
   return {
     title: `${post.title} — Junhao Liao`,
     description: post.description,
     alternates: {
       canonical: `/${locale}/blog/${slug}/`,
-      languages,
+      languages: buildLanguageAlternates((loc) => `/${loc}/blog/${slug}/`, available),
     },
     openGraph: {
       type: "article",
@@ -59,11 +54,11 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       description: post.description,
     },
   };
-}
+};
 
-export default async function LocalizedBlogPostPage({ params }: Props) {
+const LocalizedBlogPostPage = async ({ params }: Props) => {
   const { locale, slug } = await params;
-  const i18nCode = URL_TO_I18N[locale as UrlLocale] ?? "en";
+  const i18nCode = URL_TO_I18N[locale as UrlLocale] ?? DEFAULT_LOCALE;
   const variants = await getAllLocaleVariants(slug);
   const post = variants[i18nCode];
 
@@ -71,12 +66,9 @@ export default async function LocalizedBlogPostPage({ params }: Props) {
     notFound();
   }
 
-  const availableUrlLocales: string[] = [];
-  for (const urlLoc of URL_LOCALES) {
-    if (variants[URL_TO_I18N[urlLoc]]) {
-      availableUrlLocales.push(urlLoc);
-    }
-  }
+  const availableUrlLocales: UrlLocale[] = URL_LOCALES.filter(
+    (loc) => variants[URL_TO_I18N[loc]],
+  );
 
   return (
     <>
@@ -101,4 +93,6 @@ export default async function LocalizedBlogPostPage({ params }: Props) {
       <Footer />
     </>
   );
-}
+};
+
+export default LocalizedBlogPostPage;

@@ -19,7 +19,7 @@ const BLOG_DIR = path.join(process.cwd(), "content", "blog");
 const OUT_DIR = path.join(process.cwd(), "out");
 const BASE_URL = "https://junhao.ca";
 
-function redirectHtml(targetPath: string): string {
+const redirectHtml = (targetPath: string): string => {
   const absUrl = `${BASE_URL}${targetPath}`;
   return `<!DOCTYPE html>
 <html>
@@ -33,7 +33,7 @@ function redirectHtml(targetPath: string): string {
 <p>Redirecting to <a href="${targetPath}">${targetPath}</a>...</p>
 </body>
 </html>`;
-}
+};
 
 /**
  * Generate static HTML redirects from old WordPress date-based URLs
@@ -42,7 +42,7 @@ function redirectHtml(targetPath: string): string {
  * /{YYYY}/{MM}/{DD}/{slug}/ -> /en/blog/{slug}/
  * /zh/{YYYY}/{MM}/{DD}/{slug}/ -> /zh/blog/{slug}/
  */
-function generateRedirects(slugs: string[]): void {
+const generateRedirects = (slugs: string[]): void => {
   let count = 0;
 
   for (const slug of slugs) {
@@ -75,10 +75,10 @@ function generateRedirects(slugs: string[]): void {
   }
 
   console.log(`Generated ${count} redirect files.`);
-}
+};
 
 /** Generate sitemap.xml listing all locale-prefixed pages. */
-function generateSitemap(slugs: string[]): void {
+const generateSitemap = (slugs: string[]): void => {
   const urls: string[] = [];
 
   for (const locale of URL_LOCALES) {
@@ -112,9 +112,9 @@ ${urls.map((u) => `  <url><loc>${u}</loc></url>`).join("\n")}
 </urlset>`;
   fs.writeFileSync(path.join(OUT_DIR, "sitemap.xml"), xml);
   console.log(`Generated sitemap.xml with ${urls.length} URLs.`);
-}
+};
 
-function main(): void {
+const main = (): void => {
   if (!fs.existsSync(OUT_DIR)) {
     console.error("Error: out/ directory not found. Run `next build` first.");
     process.exit(1);
@@ -127,6 +127,6 @@ function main(): void {
 
   generateRedirects(slugs);
   generateSitemap(slugs);
-}
+};
 
 main();

@@ -14,7 +14,7 @@ const FEATURED_SKILLS = [
 
 const CATEGORY_KEYS = ["languages", "infrastructure", "hardware", "spoken"] as const;
 
-export default function SkillsSection() {
+const SkillsSection = () => {
   const { t } = useTranslation();
   const container = useRef<HTMLElement>(null);
 
@@ -120,4 +120,6 @@ export default function SkillsSection() {
       </div>
     </section>
   );
-}
+};
+
+export default SkillsSection;

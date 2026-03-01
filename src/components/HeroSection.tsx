@@ -8,7 +8,7 @@ import { smoothScrollTo } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
 import { ChevronDown } from "lucide-react";
 
-export default function HeroSection() {
+const HeroSection = () => {
   const { t } = useTranslation();
   const container = useRef<HTMLElement>(null);
 
@@ -112,4 +112,6 @@ export default function HeroSection() {
       </div>
     </section>
   );
-}
+};
+
+export default HeroSection;

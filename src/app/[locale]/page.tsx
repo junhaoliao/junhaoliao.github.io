@@ -1,5 +1,5 @@
 import { getLocalizedPostIndex } from "@/lib/blog";
-import { URL_LOCALES, URL_TO_I18N } from "@/lib/locales";
+import { buildLanguageAlternates } from "@/lib/locales";
 import Navbar from "@/components/Navbar";
 import HeroSection from "@/components/HeroSection";
 import SkillsSection from "@/components/SkillsSection";
@@ -10,23 +10,16 @@ import ContactSection from "@/components/ContactSection";
 import Footer from "@/components/Footer";
 import type { Metadata } from "next";
 
-export function generateMetadata(): Metadata {
-  const languages: Record<string, string> = {};
-  for (const loc of URL_LOCALES) {
-    languages[URL_TO_I18N[loc]] = `/${loc}/`;
-  }
+export const generateMetadata = (): Metadata => ({
+  title: "Junhao Liao - Junhao's Personal Website",
+  description:
+    "Junhao Liao \u2014 Software Developer at YScope Inc. Based in Toronto, Canada.",
+  alternates: {
+    languages: buildLanguageAlternates(),
+  },
+});
 
-  return {
-    title: "Junhao Liao - Junhao's Personal Website",
-    description:
-      "Junhao Liao \u2014 Software Developer at YScope Inc. Based in Toronto, Canada.",
-    alternates: {
-      languages,
-    },
-  };
-}
-
-export default async function LocaleHome() {
+const LocaleHome = async () => {
   const posts = await getLocalizedPostIndex(5);
 
   return (
@@ -41,4 +34,6 @@ export default async function LocaleHome() {
       <Footer />
     </main>
   );
-}
+};
+
+export default LocaleHome;

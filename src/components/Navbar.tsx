@@ -13,7 +13,7 @@ import { Separator } from "@/components/ui/separator";
 import ThemeToggle from "@/components/ThemeToggle";
 import LanguageSwitcher from "@/components/LanguageSwitcher";
 
-export default function Navbar() {
+const Navbar = () => {
   const { t } = useTranslation();
   const pathname = usePathname();
   const { urlLocale, isHome } = parseLocalePath(pathname);
@@ -148,4 +148,6 @@ export default function Navbar() {
       </nav>
     </header>
   );
-}
+};
+
+export default Navbar;

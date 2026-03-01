@@ -1,5 +1,7 @@
 /** URL slug <-> i18n code mapping for locale-prefixed routes. */
 
+export const DEFAULT_LOCALE: UrlLocale = "en";
+
 export const URL_LOCALES = ["en", "fr", "zh", "zh-Hant"] as const;
 export type UrlLocale = (typeof URL_LOCALES)[number];
 
@@ -45,12 +47,30 @@ const sorted = [...URL_LOCALES].sort((a, b) => b.length - a.length);
 export const LOCALE_RE = new RegExp(`^\\/(${sorted.join("|")})(\\/|$)`);
 
 /** Parse URL locale and home-page flag from a Next.js pathname. */
-export function parseLocalePath(pathname: string): {
+export const parseLocalePath = (pathname: string): {
   urlLocale: UrlLocale;
   isHome: boolean;
-} {
+} => {
   const match = pathname.match(LOCALE_RE);
-  const urlLocale = (match ? match[1] : "en") as UrlLocale;
+  const urlLocale = (match ? match[1] : DEFAULT_LOCALE) as UrlLocale;
   const isHome = pathname === `/${urlLocale}` || pathname === `/${urlLocale}/`;
   return { urlLocale, isHome };
-}
+};
+
+/**
+ * Build the `alternates.languages` object for Next.js metadata.
+ * @param pathFn – given a URL locale, returns the path (e.g. `loc => \`/${loc}/blog/\``).
+ *                 Defaults to the home page path.
+ * @param filter – optional set of i18n codes to include (for pages that only exist in some locales).
+ */
+export const buildLanguageAlternates = (
+  pathFn: (loc: UrlLocale) => string = (loc) => `/${loc}/`,
+  filter?: Set<string>,
+): Record<string, string> => {
+  const languages: Record<string, string> = {};
+  for (const loc of URL_LOCALES) {
+    if (filter && !filter.has(URL_TO_I18N[loc])) continue;
+    languages[URL_TO_I18N[loc]] = pathFn(loc);
+  }
+  return languages;
+};

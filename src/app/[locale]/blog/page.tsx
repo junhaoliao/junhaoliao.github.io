@@ -1,5 +1,5 @@
 import { getAllPosts } from "@/lib/blog";
-import { URL_LOCALES, URL_TO_I18N, type UrlLocale } from "@/lib/locales";
+import { DEFAULT_LOCALE, URL_TO_I18N, buildLanguageAlternates, type UrlLocale } from "@/lib/locales";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import BlogListClient from "./BlogListClient";
@@ -9,24 +9,17 @@ interface Props {
   params: Promise<{ locale: string }>;
 }
 
-export function generateMetadata(): Metadata {
-  const languages: Record<string, string> = {};
-  for (const loc of URL_LOCALES) {
-    languages[URL_TO_I18N[loc]] = `/${loc}/blog/`;
-  }
+export const generateMetadata = (): Metadata => ({
+  title: "Blog — Junhao Liao",
+  description: "Projects, tips and life moments from Junhao Liao.",
+  alternates: {
+    languages: buildLanguageAlternates((loc) => `/${loc}/blog/`),
+  },
+});
 
-  return {
-    title: "Blog — Junhao Liao",
-    description: "Projects, tips and life moments from Junhao Liao.",
-    alternates: {
-      languages,
-    },
-  };
-}
-
-export default async function LocalizedBlogListPage({ params }: Props) {
+const LocalizedBlogListPage = async ({ params }: Props) => {
   const { locale } = await params;
-  const i18nCode = URL_TO_I18N[locale as UrlLocale] ?? "en";
+  const i18nCode = URL_TO_I18N[locale as UrlLocale] ?? DEFAULT_LOCALE;
   const posts = await getAllPosts(i18nCode);
 
   return (
@@ -40,4 +33,6 @@ export default async function LocalizedBlogListPage({ params }: Props) {
       <Footer />
     </>
   );
-}
+};
+
+export default LocalizedBlogListPage;

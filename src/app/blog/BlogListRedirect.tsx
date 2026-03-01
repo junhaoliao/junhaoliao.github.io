@@ -2,10 +2,11 @@
 
 import { useEffect } from "react";
 import { useRouter } from "next/navigation";
+import { DEFAULT_LOCALE } from "@/lib/locales";
 
-export default function BlogListRedirect() {
+const BlogListRedirect = () => {
   const router = useRouter();
-  const target = "/en/blog/";
+  const target = `/${DEFAULT_LOCALE}/blog/`;
 
   useEffect(() => {
     router.replace(target);
@@ -19,4 +20,6 @@ export default function BlogListRedirect() {
       </p>
     </>
   );
-}
+};
+
+export default BlogListRedirect;

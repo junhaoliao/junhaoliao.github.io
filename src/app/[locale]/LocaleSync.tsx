@@ -4,11 +4,11 @@ import { use, useEffect } from "react";
 import i18n from "@/i18n/config";
 import { URL_TO_I18N, STORAGE_KEY, type UrlLocale } from "@/lib/locales";
 
-export default function LocaleSync({
+const LocaleSync = ({
   params,
 }: {
   params: Promise<{ locale: string }>;
-}) {
+}) => {
   const { locale } = use(params);
   const i18nCode = URL_TO_I18N[locale as UrlLocale] ?? "en";
 
@@ -21,4 +21,6 @@ export default function LocaleSync({
   }, [locale, i18nCode]);
 
   return null;
-}
+};
+
+export default LocaleSync;

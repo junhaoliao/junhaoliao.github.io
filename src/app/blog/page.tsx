@@ -1,5 +1,7 @@
 import BlogListRedirect from "./BlogListRedirect";
 
-export default function BlogListRedirectPage() {
+const BlogListRedirectPage = () => {
   return <BlogListRedirect />;
-}
+};
+
+export default BlogListRedirectPage;

@@ -13,7 +13,7 @@ interface Props {
   urlLocale: string;
 }
 
-export default function BlogListClient({ posts, urlLocale }: Props) {
+const BlogListClient = ({ posts, urlLocale }: Props) => {
   const { t } = useTranslation();
 
   return (
@@ -59,4 +59,6 @@ export default function BlogListClient({ posts, urlLocale }: Props) {
       )}
     </>
   );
-}
+};
+
+export default BlogListClient;

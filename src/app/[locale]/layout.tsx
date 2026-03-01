@@ -3,21 +3,23 @@ import LocaleSync from "./LocaleSync";
 
 export const dynamicParams = false;
 
-export function generateStaticParams() {
+export const generateStaticParams = () => {
   return URL_LOCALES.map((locale) => ({ locale }));
-}
+};
 
-export default function LocaleLayout({
+const LocaleLayout = ({
   children,
   params,
 }: {
   children: React.ReactNode;
   params: Promise<{ locale: string }>;
-}) {
+}) => {
   return (
     <>
       <LocaleSync params={params} />
       {children}
     </>
   );
-}
+};
+
+export default LocaleLayout;

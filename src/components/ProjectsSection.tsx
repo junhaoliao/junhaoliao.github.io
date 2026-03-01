@@ -29,7 +29,7 @@ const SECONDARY_PROJECTS = [
   },
 ] as const;
 
-export default function ProjectsSection() {
+const ProjectsSection = () => {
   const { t } = useTranslation();
   const container = useRef<HTMLElement>(null);
 
@@ -167,4 +167,6 @@ export default function ProjectsSection() {
       </div>
     </section>
   );
-}
+};
+
+export default ProjectsSection;

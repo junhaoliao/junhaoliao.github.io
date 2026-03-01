@@ -8,7 +8,7 @@ import { Button } from "@/components/ui/button";
 const noop = () => () => {};
 const useMounted = () => useSyncExternalStore(noop, () => true, () => false);
 
-export default function ThemeToggle() {
+const ThemeToggle = () => {
   const { theme, setTheme } = useTheme();
   const mounted = useMounted();
 
@@ -30,4 +30,6 @@ export default function ThemeToggle() {
       {isDark ? <Sun className="h-4 w-4" /> : <Moon className="h-4 w-4" />}
     </Button>
   );
-}
+};
+
+export default ThemeToggle;

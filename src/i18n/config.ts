@@ -2,7 +2,7 @@
 
 import i18n from "i18next";
 import { initReactI18next } from "react-i18next";
-import { URL_TO_I18N } from "@/lib/locales";
+import { DEFAULT_LOCALE, URL_TO_I18N } from "@/lib/locales";
 
 // Import translations at build time — no HTTP backend, no network requests
 import en from "../../public/locales/en/translation.json";
@@ -24,8 +24,8 @@ const resources = {
 if (!i18n.isInitialized) {
   i18n.use(initReactI18next).init({
     resources,
-    lng: "en",
-    fallbackLng: "en",
+    lng: DEFAULT_LOCALE,
+    fallbackLng: DEFAULT_LOCALE,
     supportedLngs: [...SUPPORTED_LANGS],
     ns: ["translation"],
     defaultNS: "translation",

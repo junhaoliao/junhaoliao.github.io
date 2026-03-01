@@ -15,7 +15,7 @@ interface ContactItem {
   extra?: React.ReactNode;
 }
 
-function ContactLink({ item }: { item: ContactItem }) {
+const ContactLink = ({ item }: { item: ContactItem }) => {
   if (item.extra) return item.extra;
   return (
     <a
@@ -28,9 +28,9 @@ function ContactLink({ item }: { item: ContactItem }) {
       <span>{item.label}</span>
     </a>
   );
-}
+};
 
-export default function ContactSection() {
+const ContactSection = () => {
   const { t } = useTranslation();
   const container = useRef<HTMLElement>(null);
 
@@ -154,4 +154,6 @@ export default function ContactSection() {
       </div>
     </section>
   );
-}
+};
+
+export default ContactSection;

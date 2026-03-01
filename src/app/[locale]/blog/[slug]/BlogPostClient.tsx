@@ -14,7 +14,7 @@ interface Props {
   availableUrlLocales: string[];
 }
 
-export default function BlogPostClient({ post, urlLocale, slug, availableUrlLocales }: Props) {
+const BlogPostClient = ({ post, urlLocale, slug, availableUrlLocales }: Props) => {
   const { t } = useTranslation();
 
   const otherLocales = availableUrlLocales.filter((l) => l !== urlLocale);
@@ -72,4 +72,6 @@ export default function BlogPostClient({ post, urlLocale, slug, availableUrlLoca
       />
     </article>
   );
-}
+};
+
+export default BlogPostClient;
