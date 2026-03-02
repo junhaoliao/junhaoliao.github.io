@@ -2,7 +2,7 @@ import { notFound } from "next/navigation";
 import Link from "next/link";
 import { ArrowLeft } from "lucide-react";
 import { getAllSlugs, getAllLocaleVariants } from "@/lib/blog";
-import { DEFAULT_LOCALE, URL_LOCALES, URL_TO_I18N, buildLanguageAlternates, type UrlLocale } from "@/lib/locales";
+import { DEFAULT_LOCALE, URL_LOCALES, URL_TO_INTERNAL, buildLanguageAlternates, type UrlLocale } from "@/lib/locales";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import BlogPostClient from "./BlogPostClient";
@@ -18,7 +18,7 @@ export const generateStaticParams = async ({
   params: { locale: string };
 }) => {
   const { locale } = params;
-  const i18nCode = URL_TO_I18N[locale as UrlLocale] ?? DEFAULT_LOCALE;
+  const i18nCode = URL_TO_INTERNAL[locale as UrlLocale] ?? DEFAULT_LOCALE;
   const slugs = getAllSlugs();
   const result: { slug: string }[] = [];
 
@@ -34,7 +34,7 @@ export const generateStaticParams = async ({
 
 export const generateMetadata = async ({ params }: Props): Promise<Metadata> => {
   const { locale, slug } = await params;
-  const i18nCode = URL_TO_I18N[locale as UrlLocale] ?? DEFAULT_LOCALE;
+  const i18nCode = URL_TO_INTERNAL[locale as UrlLocale] ?? DEFAULT_LOCALE;
   const variants = await getAllLocaleVariants(slug);
   const post = variants[i18nCode];
   if (!post) return {};
@@ -58,7 +58,7 @@ export const generateMetadata = async ({ params }: Props): Promise<Metadata> => 
 
 const LocalizedBlogPostPage = async ({ params }: Props) => {
   const { locale, slug } = await params;
-  const i18nCode = URL_TO_I18N[locale as UrlLocale] ?? DEFAULT_LOCALE;
+  const i18nCode = URL_TO_INTERNAL[locale as UrlLocale] ?? DEFAULT_LOCALE;
   const variants = await getAllLocaleVariants(slug);
   const post = variants[i18nCode];
 
@@ -67,7 +67,7 @@ const LocalizedBlogPostPage = async ({ params }: Props) => {
   }
 
   const availableUrlLocales: UrlLocale[] = URL_LOCALES.filter(
-    (loc) => variants[URL_TO_I18N[loc]],
+    (loc) => variants[URL_TO_INTERNAL[loc]],
   );
 
   return (

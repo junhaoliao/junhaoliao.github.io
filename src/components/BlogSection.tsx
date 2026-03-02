@@ -4,7 +4,8 @@ import { useRef } from "react";
 import Link from "next/link";
 import { useTranslation } from "react-i18next";
 import { gsap, useGSAP } from "@/lib/gsap";
-import { I18N_TO_URL } from "@/lib/locales";
+import { INTERNAL_TO_URL } from "@/lib/locales";
+import { SCROLL_TRIGGERS } from "@/lib/constants";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -18,7 +19,7 @@ interface BlogSectionProps {
 const BlogSection = ({ posts: localizedPosts }: BlogSectionProps) => {
   const { t, i18n } = useTranslation();
   const container = useRef<HTMLElement>(null);
-  const urlLocale = I18N_TO_URL[i18n.language] ?? "en";
+  const urlLocale = INTERNAL_TO_URL[i18n.language] ?? "en";
 
   const posts = localizedPosts.map((variants) =>
     variants[i18n.language] ?? Object.values(variants)[0],
@@ -30,7 +31,7 @@ const BlogSection = ({ posts: localizedPosts }: BlogSectionProps) => {
         { opacity: 0, y: 30 },
         {
           opacity: 1, y: 0, duration: 0.7, ease: "power3.out",
-          scrollTrigger: { trigger: container.current, start: "top 85%", toggleActions: "play none none reverse" },
+          scrollTrigger: { trigger: container.current, start: SCROLL_TRIGGERS.HEADING, toggleActions: "play none none reverse" },
         },
       );
 
@@ -38,7 +39,7 @@ const BlogSection = ({ posts: localizedPosts }: BlogSectionProps) => {
         { opacity: 0, y: 50, scale: 0.95 },
         {
           opacity: 1, y: 0, scale: 1, stagger: 0.12, duration: 0.7, ease: "power2.out",
-          scrollTrigger: { trigger: ".blog-card", start: "top 85%", toggleActions: "play none none reverse" },
+          scrollTrigger: { trigger: ".blog-card", start: SCROLL_TRIGGERS.HEADING, toggleActions: "play none none reverse" },
         },
       );
     },
@@ -61,7 +62,7 @@ const BlogSection = ({ posts: localizedPosts }: BlogSectionProps) => {
           <>
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 mb-10">
               {posts.map((post, i) => {
-                const linkLocale = I18N_TO_URL[post.locale] ?? urlLocale;
+                const linkLocale = INTERNAL_TO_URL[post.locale] ?? urlLocale;
                 return (
                   <Link key={post.slug} href={`/${linkLocale}/blog/${post.slug}/`} className={`block ${i === 0 ? "lg:col-span-2" : ""}`}>
                     <Card className="blog-card opacity-0 h-full hover:shadow-lg transition-shadow duration-300 group">

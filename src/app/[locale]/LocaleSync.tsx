@@ -2,7 +2,7 @@
 
 import { use, useEffect } from "react";
 import i18n from "@/i18n/config";
-import { URL_TO_I18N, STORAGE_KEY, type UrlLocale } from "@/lib/locales";
+import { URL_TO_INTERNAL, STORAGE_KEY, type UrlLocale } from "@/lib/locales";
 
 const LocaleSync = ({
   params,
@@ -10,7 +10,7 @@ const LocaleSync = ({
   params: Promise<{ locale: string }>;
 }) => {
   const { locale } = use(params);
-  const i18nCode = URL_TO_I18N[locale as UrlLocale] ?? "en";
+  const i18nCode = URL_TO_INTERNAL[locale as UrlLocale] ?? "en";
 
   useEffect(() => {
     if (i18n.language !== i18nCode) {

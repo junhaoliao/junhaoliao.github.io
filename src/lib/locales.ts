@@ -6,15 +6,18 @@ export const URL_LOCALES = ["en", "fr", "zh", "zh-Hant"] as const;
 export type UrlLocale = (typeof URL_LOCALES)[number];
 
 /** Map a URL slug to the internal i18n / content code. */
-export const URL_TO_I18N: Record<UrlLocale, string> = {
+export const URL_TO_INTERNAL: Record<UrlLocale, string> = {
   en: "en",
   fr: "fr",
   zh: "zh-CN",
   "zh-Hant": "zh-HK",
 };
 
-/** Reverse map: i18n code -> URL slug. */
-export const I18N_TO_URL: Record<string, UrlLocale> = {
+/** Internal i18n codes derived from URL_TO_INTERNAL. */
+export const SUPPORTED_LANGS = Object.values(URL_TO_INTERNAL);
+
+/** Reverse map: internal i18n code -> URL slug. */
+export const INTERNAL_TO_URL: Record<string, UrlLocale> = {
   en: "en",
   fr: "fr",
   "zh-CN": "zh",
@@ -69,8 +72,8 @@ export const buildLanguageAlternates = (
 ): Record<string, string> => {
   const languages: Record<string, string> = {};
   for (const loc of URL_LOCALES) {
-    if (filter && !filter.has(URL_TO_I18N[loc])) continue;
-    languages[URL_TO_I18N[loc]] = pathFn(loc);
+    if (filter && !filter.has(URL_TO_INTERNAL[loc])) continue;
+    languages[URL_TO_INTERNAL[loc]] = pathFn(loc);
   }
   return languages;
 };

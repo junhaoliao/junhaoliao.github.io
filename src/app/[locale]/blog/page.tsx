@@ -1,5 +1,5 @@
 import { getAllPosts } from "@/lib/blog";
-import { DEFAULT_LOCALE, URL_TO_I18N, buildLanguageAlternates, type UrlLocale } from "@/lib/locales";
+import { DEFAULT_LOCALE, URL_TO_INTERNAL, buildLanguageAlternates, type UrlLocale } from "@/lib/locales";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import BlogListClient from "./BlogListClient";
@@ -19,7 +19,7 @@ export const generateMetadata = (): Metadata => ({
 
 const LocalizedBlogListPage = async ({ params }: Props) => {
   const { locale } = await params;
-  const i18nCode = URL_TO_I18N[locale as UrlLocale] ?? DEFAULT_LOCALE;
+  const i18nCode = URL_TO_INTERNAL[locale as UrlLocale] ?? DEFAULT_LOCALE;
   const posts = await getAllPosts(i18nCode);
 
   return (

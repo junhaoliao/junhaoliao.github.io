@@ -7,6 +7,7 @@ import Image from "next/image";
 import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Github, ExternalLink } from "lucide-react";
+import { SCROLL_TRIGGERS } from "@/lib/constants";
 
 const FEATURED_PROJECT = {
   key: "ictrl",
@@ -29,6 +30,14 @@ const SECONDARY_PROJECTS = [
   },
 ] as const;
 
+type SecondaryProject = (typeof SECONDARY_PROJECTS)[number];
+
+const hasGithubUrl = (p: SecondaryProject): p is SecondaryProject & { githubUrl: string } =>
+  "githubUrl" in p;
+
+const hasExternalUrl = (p: SecondaryProject): p is SecondaryProject & { externalUrl: string } =>
+  "externalUrl" in p;
+
 const ProjectsSection = () => {
   const { t } = useTranslation();
   const container = useRef<HTMLElement>(null);
@@ -39,7 +48,7 @@ const ProjectsSection = () => {
         { opacity: 0, y: 30 },
         {
           opacity: 1, y: 0, duration: 0.7, ease: "power3.out",
-          scrollTrigger: { trigger: container.current, start: "top 85%", toggleActions: "play none none reverse" },
+          scrollTrigger: { trigger: container.current, start: SCROLL_TRIGGERS.HEADING, toggleActions: "play none none reverse" },
         },
       );
 
@@ -47,7 +56,7 @@ const ProjectsSection = () => {
         { opacity: 0, y: 40, scale: 0.97 },
         {
           opacity: 1, y: 0, scale: 1, duration: 0.8, ease: "power2.out",
-          scrollTrigger: { trigger: ".featured-card", start: "top 85%", toggleActions: "play none none reverse" },
+          scrollTrigger: { trigger: ".featured-card", start: SCROLL_TRIGGERS.HEADING, toggleActions: "play none none reverse" },
         },
       );
 
@@ -55,7 +64,7 @@ const ProjectsSection = () => {
         { opacity: 0, y: 40, scale: 0.95 },
         {
           opacity: 1, y: 0, scale: 1, stagger: 0.12, duration: 0.7, ease: "power2.out",
-          scrollTrigger: { trigger: ".project-card", start: "top 85%", toggleActions: "play none none reverse" },
+          scrollTrigger: { trigger: ".project-card", start: SCROLL_TRIGGERS.HEADING, toggleActions: "play none none reverse" },
         },
       );
     },
@@ -147,13 +156,13 @@ const ProjectsSection = () => {
                 )}
 
                 <CardFooter className="gap-2 mt-auto pt-4">
-                  {"githubUrl" in project && (
+                  {hasGithubUrl(project) && (
                     <Button variant="outline" size="sm" nativeButton={false} render={<a href={project.githubUrl} target="_blank" rel="noopener noreferrer" />} className="inline-flex items-center gap-1.5">
                       <Github className="h-3.5 w-3.5" />
                       {t("projects.view_github")}
                     </Button>
                   )}
-                  {"externalUrl" in project && (
+                  {hasExternalUrl(project) && (
                     <Button variant="outline" size="sm" nativeButton={false} render={<a href={project.externalUrl} target="_blank" rel="noopener noreferrer" />} className="inline-flex items-center gap-1.5">
                       <ExternalLink className="h-3.5 w-3.5" />
                       {t("projects.view_link")}

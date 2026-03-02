@@ -5,6 +5,7 @@ import { useTranslation, Trans } from "react-i18next";
 import { gsap, useGSAP } from "@/lib/gsap";
 import Image from "next/image";
 import { MapPin, CalendarDays } from "lucide-react";
+import { LOGO_CLASSES, SCROLL_TRIGGERS } from "@/lib/constants";
 
 type TimelineItem =
   | {
@@ -25,10 +26,7 @@ type TimelineItem =
       url: string;
     };
 
-// Square logos fill the circle (crop to round). Crests/wordmarks stay contained.
-const LOGO_FILL = "w-full h-full object-cover rounded-full";
-const LOGO_CREST = "w-7 h-7 sm:w-9 sm:h-9 object-contain";
-const LOGO_WIDE = "w-8 h-4 sm:w-9 sm:h-5 object-contain";
+const { FILL: LOGO_FILL, CREST: LOGO_CREST, WIDE: LOGO_WIDE } = LOGO_CLASSES;
 
 const TIMELINE_ITEMS: TimelineItem[] = [
   { type: "experience", i18nKey: "hero.roles.yscope_mgr", dates: "Jan 2026 – Present", logo: "/images/yscope-logo.webp", logoAlt: "YScope", url: "https://yscope.com/" },
@@ -74,7 +72,7 @@ const ExperienceSection = () => {
         { opacity: 0, y: 30 },
         {
           opacity: 1, y: 0, duration: 0.7, ease: "power3.out",
-          scrollTrigger: { trigger: container.current, start: "top 85%", toggleActions: "play none none reverse" },
+          scrollTrigger: { trigger: container.current, start: SCROLL_TRIGGERS.HEADING, toggleActions: "play none none reverse" },
         },
       );
 
@@ -87,8 +85,8 @@ const ExperienceSection = () => {
             ease: "none",
             scrollTrigger: {
               trigger: container.current,
-              start: "top 70%",
-              end: "80% 50%",
+              start: SCROLL_TRIGGERS.LINE_START,
+              end: SCROLL_TRIGGERS.LINE_END,
               scrub: 0.5,
             },
           },
@@ -99,7 +97,7 @@ const ExperienceSection = () => {
         { opacity: 0, x: -30 },
         {
           opacity: 1, x: 0, stagger: 0.15, duration: 0.7, ease: "power2.out",
-          scrollTrigger: { trigger: container.current, start: "top 75%", toggleActions: "play none none reverse" },
+          scrollTrigger: { trigger: container.current, start: SCROLL_TRIGGERS.ITEM, toggleActions: "play none none reverse" },
         },
       );
 
@@ -107,7 +105,7 @@ const ExperienceSection = () => {
         { opacity: 0, y: 20 },
         {
           opacity: 1, y: 0, duration: 0.6, ease: "power2.out",
-          scrollTrigger: { trigger: ".tl-publication", start: "top 90%", toggleActions: "play none none reverse" },
+          scrollTrigger: { trigger: ".tl-publication", start: SCROLL_TRIGGERS.PUBLICATION, toggleActions: "play none none reverse" },
         },
       );
     },

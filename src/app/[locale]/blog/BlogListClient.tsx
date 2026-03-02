@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { useTranslation } from "react-i18next";
-import { I18N_TO_URL } from "@/lib/locales";
+import { INTERNAL_TO_URL } from "@/lib/locales";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { CalendarDays } from "lucide-react";
@@ -26,7 +26,7 @@ const BlogListClient = ({ posts, urlLocale }: Props) => {
       ) : (
         <div className="space-y-6">
           {posts.map((post) => {
-            const linkLocale = I18N_TO_URL[post.locale] ?? urlLocale;
+            const linkLocale = INTERNAL_TO_URL[post.locale] ?? urlLocale;
             return (
               <Link key={post.slug} href={`/${linkLocale}/blog/${post.slug}/`} className="block">
                 <Card className="hover:shadow-md transition-shadow duration-300 group">

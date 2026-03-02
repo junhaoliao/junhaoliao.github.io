@@ -10,7 +10,7 @@ import path from "path";
 import matter from "gray-matter";
 import {
   URL_LOCALES,
-  URL_TO_I18N,
+  URL_TO_INTERNAL,
   LOCALE_SUFFIXES,
   type UrlLocale,
 } from "../src/lib/locales.ts";
@@ -96,7 +96,7 @@ const generateSitemap = (slugs: string[]): void => {
     }
 
     for (const locale of URL_LOCALES) {
-      const i18nCode = URL_TO_I18N[locale as UrlLocale];
+      const i18nCode = URL_TO_INTERNAL[locale as UrlLocale];
       const suffix = LOCALE_SUFFIXES[i18nCode];
       if (suffix && fs.existsSync(path.join(dir, `index${suffix}.md`))) {
         urls.push(`${BASE_URL}/${locale}/blog/${slug}/`);

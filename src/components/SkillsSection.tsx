@@ -5,6 +5,7 @@ import { useTranslation } from "react-i18next";
 import { gsap, useGSAP } from "@/lib/gsap";
 import { Badge } from "@/components/ui/badge";
 import { Code2, Globe, Cog } from "lucide-react";
+import { SCROLL_TRIGGERS } from "@/lib/constants";
 
 const FEATURED_SKILLS = [
   { key: "cpp", icon: <Code2 className="h-8 w-8" />, color: "text-rose-500" },
@@ -24,7 +25,7 @@ const SkillsSection = () => {
         { opacity: 0, y: 30 },
         {
           opacity: 1, y: 0, duration: 0.7, ease: "power3.out",
-          scrollTrigger: { trigger: container.current, start: "top 85%", toggleActions: "play none none reverse" },
+          scrollTrigger: { trigger: container.current, start: SCROLL_TRIGGERS.HEADING, toggleActions: "play none none reverse" },
         },
       );
 
@@ -33,7 +34,7 @@ const SkillsSection = () => {
           { opacity: 0, x: i % 2 === 0 ? -60 : 60 },
           {
             opacity: 1, x: 0, duration: 0.8, ease: "power2.out",
-            scrollTrigger: { trigger: row, start: "top 85%", toggleActions: "play none none reverse" },
+            scrollTrigger: { trigger: row, start: SCROLL_TRIGGERS.HEADING, toggleActions: "play none none reverse" },
           },
         );
       });
@@ -42,7 +43,7 @@ const SkillsSection = () => {
         { opacity: 0, y: 30 },
         {
           opacity: 1, y: 0, duration: 0.7, ease: "power2.out",
-          scrollTrigger: { trigger: ".category-grid", start: "top 85%", toggleActions: "play none none reverse" },
+          scrollTrigger: { trigger: ".category-grid", start: SCROLL_TRIGGERS.HEADING, toggleActions: "play none none reverse" },
         },
       );
     },
