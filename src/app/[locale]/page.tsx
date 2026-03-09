@@ -10,14 +10,22 @@ import ContactSection from "@/components/ContactSection";
 import Footer from "@/components/Footer";
 import type { Metadata } from "next";
 
-export const generateMetadata = (): Metadata => ({
-  title: "Junhao Liao - Junhao's Personal Website",
-  description:
-    "Junhao Liao \u2014 Software Developer at YScope Inc. Based in Toronto, Canada.",
-  alternates: {
-    languages: buildLanguageAlternates(),
-  },
-});
+export const generateMetadata = async ({
+  params,
+}: {
+  params: Promise<{ locale: string }>;
+}): Promise<Metadata> => {
+  const { locale } = await params;
+  return {
+    title: "Junhao Liao - Junhao's Personal Website",
+    description:
+      "Junhao Liao \u2014 Software Developer at YScope Inc. Based in Toronto, Canada.",
+    alternates: {
+      canonical: `/${locale}/`,
+      languages: buildLanguageAlternates(),
+    },
+  };
+};
 
 const LocaleHome = async () => {
   const posts = await getLocalizedPostIndex(5);

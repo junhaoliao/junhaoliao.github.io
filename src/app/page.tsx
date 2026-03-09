@@ -1,5 +1,12 @@
 import Script from "next/script";
+import type { Metadata } from "next";
 import { DEFAULT_LOCALE, INTERNAL_TO_URL, STORAGE_KEY, SUPPORTED_LANGS } from "@/lib/locales";
+
+export const metadata: Metadata = {
+  alternates: {
+    canonical: `/${DEFAULT_LOCALE}/`,
+  },
+};
 
 const FALLBACK = JSON.stringify(DEFAULT_LOCALE);
 const REDIRECT_SCRIPT = `

@@ -9,13 +9,19 @@ interface Props {
   params: Promise<{ locale: string }>;
 }
 
-export const generateMetadata = (): Metadata => ({
-  title: "Blog — Junhao Liao",
-  description: "Projects, tips and life moments from Junhao Liao.",
-  alternates: {
-    languages: buildLanguageAlternates((loc) => `/${loc}/blog/`),
-  },
-});
+export const generateMetadata = async ({
+  params,
+}: Props): Promise<Metadata> => {
+  const { locale } = await params;
+  return {
+    title: "Blog — Junhao Liao",
+    description: "Projects, tips and life moments from Junhao Liao.",
+    alternates: {
+      canonical: `/${locale}/blog/`,
+      languages: buildLanguageAlternates((loc) => `/${loc}/blog/`),
+    },
+  };
+};
 
 const LocalizedBlogListPage = async ({ params }: Props) => {
   const { locale } = await params;
