@@ -4,11 +4,11 @@ import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useTranslation } from "react-i18next";
-import { smoothScrollTo } from "@/lib/utils";
+import { cn, smoothScrollTo } from "@/lib/utils";
 import { parseLocalePath, NAV_SECTIONS } from "@/lib/locales";
 import { Menu, ExternalLink } from "lucide-react";
-import { Button } from "@/components/ui/button";
-import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
+import { Button, buttonVariants } from "@/components/ui/button";
+import { Sheet, SheetContent, SheetTitle, SheetTrigger } from "@/components/ui/sheet";
 import { Separator } from "@/components/ui/separator";
 import ThemeToggle from "@/components/ThemeToggle";
 import LanguageSwitcher from "@/components/LanguageSwitcher";
@@ -43,11 +43,11 @@ const Navbar = () => {
   return (
     <header
       ref={navRef}
-      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
+      className={cn("fixed top-0 left-0 right-0 z-50 text-foreground transition-all duration-300",
         isScrolled
           ? "bg-background/95 backdrop-blur-md border-b border-border shadow-sm"
-          : "bg-transparent"
-      }`}
+          : "photo-surface bg-transparent"
+      )}
     >
       <nav className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
         <Link
@@ -58,53 +58,44 @@ const Navbar = () => {
               smoothScrollTo("hero");
             }
           }}
-          className={`text-lg font-bold tracking-tight transition-colors ${
-            isScrolled ? "text-foreground" : "text-white"
-          }`}
+          className="text-lg font-bold tracking-tight transition-colors"
         >
           Junhao
         </Link>
 
         {/* Desktop nav */}
-        <div className="hidden md:flex items-center gap-1">
+        <div className="hidden md:flex items-center gap-1 text-muted-foreground">
           {NAV_SECTIONS.map((section) => (
-            <button
+            <Button
               key={section}
+              variant="ghost"
+              size="sm"
               onClick={() => handleNavClick(section)}
-              className={`px-3 py-1.5 rounded-md text-sm font-medium transition-colors ${
-                isScrolled
-                  ? "text-muted-foreground hover:text-foreground hover:bg-accent"
-                  : "text-white/80 hover:text-white hover:bg-white/10"
-              }`}
             >
               {t(`nav.${section}`)}
-            </button>
+            </Button>
           ))}
 
           <a
             href="https://ictrl.ca/"
             target="_blank"
             rel="noopener noreferrer"
-            className={`px-3 py-1.5 rounded-md text-sm font-medium transition-colors inline-flex items-center gap-1 ${
-              isScrolled
-                ? "text-muted-foreground hover:text-foreground hover:bg-accent"
-                : "text-white/80 hover:text-white hover:bg-white/10"
-            }`}
+            className={buttonVariants({ variant: "ghost", size: "sm" })}
           >
             {t("nav.ictrl")}
-            <ExternalLink className="h-3 w-3" />
+            <ExternalLink data-icon="inline-end" />
           </a>
 
-          <Separator orientation="vertical" className={`h-5 mx-1 ${isScrolled ? "" : "bg-white/30"}`} />
+          <Separator orientation="vertical" className="h-5 mx-1 self-center" />
 
-          <div className={`flex items-center gap-1 ${isScrolled ? "" : "text-white [&_button]:text-white [&_button]:hover:bg-white/10"}`}>
+          <div className="flex items-center gap-1 text-foreground">
             <LanguageSwitcher />
             <ThemeToggle />
           </div>
         </div>
 
         {/* Mobile nav */}
-        <div className={`flex md:hidden items-center gap-1 ${isScrolled ? "" : "text-white [&_button]:text-white [&_button]:hover:bg-white/10"}`}>
+        <div className="flex md:hidden items-center gap-1">
           <LanguageSwitcher />
           <ThemeToggle />
           <Sheet open={mobileOpen} onOpenChange={setMobileOpen}>
@@ -113,35 +104,36 @@ const Navbar = () => {
                 <Button
                   variant="ghost"
                   size="icon"
-                  className={`w-9 h-9 ${isScrolled ? "" : "text-white hover:bg-white/10"}`}
                   aria-label="Open menu"
                 />
               }
             >
-              <Menu className="h-5 w-5" />
+              <Menu data-icon="inline-start" />
             </SheetTrigger>
             <SheetContent side="right" className="w-64 pt-12">
-              <div className="flex flex-col gap-1">
+              <SheetTitle className="sr-only">{t("nav.menu")}</SheetTitle>
+              <nav className="flex flex-col gap-1 text-muted-foreground" aria-label={t("nav.menu")}>
                 {NAV_SECTIONS.map((section) => (
-                  <button
+                  <Button
                     key={section}
+                    variant="ghost"
                     onClick={() => handleNavClick(section)}
-                    className="text-left px-4 py-2.5 rounded-md text-sm font-medium text-muted-foreground hover:text-foreground hover:bg-accent transition-colors"
+                    className="justify-start px-4"
                   >
                     {t(`nav.${section}`)}
-                  </button>
+                  </Button>
                 ))}
                 <a
                   href="https://ictrl.ca/"
                   target="_blank"
                   rel="noopener noreferrer"
                   onClick={() => setMobileOpen(false)}
-                  className="px-4 py-2.5 rounded-md text-sm font-medium text-muted-foreground hover:text-foreground hover:bg-accent transition-colors inline-flex items-center gap-1.5"
+                  className={cn(buttonVariants({ variant: "ghost" }), "justify-start px-4")}
                 >
                   {t("nav.ictrl")}
-                  <ExternalLink className="h-3.5 w-3.5" />
+                  <ExternalLink data-icon="inline-end" />
                 </a>
-              </div>
+              </nav>
             </SheetContent>
           </Sheet>
         </div>

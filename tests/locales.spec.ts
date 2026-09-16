@@ -66,7 +66,7 @@ test("blocked preference storage does not break a localized page", async ({ page
   await page.goto("/fr/blog/");
   await expect(page.locator("nav")).toContainText(fr.nav.experience);
   await page.getByRole("button", { name: "FR — Change language" }).first().click();
-  await expect(page.getByRole("menuitem", { name: "English" })).toBeVisible();
+  await expect(page.getByRole("menuitemradio", { name: "English" })).toBeVisible();
   expect(errors).toEqual([]);
 });
 

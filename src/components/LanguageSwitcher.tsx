@@ -5,7 +5,9 @@ import { usePathname, useRouter } from "next/navigation";
 import {
   DropdownMenu,
   DropdownMenuContent,
-  DropdownMenuItem,
+  DropdownMenuGroup,
+  DropdownMenuRadioGroup,
+  DropdownMenuRadioItem,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { Button } from "@/components/ui/button";
@@ -72,22 +74,22 @@ const LanguageSwitcher = () => {
           />
         }
       >
-        <span className="text-sm font-medium">{SHORT_LABELS[currentUrlLocale]}</span>
+        {SHORT_LABELS[currentUrlLocale]}
       </DropdownMenuTrigger>
       <DropdownMenuContent
         align="end"
         onMouseEnter={handleMouseEnter}
         onMouseLeave={handleMouseLeave}
       >
-        {URL_LOCALES.map((loc) => (
-          <DropdownMenuItem
-            key={loc}
-            onClick={() => switchLocale(loc)}
-            className={currentUrlLocale === loc ? "font-semibold bg-accent" : ""}
-          >
-            {LOCALE_LABELS[loc]}
-          </DropdownMenuItem>
-        ))}
+        <DropdownMenuGroup>
+          <DropdownMenuRadioGroup value={currentUrlLocale} onValueChange={switchLocale} aria-label="Language">
+            {URL_LOCALES.map((loc) => (
+              <DropdownMenuRadioItem key={loc} value={loc}>
+                {LOCALE_LABELS[loc]}
+              </DropdownMenuRadioItem>
+            ))}
+          </DropdownMenuRadioGroup>
+        </DropdownMenuGroup>
       </DropdownMenuContent>
     </DropdownMenu>
   );

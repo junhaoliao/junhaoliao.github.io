@@ -6,6 +6,7 @@ import { gsap, useGSAP } from "@/lib/gsap";
 import Image from "next/image";
 import { MapPin, CalendarDays } from "lucide-react";
 import { LOGO_CLASSES, SCROLL_TRIGGERS } from "@/lib/constants";
+import { Separator } from "@/components/ui/separator";
 
 type TimelineItem =
   | {
@@ -131,7 +132,7 @@ const ExperienceSection = () => {
             className="absolute left-4 sm:left-6 top-0 bottom-0 w-0.5 bg-border origin-top"
           />
 
-          <div className="space-y-8 sm:space-y-10">
+          <div className="flex flex-col gap-8 sm:gap-10">
             {TIMELINE_ITEMS.map((item) => {
               if (item.type === "experience") {
                 return (
@@ -144,7 +145,7 @@ const ExperienceSection = () => {
                       target="_blank"
                       rel="noopener noreferrer"
                       aria-label={item.logoAlt}
-                      className="absolute left-0 sm:left-1 top-0 w-9 h-9 sm:w-11 sm:h-11 rounded-full bg-white flex items-center justify-center shadow-md ring-2 ring-border overflow-hidden"
+                      className="absolute left-0 sm:left-1 top-0 size-9 sm:size-11 rounded-full bg-logo-surface flex items-center justify-center shadow-md ring-2 ring-border overflow-hidden"
                     >
                       <Image
                         src={item.logo}
@@ -191,7 +192,7 @@ const ExperienceSection = () => {
                     target="_blank"
                     rel="noopener noreferrer"
                     aria-label={t(`education.items.${key}.name`)}
-                    className="absolute left-0 sm:left-1 top-0 w-9 h-9 sm:w-11 sm:h-11 rounded-full bg-white flex items-center justify-center shadow-md ring-2 ring-border overflow-hidden"
+                    className="absolute left-0 sm:left-1 top-0 size-9 sm:size-11 rounded-full bg-logo-surface flex items-center justify-center shadow-md ring-2 ring-border overflow-hidden"
                   >
                     <Image
                       src={logo}
@@ -202,7 +203,7 @@ const ExperienceSection = () => {
                     />
                   </a>
 
-                  <div className="flex-1 min-w-0 p-5 sm:p-6 rounded-xl bg-muted/60 dark:bg-muted/40">
+                  <div className="flex-1 min-w-0 p-5 sm:p-6 rounded-xl bg-timeline-panel">
                     <a
                       href={url}
                       target="_blank"
@@ -220,11 +221,11 @@ const ExperienceSection = () => {
 
                     <div className="flex flex-wrap gap-4 mt-2 text-sm opacity-60">
                       <span className="flex items-center gap-1">
-                        <CalendarDays className="h-3.5 w-3.5" />
+                        <CalendarDays className="size-3.5" />
                         {t(`education.items.${key}.years`)}
                       </span>
                       <span className="flex items-center gap-1">
-                        <MapPin className="h-3.5 w-3.5" />
+                        <MapPin className="size-3.5" />
                         {t(`education.items.${key}.location`)}
                       </span>
                     </div>
@@ -241,7 +242,8 @@ const ExperienceSection = () => {
           </div>
         </div>
 
-        <div className="tl-publication opacity-0 mt-12 pt-8 border-t border-border">
+        <div className="tl-publication opacity-0 mt-12">
+          <Separator className="mb-8" />
           <p className="text-xs font-semibold uppercase tracking-[0.2em] opacity-50 mb-4">
             {t("hero.publications_label")}
           </p>

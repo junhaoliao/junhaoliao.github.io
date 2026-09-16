@@ -5,11 +5,13 @@ import Image from "next/image";
 import { useTranslation } from "react-i18next";
 import { gsap, useGSAP } from "@/lib/gsap";
 import { HoverCard, HoverCardContent, HoverCardTrigger } from "@/components/ui/hover-card";
-import { MapPin, Mail, MessageCircle, Linkedin, Github } from "lucide-react";
+import { Button, buttonVariants } from "@/components/ui/button";
+import { cn } from "@/lib/utils";
+import { MapPin, Mail, MessageCircle, Linkedin, Github, type LucideIcon } from "lucide-react";
 
 interface ContactItem {
   id: string;
-  icon: React.ReactNode;
+  icon: LucideIcon;
   label: string;
   href?: string;
   extra?: React.ReactNode;
@@ -17,14 +19,15 @@ interface ContactItem {
 
 const ContactLink = ({ item }: { item: ContactItem }) => {
   if (item.extra) return item.extra;
+  const Icon = item.icon;
   return (
     <a
       href={item.href}
       target={item.href?.startsWith("http") ? "_blank" : undefined}
       rel={item.href?.startsWith("http") ? "noopener noreferrer" : undefined}
-      className="contact-item opacity-0 flex items-center gap-3 text-white/85 hover:text-white transition-colors"
+      className={cn(buttonVariants({ variant: "ghost" }), "contact-item opacity-0 gap-3")}
     >
-      {item.icon}
+      <Icon data-icon="inline-start" />
       <span>{item.label}</span>
     </a>
   );
@@ -61,19 +64,19 @@ const ContactSection = () => {
   const items: ContactItem[] = [
     {
       id: "location",
-      icon: <MapPin className="h-5 w-5 shrink-0" />,
+      icon: MapPin,
       label: t("contact.location"),
       href: "https://maps.app.goo.gl/k12U9Lre5H9hfVfAA",
     },
     {
       id: "email",
-      icon: <Mail className="h-5 w-5 shrink-0" />,
+      icon: Mail,
       label: t("contact.email"),
       href: "mailto:junhao@junhao.ca",
     },
     {
       id: "wechat",
-      icon: <MessageCircle className="h-5 w-5 shrink-0" />,
+      icon: MessageCircle,
       label: t("contact.wechat"),
       extra: (
         <HoverCard>
@@ -81,20 +84,21 @@ const ContactSection = () => {
             delay={100}
             closeDelay={100}
             render={
-              <button
+              <Button
+                variant="ghost"
                 onClick={() => window.open("/images/wechat-qr.webp", "_blank")}
-                className="contact-item opacity-0 flex items-center gap-3 text-white/85 hover:text-white transition-colors"
+                className="contact-item opacity-0 gap-3"
                 aria-label="WeChat QR code"
               />
             }
           >
-            <MessageCircle className="h-5 w-5 shrink-0" />
+            <MessageCircle data-icon="inline-start" />
             <span>{t("contact.wechat")}</span>
           </HoverCardTrigger>
           <HoverCardContent
             side="right"
             align="center"
-            className="w-48 p-2 border-0 shadow-xl"
+            className="w-48 p-2"
           >
             <Image
               src="/images/wechat-qr.webp"
@@ -109,13 +113,13 @@ const ContactSection = () => {
     },
     {
       id: "linkedin",
-      icon: <Linkedin className="h-5 w-5 shrink-0" />,
+      icon: Linkedin,
       label: t("contact.linkedin"),
       href: "https://www.linkedin.com/in/junhaoliao/",
     },
     {
       id: "github",
-      icon: <Github className="h-5 w-5 shrink-0" />,
+      icon: Github,
       label: t("contact.github"),
       href: "https://github.com/junhaoliao",
     },
@@ -131,15 +135,15 @@ const ContactSection = () => {
           className="object-cover scale-110"
           sizes="100vw"
         />
-        <div className="absolute inset-0 bg-black/0 dark:bg-black/40" />
+        <div className="absolute inset-0 bg-contact-scrim" />
       </div>
 
       <div className="relative z-10 max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-        <h2 className="contact-item opacity-0 text-4xl sm:text-5xl lg:text-6xl font-bold text-white tracking-tight mb-12 sm:mb-16">
+        <h2 className="contact-item opacity-0 text-4xl sm:text-5xl lg:text-6xl font-bold text-photo-foreground tracking-tight mb-12 sm:mb-16">
           {t("contact.title")}
         </h2>
 
-        <div className="space-y-5">
+        <div className="photo-surface flex flex-col gap-5 text-muted-foreground">
           <div className="flex flex-col sm:flex-row justify-center items-center gap-5 sm:gap-8">
             {items.slice(0, 3).map((item) => (
               <ContactLink key={item.id} item={item} />

@@ -60,26 +60,26 @@ const HeroSection = () => {
           className="object-cover scale-110"
           sizes="100vw"
         />
-        <div className="absolute inset-0 bg-black/50" />
+        <div className="absolute inset-0 bg-photo-scrim/50" />
       </div>
 
-      <div className="hero-content relative z-10 flex flex-col items-center text-center px-4 sm:px-6 [text-shadow:0_1px_8px_rgba(0,0,0,0.6)]">
-        <div className="hero-portrait relative w-28 h-28 sm:w-32 sm:h-32 md:w-36 md:h-36 mb-6 sm:mb-8">
+      <div className="hero-content relative z-10 flex flex-col items-center text-center px-4 sm:px-6 [text-shadow:0_1px_8px_var(--photo-text-shadow)]">
+        <div className="hero-portrait relative size-28 sm:size-32 md:size-36 mb-6 sm:mb-8">
           <Image
             src="/images/portrait.webp"
             alt="Junhao Liao"
             fill
             priority
-            className="object-cover rounded-full ring-4 ring-white/20 shadow-2xl"
+            className="object-cover rounded-full ring-4 ring-photo-foreground/20 shadow-2xl"
             sizes="(max-width: 640px) 112px, (max-width: 768px) 128px, 144px"
           />
         </div>
 
-        <h1 className="hero-name text-6xl sm:text-7xl md:text-8xl lg:text-[6.5rem] font-bold text-white tracking-tighter leading-none [text-shadow:0_2px_12px_rgba(0,0,0,0.5)]">
+        <h1 className="hero-name text-6xl sm:text-7xl md:text-8xl lg:text-[6.5rem] font-bold text-photo-foreground tracking-tighter leading-none [text-shadow:0_2px_12px_var(--photo-title-shadow)]">
           {t("hero.name")}
         </h1>
 
-        <p className="hero-tagline mt-4 sm:mt-6 text-lg sm:text-xl md:text-2xl text-white/75 font-light tracking-wide max-w-2xl">
+        <p className="hero-tagline mt-4 sm:mt-6 text-lg sm:text-xl md:text-2xl text-photo-foreground/75 font-light tracking-wide max-w-2xl">
           <Trans
             i18nKey="hero.tagline"
             components={{
@@ -88,7 +88,7 @@ const HeroSection = () => {
                   href="https://ictrl.ca/"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="underline underline-offset-2 hover:text-white transition-colors"
+                  className="underline underline-offset-2 hover:text-photo-foreground transition-colors"
                   aria-label="iCtrl"
                 />
               ),
@@ -100,7 +100,7 @@ const HeroSection = () => {
           <Button
             size="lg"
             onClick={() => smoothScrollTo("contact")}
-            className="rounded-full px-10 py-3 text-base font-semibold"
+            className="rounded-full px-10"
           >
             {t("hero.cta")}
           </Button>
@@ -108,7 +108,7 @@ const HeroSection = () => {
       </div>
 
       <div className="hero-scroll absolute bottom-8 left-1/2 -translate-x-1/2 z-10 animate-bounce">
-        <ChevronDown className="h-6 w-6 text-white/50" />
+        <ChevronDown className="size-6 text-photo-foreground/50" />
       </div>
     </section>
   );

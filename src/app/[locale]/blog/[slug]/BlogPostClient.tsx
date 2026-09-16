@@ -26,12 +26,12 @@ const BlogPostClient = ({ post, urlLocale, slug, availableUrlLocales }: Props) =
 
         <div className="flex flex-wrap items-center gap-3 text-sm text-muted-foreground mb-4">
           <span className="flex items-center gap-1.5">
-            <CalendarDays className="h-4 w-4" />
+            <CalendarDays className="size-4" />
             {t("blog.published")} {post.date}
           </span>
           {post.lastModified && (
             <span className="flex items-center gap-1.5">
-              <CalendarDays className="h-4 w-4" />
+              <CalendarDays className="size-4" />
               {t("blog.updated")} {post.lastModified}
             </span>
           )}
@@ -40,7 +40,7 @@ const BlogPostClient = ({ post, urlLocale, slug, availableUrlLocales }: Props) =
         {otherLocales.length > 0 && (
           <div className="flex flex-wrap items-center gap-2 text-sm text-muted-foreground mb-4">
             <span className="flex items-center gap-1.5">
-              <Languages className="h-4 w-4" />
+              <Languages className="size-4" />
               {t("blog.translations")}:
             </span>
             {otherLocales.map((otherUrlLocale) => (

@@ -14,7 +14,7 @@ const ThemeToggle = () => {
 
   // Avoid hydration mismatch — render a placeholder until mounted
   if (!mounted) {
-    return <Button variant="ghost" size="icon" className="w-9 h-9" aria-hidden="true" />;
+    return <Button variant="ghost" size="icon" aria-hidden="true" />;
   }
 
   const isDark = theme === "dark";
@@ -25,9 +25,9 @@ const ThemeToggle = () => {
       size="icon"
       onClick={() => setTheme(isDark ? "light" : "dark")}
       aria-label={isDark ? "Switch to light mode" : "Switch to dark mode"}
-      className="w-9 h-9 rounded-full"
+      className="rounded-full"
     >
-      {isDark ? <Sun className="h-4 w-4" /> : <Moon className="h-4 w-4" />}
+      {isDark ? <Sun data-icon="inline-start" /> : <Moon data-icon="inline-start" />}
     </Button>
   );
 };

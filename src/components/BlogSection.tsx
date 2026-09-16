@@ -8,7 +8,9 @@ import { INTERNAL_TO_URL } from "@/lib/locales";
 import { SCROLL_TRIGGERS } from "@/lib/constants";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { Button } from "@/components/ui/button";
+import { buttonVariants } from "@/components/ui/button";
+import { Empty, EmptyHeader, EmptyTitle } from "@/components/ui/empty";
+import { cn } from "@/lib/utils";
 import { ArrowRight, CalendarDays } from "lucide-react";
 import type { PostMeta } from "@/lib/blog";
 
@@ -30,6 +32,8 @@ const BlogSection = ({ posts }: BlogSectionProps) => {
           scrollTrigger: { trigger: container.current, start: SCROLL_TRIGGERS.HEADING, toggleActions: "play none none reverse" },
         },
       );
+
+      if (posts.length === 0) return;
 
       gsap.fromTo(".blog-card",
         { opacity: 0, y: 50, scale: 0.95 },
@@ -53,21 +57,25 @@ const BlogSection = ({ posts }: BlogSectionProps) => {
         </div>
 
         {posts.length === 0 ? (
-          <p className="text-center text-muted-foreground">{t("blog.no_posts")}</p>
+          <Empty>
+            <EmptyHeader>
+              <EmptyTitle>{t("blog.no_posts")}</EmptyTitle>
+            </EmptyHeader>
+          </Empty>
         ) : (
           <>
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 mb-10">
               {posts.map((post, i) => {
                 const linkLocale = INTERNAL_TO_URL[post.locale] ?? urlLocale;
                 return (
-                  <Link key={post.slug} href={`/${linkLocale}/blog/${post.slug}/`} className={`block ${i === 0 ? "lg:col-span-2" : ""}`}>
+                  <Link key={post.slug} href={`/${linkLocale}/blog/${post.slug}/`} className={cn("block", i === 0 && "lg:col-span-2")}>
                     <Card className="blog-card opacity-0 h-full hover:shadow-lg transition-shadow duration-300 group">
                       <CardHeader>
                         <div className="flex items-center gap-2 text-xs text-muted-foreground mb-2">
-                          <CalendarDays className="h-3.5 w-3.5" />
+                          <CalendarDays className="size-3.5" />
                           {post.date}
                         </div>
-                        <CardTitle className="text-lg group-hover:text-primary transition-colors line-clamp-2">
+                        <CardTitle className="line-clamp-2">
                           {post.title}
                         </CardTitle>
                       </CardHeader>
@@ -78,7 +86,7 @@ const BlogSection = ({ posts }: BlogSectionProps) => {
                         {post.tags.length > 0 && (
                           <div className="flex flex-wrap gap-1.5">
                             {post.tags.slice(0, 3).map((tag) => (
-                              <Badge key={tag} variant="secondary" className="text-xs">
+                              <Badge key={tag} variant="secondary">
                                 {tag}
                               </Badge>
                             ))}
@@ -92,10 +100,10 @@ const BlogSection = ({ posts }: BlogSectionProps) => {
             </div>
 
             <div className="text-center">
-              <Button variant="outline" nativeButton={false} render={<Link href={`/${urlLocale}/blog/`} />} className="inline-flex items-center gap-2">
+              <Link href={`/${urlLocale}/blog/`} className={buttonVariants({ variant: "outline" })}>
                 {t("blog.all_posts")}
-                <ArrowRight className="h-4 w-4" />
-              </Button>
+                <ArrowRight data-icon="inline-end" />
+              </Link>
             </div>
           </>
         )}

@@ -5,6 +5,7 @@ import { useTranslation } from "react-i18next";
 import { INTERNAL_TO_URL } from "@/lib/locales";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
+import { Empty, EmptyHeader, EmptyTitle } from "@/components/ui/empty";
 import { CalendarDays } from "lucide-react";
 import type { PostMeta } from "@/lib/blog";
 
@@ -22,9 +23,13 @@ const BlogListClient = ({ posts, urlLocale }: Props) => {
       <p className="text-muted-foreground mb-10">{t("blog.subtitle")}</p>
 
       {posts.length === 0 ? (
-        <p className="text-muted-foreground">{t("blog.no_posts")}</p>
+        <Empty>
+          <EmptyHeader>
+            <EmptyTitle>{t("blog.no_posts")}</EmptyTitle>
+          </EmptyHeader>
+        </Empty>
       ) : (
-        <div className="space-y-6">
+        <div className="flex flex-col gap-6">
           {posts.map((post) => {
             const linkLocale = INTERNAL_TO_URL[post.locale] ?? urlLocale;
             return (
@@ -32,10 +37,10 @@ const BlogListClient = ({ posts, urlLocale }: Props) => {
                 <Card className="hover:shadow-md transition-shadow duration-300 group">
                   <CardHeader className="pb-2">
                     <div className="flex items-center gap-2 text-xs text-muted-foreground mb-1">
-                      <CalendarDays className="h-3.5 w-3.5" />
+                      <CalendarDays className="size-3.5" />
                       {post.date}
                     </div>
-                    <CardTitle className="text-xl group-hover:text-primary transition-colors">
+                    <CardTitle>
                       {post.title}
                     </CardTitle>
                   </CardHeader>
@@ -44,7 +49,7 @@ const BlogListClient = ({ posts, urlLocale }: Props) => {
                     {post.tags.length > 0 && (
                       <div className="flex flex-wrap gap-1.5">
                         {post.tags.map((tag) => (
-                          <Badge key={tag} variant="secondary" className="text-xs">
+                          <Badge key={tag} variant="secondary">
                             {tag}
                           </Badge>
                         ))}

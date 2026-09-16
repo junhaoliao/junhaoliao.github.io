@@ -43,10 +43,29 @@
     --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
     --color-sidebar-border: var(--sidebar-border);
     --color-sidebar-ring: var(--sidebar-ring);
+    --color-photo-foreground: var(--photo-foreground);
+    --color-photo-scrim: var(--photo-scrim);
+    --color-contact-scrim: var(--contact-scrim);
+    --color-logo-surface: var(--logo-surface);
+    --color-skill-systems: var(--skill-systems);
+    --color-skill-web: var(--skill-web);
+    --color-skill-rust: var(--skill-rust);
+    --color-timeline-panel: var(--timeline-panel);
 }
 
 /* Pantone 2026 "Atmospheric" palette — Cloud Dancer + breezy blues */
 :root {
+    /* Photos and original logo assets retain their contrast in both themes. */
+    --photo-foreground: oklch(1 0 0);
+    --photo-scrim: oklch(0 0 0);
+    --photo-text-shadow: oklch(0 0 0 / 60%);
+    --photo-title-shadow: oklch(0 0 0 / 50%);
+    --contact-scrim: oklch(0 0 0 / 0%);
+    --logo-surface: oklch(1 0 0);
+    --skill-systems: oklch(0.645 0.246 16.439);
+    --skill-web: oklch(0.769 0.188 70.08);
+    --skill-rust: oklch(0.705 0.213 47.604);
+    --timeline-panel: color-mix(in oklab, var(--muted) 60%, transparent);
     --radius: 0.625rem;
     --background: oklch(0.985 0.003 250);
     --foreground: oklch(0.18 0.025 255);
@@ -82,6 +101,8 @@
 }
 
 .dark {
+    --contact-scrim: oklch(0 0 0 / 40%);
+    --timeline-panel: color-mix(in oklab, var(--muted) 40%, transparent);
     --background: oklch(0.155 0.025 255);
     --foreground: oklch(0.955 0.006 85);
     --card: oklch(0.21 0.025 255);
@@ -113,6 +134,16 @@
     --sidebar-accent-foreground: oklch(0.955 0.006 85);
     --sidebar-border: oklch(0.96 0.012 240 / 12%);
     --sidebar-ring: oklch(0.55 0.15 240);
+}
+
+/* Context tokens let standard ghost buttons work over photography. Portaled
+   menus and sheets continue to use the page theme. */
+.photo-surface {
+    --foreground: var(--photo-foreground);
+    --muted-foreground: color-mix(in oklab, var(--photo-foreground) 80%, transparent);
+    --muted: color-mix(in oklab, var(--photo-foreground) 10%, transparent);
+    --border: color-mix(in oklab, var(--photo-foreground) 30%, transparent);
+    --ring: var(--photo-foreground);
 }
 
 @layer base {

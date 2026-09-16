@@ -4,8 +4,8 @@ import { useRef } from "react";
 import { useTranslation } from "react-i18next";
 import { gsap, useGSAP } from "@/lib/gsap";
 import Image from "next/image";
-import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
+import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
+import { buttonVariants } from "@/components/ui/button";
 import { Github, ExternalLink } from "lucide-react";
 import { SCROLL_TRIGGERS } from "@/lib/constants";
 
@@ -83,48 +83,48 @@ const ProjectsSection = () => {
           </h2>
         </div>
 
-        <div className="featured-card opacity-0 mb-8 rounded-2xl ring-1 ring-foreground/10 bg-card shadow-xs overflow-hidden">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-0">
-            <div className="p-8 sm:p-10 lg:p-12 flex flex-col justify-center">
-              <div className="flex items-center gap-3 mb-4">
+        <Card className="featured-card opacity-0 mb-8 grid grid-cols-1 lg:grid-cols-2 gap-0 p-0">
+          <div className="p-8 sm:p-10 lg:p-12 flex flex-col justify-center gap-6">
+            <CardHeader className="p-0 gap-4">
+              <div className="flex items-center gap-3">
                 <Image
                   src={FEATURED_PROJECT.logo}
                   alt={t(`projects.items.${FEATURED_PROJECT.key}.name`)}
                   width={48}
                   height={48}
-                  className="w-12 h-12 object-contain"
+                  className="size-12 object-contain"
                 />
-                <h3 className="text-2xl sm:text-3xl lg:text-4xl font-bold tracking-tight">
+                <CardTitle role="heading" aria-level={3}>
                   {t(`projects.items.${FEATURED_PROJECT.key}.name`)}
-                </h3>
+                </CardTitle>
               </div>
-              <p className="text-base sm:text-lg text-muted-foreground leading-relaxed mb-6">
+              <CardDescription>
                 {t(`projects.items.${FEATURED_PROJECT.key}.description`)}
-              </p>
-              <div className="flex gap-3">
-                <Button variant="outline" nativeButton={false} render={<a href={FEATURED_PROJECT.githubUrl} target="_blank" rel="noopener noreferrer" />} className="inline-flex items-center gap-2">
-                  <Github className="h-4 w-4" />
-                  {t("projects.view_github")}
-                </Button>
-                <Button variant="outline" nativeButton={false} render={<a href={FEATURED_PROJECT.externalUrl} target="_blank" rel="noopener noreferrer" />} className="inline-flex items-center gap-2">
-                  <ExternalLink className="h-4 w-4" />
-                  {t("projects.view_link")}
-                </Button>
-              </div>
-            </div>
-
-            <div className="relative min-h-[200px] lg:min-h-0">
-              <Image
-                src={FEATURED_PROJECT.screenshot}
-                alt="iCtrl screenshot"
-                fill
-                className="object-cover brightness-75 saturate-75"
-                sizes="(max-width: 1024px) 100vw, 50vw"
-              />
-              <div className="absolute inset-0 bg-gradient-to-t from-card/60 via-card/20 to-transparent" />
-            </div>
+              </CardDescription>
+            </CardHeader>
+            <CardFooter className="p-0 flex-wrap gap-3">
+              <a href={FEATURED_PROJECT.githubUrl} target="_blank" rel="noopener noreferrer" className={buttonVariants({ variant: "outline" })}>
+                <Github data-icon="inline-start" />
+                {t("projects.view_github")}
+              </a>
+              <a href={FEATURED_PROJECT.externalUrl} target="_blank" rel="noopener noreferrer" className={buttonVariants({ variant: "outline" })}>
+                <ExternalLink data-icon="inline-start" />
+                {t("projects.view_link")}
+              </a>
+            </CardFooter>
           </div>
-        </div>
+
+          <CardContent className="relative min-h-[200px] lg:min-h-0 p-0">
+            <Image
+              src={FEATURED_PROJECT.screenshot}
+              alt="iCtrl screenshot"
+              fill
+              className="object-cover brightness-75 saturate-75"
+              sizes="(max-width: 1024px) 100vw, 50vw"
+            />
+            <div className="absolute inset-0 bg-gradient-to-t from-card/60 via-card/20 to-transparent" />
+          </CardContent>
+        </Card>
 
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
           {SECONDARY_PROJECTS.map((project) => {
@@ -141,9 +141,9 @@ const ProjectsSection = () => {
                       alt={t(`projects.items.${project.key}.name`)}
                       width={40}
                       height={40}
-                      className="w-10 h-10 object-contain shrink-0"
+                      className="size-10 object-contain shrink-0"
                     />
-                    <CardTitle className="text-xl">
+                    <CardTitle>
                       {t(`projects.items.${project.key}.name`)}
                     </CardTitle>
                   </div>
@@ -157,16 +157,16 @@ const ProjectsSection = () => {
 
                 <CardFooter className="gap-2 mt-auto pt-4">
                   {hasGithubUrl(project) && (
-                    <Button variant="outline" size="sm" nativeButton={false} render={<a href={project.githubUrl} target="_blank" rel="noopener noreferrer" />} className="inline-flex items-center gap-1.5">
-                      <Github className="h-3.5 w-3.5" />
+                    <a href={project.githubUrl} target="_blank" rel="noopener noreferrer" className={buttonVariants({ variant: "outline", size: "sm" })}>
+                      <Github data-icon="inline-start" />
                       {t("projects.view_github")}
-                    </Button>
+                    </a>
                   )}
                   {hasExternalUrl(project) && (
-                    <Button variant="outline" size="sm" nativeButton={false} render={<a href={project.externalUrl} target="_blank" rel="noopener noreferrer" />} className="inline-flex items-center gap-1.5">
-                      <ExternalLink className="h-3.5 w-3.5" />
+                    <a href={project.externalUrl} target="_blank" rel="noopener noreferrer" className={buttonVariants({ variant: "outline", size: "sm" })}>
+                      <ExternalLink data-icon="inline-start" />
                       {t("projects.view_link")}
-                    </Button>
+                    </a>
                   )}
                 </CardFooter>
               </Card>
