@@ -2,7 +2,7 @@ import { notFound } from "next/navigation";
 import DocumentLayout from "@/components/DocumentLayout";
 import { URL_LOCALES, type UrlLocale } from "@/lib/locales";
 
-export { metadata } from "@/components/DocumentLayout";
+export { metadata, viewport } from "@/components/DocumentLayout";
 
 export const dynamicParams = false;
 

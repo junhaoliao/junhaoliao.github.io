@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import { formatBlogDate } from "@/lib/dates";
 import { useTranslation } from "react-i18next";
 import { Badge } from "@/components/ui/badge";
 import { CalendarDays, Languages } from "lucide-react";
@@ -15,7 +16,7 @@ interface Props {
 }
 
 const BlogPostClient = ({ post, urlLocale, slug, availableUrlLocales }: Props) => {
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
 
   const otherLocales = availableUrlLocales.filter((l) => l !== urlLocale);
 
@@ -27,12 +28,12 @@ const BlogPostClient = ({ post, urlLocale, slug, availableUrlLocales }: Props) =
         <div className="flex flex-wrap items-center gap-3 text-sm text-muted-foreground mb-4">
           <span className="flex items-center gap-1.5">
             <CalendarDays className="size-4" />
-            {t("blog.published")} {post.date}
+            {t("blog.published")} <time dateTime={post.date}>{formatBlogDate(post.date, i18n.language)}</time>
           </span>
           {post.lastModified && (
             <span className="flex items-center gap-1.5">
               <CalendarDays className="size-4" />
-              {t("blog.updated")} {post.lastModified}
+              {t("blog.updated")} <time dateTime={post.lastModified}>{formatBlogDate(post.lastModified, i18n.language)}</time>
             </span>
           )}
         </div>

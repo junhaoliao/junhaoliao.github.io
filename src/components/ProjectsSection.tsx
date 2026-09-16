@@ -2,7 +2,7 @@
 
 import { useRef } from "react";
 import { useTranslation } from "react-i18next";
-import { gsap, useGSAP } from "@/lib/gsap";
+import { gsap, useMotionGSAP } from "@/lib/gsap";
 import Image from "next/image";
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import { buttonVariants } from "@/components/ui/button";
@@ -42,7 +42,7 @@ const ProjectsSection = () => {
   const { t } = useTranslation();
   const container = useRef<HTMLElement>(null);
 
-  useGSAP(
+  useMotionGSAP(
     () => {
       gsap.fromTo(".section-heading",
         { opacity: 0, y: 30 },
@@ -68,13 +68,13 @@ const ProjectsSection = () => {
         },
       );
     },
-    { scope: container },
+    container,
   );
 
   return (
     <section id="projects" ref={container} className="py-32 lg:py-40 bg-background">
       <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="section-heading opacity-0 mb-10 sm:mb-14">
+        <div className="section-heading mb-10 sm:mb-14">
           <p className="text-xs font-semibold uppercase tracking-[0.2em] text-muted-foreground mb-3">
             {t("projects.featured_label")}
           </p>
@@ -83,7 +83,7 @@ const ProjectsSection = () => {
           </h2>
         </div>
 
-        <Card className="featured-card opacity-0 mb-8 grid grid-cols-1 lg:grid-cols-2 gap-0 p-0">
+        <Card className="featured-card mb-8 grid grid-cols-1 lg:grid-cols-2 gap-0 p-0">
           <div className="p-8 sm:p-10 lg:p-12 flex flex-col justify-center gap-6">
             <CardHeader className="p-0 gap-4">
               <div className="flex items-center gap-3">
@@ -132,7 +132,7 @@ const ProjectsSection = () => {
             return (
               <Card
                 key={project.key}
-                className="project-card opacity-0 flex flex-col"
+                className="project-card flex flex-col"
               >
                 <CardHeader>
                   <div className="flex items-center gap-3">

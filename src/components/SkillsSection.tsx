@@ -2,7 +2,7 @@
 
 import { useRef } from "react";
 import { useTranslation } from "react-i18next";
-import { gsap, useGSAP } from "@/lib/gsap";
+import { gsap, useMotionGSAP } from "@/lib/gsap";
 import { Badge } from "@/components/ui/badge";
 import { Separator } from "@/components/ui/separator";
 import { cn } from "@/lib/utils";
@@ -21,7 +21,7 @@ const SkillsSection = () => {
   const { t } = useTranslation();
   const container = useRef<HTMLElement>(null);
 
-  useGSAP(
+  useMotionGSAP(
     () => {
       gsap.fromTo(".section-heading",
         { opacity: 0, y: 30 },
@@ -49,14 +49,14 @@ const SkillsSection = () => {
         },
       );
     },
-    { scope: container },
+    container,
   );
 
   return (
     <section id="skills" ref={container} className="py-32 lg:py-40 bg-muted/40 overflow-hidden">
       <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-16 sm:mb-20">
-          <h2 className="section-heading opacity-0 text-3xl sm:text-4xl lg:text-5xl font-bold tracking-tight">
+          <h2 className="section-heading text-3xl sm:text-4xl lg:text-5xl font-bold tracking-tight">
             {t("skills.title")}
           </h2>
         </div>
@@ -65,7 +65,7 @@ const SkillsSection = () => {
           {FEATURED_SKILLS.map(({ key, icon: Icon, color }, index) => (
             <div
               key={key}
-              className={cn("skill-row opacity-0 flex flex-col", index % 2 === 1 ? "items-end text-right" : "items-start text-left")}
+              className={cn("skill-row flex flex-col", index % 2 === 1 ? "items-end text-right" : "items-start text-left")}
             >
               <div className="flex items-center gap-4 mb-4">
                 <div className={cn("p-3 rounded-2xl bg-muted/60", color)}>
@@ -92,7 +92,7 @@ const SkillsSection = () => {
           ))}
         </div>
 
-        <div className="category-grid opacity-0">
+        <div className="category-grid">
           <Separator className="mb-16 opacity-50" />
           <p className="text-xs font-semibold uppercase tracking-[0.2em] text-muted-foreground mb-8">
             {t("skills.also")}

@@ -3,9 +3,9 @@
 import { useRef } from "react";
 import Image from "next/image";
 import { useTranslation } from "react-i18next";
-import { gsap, useGSAP } from "@/lib/gsap";
+import { gsap, useMotionGSAP } from "@/lib/gsap";
 import { HoverCard, HoverCardContent, HoverCardTrigger } from "@/components/ui/hover-card";
-import { Button, buttonVariants } from "@/components/ui/button";
+import { buttonVariants } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 import { MapPin, Mail, MessageCircle, Linkedin, Github, type LucideIcon } from "lucide-react";
 
@@ -25,7 +25,7 @@ const ContactLink = ({ item }: { item: ContactItem }) => {
       href={item.href}
       target={item.href?.startsWith("http") ? "_blank" : undefined}
       rel={item.href?.startsWith("http") ? "noopener noreferrer" : undefined}
-      className={cn(buttonVariants({ variant: "ghost" }), "contact-item opacity-0 gap-3")}
+      className={cn(buttonVariants({ variant: "ghost" }), "contact-item gap-3")}
     >
       <Icon data-icon="inline-start" />
       <span>{item.label}</span>
@@ -37,7 +37,7 @@ const ContactSection = () => {
   const { t } = useTranslation();
   const container = useRef<HTMLElement>(null);
 
-  useGSAP(
+  useMotionGSAP(
     () => {
       gsap.to(".contact-bg", {
         yPercent: 15,
@@ -58,7 +58,7 @@ const ContactSection = () => {
         },
       );
     },
-    { scope: container },
+    container,
   );
 
   const items: ContactItem[] = [
@@ -84,10 +84,11 @@ const ContactSection = () => {
             delay={100}
             closeDelay={100}
             render={
-              <Button
-                variant="ghost"
-                onClick={() => window.open("/images/wechat-qr.webp", "_blank")}
-                className="contact-item opacity-0 gap-3"
+              <a
+                href="/images/wechat-qr.webp"
+                target="_blank"
+                rel="noopener noreferrer"
+                className={cn(buttonVariants({ variant: "ghost" }), "contact-item gap-3")}
                 aria-label="WeChat QR code"
               />
             }
@@ -139,7 +140,7 @@ const ContactSection = () => {
       </div>
 
       <div className="relative z-10 max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-        <h2 className="contact-item opacity-0 text-4xl sm:text-5xl lg:text-6xl font-bold text-photo-foreground tracking-tight mb-12 sm:mb-16">
+        <h2 className="contact-item text-4xl sm:text-5xl lg:text-6xl font-bold text-photo-foreground tracking-tight mb-12 sm:mb-16">
           {t("contact.title")}
         </h2>
 

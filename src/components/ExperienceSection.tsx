@@ -2,7 +2,7 @@
 
 import { useRef } from "react";
 import { useTranslation, Trans } from "react-i18next";
-import { gsap, useGSAP } from "@/lib/gsap";
+import { gsap, useMotionGSAP } from "@/lib/gsap";
 import Image from "next/image";
 import { MapPin, CalendarDays } from "lucide-react";
 import { LOGO_CLASSES, SCROLL_TRIGGERS } from "@/lib/constants";
@@ -67,7 +67,7 @@ const ExperienceSection = () => {
   const container = useRef<HTMLElement>(null);
   const lineRef = useRef<HTMLDivElement>(null);
 
-  useGSAP(
+  useMotionGSAP(
     () => {
       gsap.fromTo(".timeline-heading",
         { opacity: 0, y: 30 },
@@ -110,7 +110,7 @@ const ExperienceSection = () => {
         },
       );
     },
-    { scope: container },
+    container,
   );
 
   return (
@@ -121,7 +121,7 @@ const ExperienceSection = () => {
     >
       <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-16 sm:mb-20">
-          <h2 className="timeline-heading opacity-0 text-3xl sm:text-4xl lg:text-5xl font-bold tracking-tight">
+          <h2 className="timeline-heading text-3xl sm:text-4xl lg:text-5xl font-bold tracking-tight">
             {t("timeline.title")}
           </h2>
         </div>
@@ -138,7 +138,7 @@ const ExperienceSection = () => {
                 return (
                   <div
                     key={item.i18nKey}
-                    className="tl-item opacity-0 relative flex items-start gap-5 sm:gap-6 pl-14 sm:pl-18"
+                    className="tl-item relative flex items-start gap-5 sm:gap-6 pl-14 sm:pl-18"
                   >
                     <a
                       href={item.url}
@@ -185,7 +185,7 @@ const ExperienceSection = () => {
               return (
                 <div
                   key={key}
-                  className="tl-item opacity-0 relative flex items-start gap-5 sm:gap-6 pl-14 sm:pl-18"
+                  className="tl-item relative flex items-start gap-5 sm:gap-6 pl-14 sm:pl-18"
                 >
                   <a
                     href={url}
@@ -242,7 +242,7 @@ const ExperienceSection = () => {
           </div>
         </div>
 
-        <div className="tl-publication opacity-0 mt-12">
+        <div className="tl-publication mt-12">
           <Separator className="mb-8" />
           <p className="text-xs font-semibold uppercase tracking-[0.2em] opacity-50 mb-4">
             {t("hero.publications_label")}

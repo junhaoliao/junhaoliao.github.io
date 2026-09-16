@@ -156,9 +156,16 @@
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
   }
-  html {
-    scroll-behavior: smooth;
+  @media (prefers-reduced-motion: no-preference) {
+    html { scroll-behavior: smooth; }
   }
+  h1, h2, h3, h4, h5, h6 {
+    text-wrap: balance;
+  }
+  :where(section[id], h1[id], h2[id], h3[id], h4[id], h5[id], h6[id]) {
+    scroll-margin-top: 5rem;
+  }
+  #hero { scroll-margin-top: 0; }
 }
 
 /* Typography utilities */
@@ -215,4 +222,12 @@
   hr {
     @apply border-border my-8;
   }
+}
+
+.skip-link {
+  @apply sr-only;
+}
+
+.skip-link:focus {
+  @apply not-sr-only fixed top-2 left-2 z-[60] rounded-md bg-background px-4 py-2 text-foreground outline-2 outline-offset-2 outline-ring;
 }

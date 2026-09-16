@@ -39,16 +39,16 @@ const LocaleHome = async ({ params }: { params: Promise<{ locale: string }> }) =
       language={URL_TO_INTERNAL[locale as UrlLocale]}
       dictionary={getDictionary(locale as UrlLocale)}
     >
-      <main>
-        <Navbar />
+      <Navbar />
+      <main id="main-content" tabIndex={-1}>
         <HeroSection />
         <ExperienceSection />
         <SkillsSection />
         <ProjectsSection />
         <BlogSection posts={posts} />
         <ContactSection />
-        <Footer />
       </main>
+      <Footer />
     </I18nProvider>
   );
 };

@@ -31,7 +31,7 @@ const LocalizedBlogListPage = async ({ params }: Props) => {
   return (
     <>
       <Navbar />
-      <main className="min-h-screen pt-24 pb-16">
+      <main id="main-content" tabIndex={-1} className="min-h-screen pt-24 pb-16">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
           <BlogListClient posts={posts} urlLocale={locale} />
         </div>

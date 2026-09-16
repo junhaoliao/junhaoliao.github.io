@@ -3,16 +3,16 @@
 import { useRef } from "react";
 import Image from "next/image";
 import { useTranslation, Trans } from "react-i18next";
-import { gsap, useGSAP } from "@/lib/gsap";
-import { smoothScrollTo } from "@/lib/utils";
-import { Button } from "@/components/ui/button";
+import { gsap, useMotionGSAP } from "@/lib/gsap";
+import { buttonVariants } from "@/components/ui/button";
+import { cn } from "@/lib/utils";
 import { ChevronDown } from "lucide-react";
 
 const HeroSection = () => {
   const { t } = useTranslation();
   const container = useRef<HTMLElement>(null);
 
-  useGSAP(
+  useMotionGSAP(
     () => {
       const tl = gsap.timeline({ defaults: { ease: "power3.out" } });
       tl.from(".hero-tagline", { opacity: 0, y: 30, duration: 0.7 })
@@ -42,7 +42,7 @@ const HeroSection = () => {
         },
       });
     },
-    { scope: container },
+    container,
   );
 
   return (
@@ -97,17 +97,16 @@ const HeroSection = () => {
         </p>
 
         <div className="hero-cta mt-8 sm:mt-10">
-          <Button
-            size="lg"
-            onClick={() => smoothScrollTo("contact")}
-            className="rounded-full px-10"
+          <a
+            href="#contact"
+            className={cn(buttonVariants({ size: "lg" }), "rounded-full px-10")}
           >
             {t("hero.cta")}
-          </Button>
+          </a>
         </div>
       </div>
 
-      <div className="hero-scroll absolute bottom-8 left-1/2 -translate-x-1/2 z-10 animate-bounce">
+      <div aria-hidden="true" className="hero-scroll absolute bottom-8 left-1/2 -translate-x-1/2 z-10">
         <ChevronDown className="size-6 text-photo-foreground/50" />
       </div>
     </section>

@@ -1,8 +1,9 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import { Inter } from "next/font/google";
 import Script from "next/script";
 import { ThemeProvider } from "next-themes";
 import "@/app/globals.css";
+import ThemeColor from "@/components/ThemeColor";
 
 const inter = Inter({
   variable: "--font-inter",
@@ -37,6 +38,14 @@ export const metadata: Metadata = {
   },
 };
 
+// Initial colors match the CSS background tokens; ThemeColor follows manual choices after hydration.
+export const viewport: Viewport = {
+  themeColor: [
+    { media: "(prefers-color-scheme: light)", color: "#f9fafc" },
+    { media: "(prefers-color-scheme: dark)", color: "#050d17" },
+  ],
+};
+
 const DocumentLayout = ({
   children,
   locale,
@@ -63,6 +72,7 @@ gtag('config', 'G-2LPTE0G465');`}
           enableSystem
           disableTransitionOnChange
         >
+          <ThemeColor />
           {children}
         </ThemeProvider>
       </body>

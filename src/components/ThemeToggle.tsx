@@ -9,7 +9,7 @@ const noop = () => () => {};
 const useMounted = () => useSyncExternalStore(noop, () => true, () => false);
 
 const ThemeToggle = () => {
-  const { theme, setTheme } = useTheme();
+  const { resolvedTheme, setTheme } = useTheme();
   const mounted = useMounted();
 
   // Avoid hydration mismatch — render a placeholder until mounted
@@ -17,7 +17,7 @@ const ThemeToggle = () => {
     return <Button variant="ghost" size="icon" aria-hidden="true" />;
   }
 
-  const isDark = theme === "dark";
+  const isDark = resolvedTheme === "dark";
 
   return (
     <Button

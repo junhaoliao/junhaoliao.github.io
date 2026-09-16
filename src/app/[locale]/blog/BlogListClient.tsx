@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import { formatBlogDate } from "@/lib/dates";
 import { useTranslation } from "react-i18next";
 import { INTERNAL_TO_URL } from "@/lib/locales";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -15,7 +16,7 @@ interface Props {
 }
 
 const BlogListClient = ({ posts, urlLocale }: Props) => {
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
 
   return (
     <>
@@ -38,9 +39,9 @@ const BlogListClient = ({ posts, urlLocale }: Props) => {
                   <CardHeader className="pb-2">
                     <div className="flex items-center gap-2 text-xs text-muted-foreground mb-1">
                       <CalendarDays className="size-3.5" />
-                      {post.date}
+                      <time dateTime={post.date}>{formatBlogDate(post.date, i18n.language)}</time>
                     </div>
-                    <CardTitle>
+                    <CardTitle as="h2">
                       {post.title}
                     </CardTitle>
                   </CardHeader>

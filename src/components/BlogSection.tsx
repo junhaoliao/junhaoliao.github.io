@@ -2,8 +2,9 @@
 
 import { useRef } from "react";
 import Link from "next/link";
+import { formatBlogDate } from "@/lib/dates";
 import { useTranslation } from "react-i18next";
-import { gsap, useGSAP } from "@/lib/gsap";
+import { gsap, useMotionGSAP } from "@/lib/gsap";
 import { INTERNAL_TO_URL } from "@/lib/locales";
 import { SCROLL_TRIGGERS } from "@/lib/constants";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -23,7 +24,7 @@ const BlogSection = ({ posts }: BlogSectionProps) => {
   const container = useRef<HTMLElement>(null);
   const urlLocale = INTERNAL_TO_URL[i18n.language] ?? "en";
 
-  useGSAP(
+  useMotionGSAP(
     () => {
       gsap.fromTo(".section-heading",
         { opacity: 0, y: 30 },
@@ -43,17 +44,17 @@ const BlogSection = ({ posts }: BlogSectionProps) => {
         },
       );
     },
-    { scope: container },
+    container,
   );
 
   return (
     <section id="blog" ref={container} className="py-32 lg:py-40 bg-muted/40">
       <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-14">
-          <h2 className="section-heading opacity-0 text-3xl sm:text-4xl font-bold tracking-tight mb-3">
+          <h2 className="section-heading text-3xl sm:text-4xl font-bold tracking-tight mb-3">
             {t("blog.title")}
           </h2>
-          <p className="section-heading opacity-0 text-muted-foreground">{t("blog.subtitle")}</p>
+          <p className="section-heading text-muted-foreground">{t("blog.subtitle")}</p>
         </div>
 
         {posts.length === 0 ? (
@@ -69,11 +70,11 @@ const BlogSection = ({ posts }: BlogSectionProps) => {
                 const linkLocale = INTERNAL_TO_URL[post.locale] ?? urlLocale;
                 return (
                   <Link key={post.slug} href={`/${linkLocale}/blog/${post.slug}/`} className={cn("block", i === 0 && "lg:col-span-2")}>
-                    <Card className="blog-card opacity-0 h-full hover:shadow-lg transition-shadow duration-300 group">
+                    <Card className="blog-card h-full hover:shadow-lg transition-shadow duration-300 group">
                       <CardHeader>
                         <div className="flex items-center gap-2 text-xs text-muted-foreground mb-2">
                           <CalendarDays className="size-3.5" />
-                          {post.date}
+                          <time dateTime={post.date}>{formatBlogDate(post.date, i18n.language)}</time>
                         </div>
                         <CardTitle className="line-clamp-2">
                           {post.title}
