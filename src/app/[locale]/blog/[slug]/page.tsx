@@ -1,7 +1,7 @@
 import { notFound } from "next/navigation";
 import Link from "next/link";
 import { ArrowLeft } from "lucide-react";
-import { getAllSlugs, getAllLocaleVariants } from "@/lib/blog";
+import { getAllSlugs, getPostMetaVariants, getPost } from "@/lib/blog";
 import { DEFAULT_LOCALE, URL_LOCALES, URL_TO_INTERNAL, buildLanguageAlternates, type UrlLocale } from "@/lib/locales";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
@@ -19,23 +19,15 @@ export const generateStaticParams = async ({
 }) => {
   const { locale } = params;
   const i18nCode = URL_TO_INTERNAL[locale as UrlLocale] ?? DEFAULT_LOCALE;
-  const slugs = getAllSlugs();
-  const result: { slug: string }[] = [];
-
-  for (const slug of slugs) {
-    const variants = await getAllLocaleVariants(slug);
-    if (variants[i18nCode]) {
-      result.push({ slug });
-    }
-  }
-
-  return result;
+  return getAllSlugs().flatMap((slug) =>
+    getPostMetaVariants(slug)[i18nCode] ? [{ slug }] : [],
+  );
 };
 
 export const generateMetadata = async ({ params }: Props): Promise<Metadata> => {
   const { locale, slug } = await params;
   const i18nCode = URL_TO_INTERNAL[locale as UrlLocale] ?? DEFAULT_LOCALE;
-  const variants = await getAllLocaleVariants(slug);
+  const variants = getPostMetaVariants(slug);
   const post = variants[i18nCode];
   if (!post) return {};
 
@@ -59,8 +51,8 @@ export const generateMetadata = async ({ params }: Props): Promise<Metadata> => 
 const LocalizedBlogPostPage = async ({ params }: Props) => {
   const { locale, slug } = await params;
   const i18nCode = URL_TO_INTERNAL[locale as UrlLocale] ?? DEFAULT_LOCALE;
-  const variants = await getAllLocaleVariants(slug);
-  const post = variants[i18nCode];
+  const variants = getPostMetaVariants(slug);
+  const post = await getPost(slug, i18nCode);
 
   if (!post) {
     notFound();

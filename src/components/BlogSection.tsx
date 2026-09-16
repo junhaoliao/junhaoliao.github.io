@@ -13,17 +13,13 @@ import { ArrowRight, CalendarDays } from "lucide-react";
 import type { PostMeta } from "@/lib/blog";
 
 interface BlogSectionProps {
-  posts: Record<string, PostMeta>[];
+  posts: PostMeta[];
 }
 
-const BlogSection = ({ posts: localizedPosts }: BlogSectionProps) => {
+const BlogSection = ({ posts }: BlogSectionProps) => {
   const { t, i18n } = useTranslation();
   const container = useRef<HTMLElement>(null);
   const urlLocale = INTERNAL_TO_URL[i18n.language] ?? "en";
-
-  const posts = localizedPosts.map((variants) =>
-    variants[i18n.language] ?? Object.values(variants)[0],
-  );
 
   useGSAP(
     () => {

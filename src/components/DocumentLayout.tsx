@@ -2,8 +2,7 @@ import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import Script from "next/script";
 import { ThemeProvider } from "next-themes";
-import "./globals.css";
-import I18nProvider from "@/components/I18nProvider";
+import "@/app/globals.css";
 
 const inter = Inter({
   variable: "--font-inter",
@@ -38,14 +37,15 @@ export const metadata: Metadata = {
   },
 };
 
-const RootLayout = ({
+const DocumentLayout = ({
   children,
+  locale,
 }: Readonly<{
   children: React.ReactNode;
+  locale: string;
 }>) => {
   return (
-    <html lang="en" suppressHydrationWarning className={inter.variable}>
-      <head />
+    <html lang={locale} suppressHydrationWarning className={inter.variable}>
       <body>
         <Script
           src="https://www.googletagmanager.com/gtag/js?id=G-2LPTE0G465"
@@ -63,11 +63,11 @@ gtag('config', 'G-2LPTE0G465');`}
           enableSystem
           disableTransitionOnChange
         >
-          <I18nProvider>{children}</I18nProvider>
+          {children}
         </ThemeProvider>
       </body>
     </html>
   );
 };
 
-export default RootLayout;
+export default DocumentLayout;

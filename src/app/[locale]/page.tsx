@@ -1,5 +1,5 @@
-import { getLocalizedPostIndex } from "@/lib/blog";
-import { buildLanguageAlternates } from "@/lib/locales";
+import { getAllPosts } from "@/lib/blog";
+import { buildLanguageAlternates, URL_TO_INTERNAL, type UrlLocale } from "@/lib/locales";
 import Navbar from "@/components/Navbar";
 import HeroSection from "@/components/HeroSection";
 import SkillsSection from "@/components/SkillsSection";
@@ -8,6 +8,8 @@ import ExperienceSection from "@/components/ExperienceSection";
 import BlogSection from "@/components/BlogSection";
 import ContactSection from "@/components/ContactSection";
 import Footer from "@/components/Footer";
+import I18nProvider from "@/components/I18nProvider";
+import { getDictionary } from "@/i18n/dictionaries";
 import type { Metadata } from "next";
 
 export const generateMetadata = async ({
@@ -27,20 +29,27 @@ export const generateMetadata = async ({
   };
 };
 
-const LocaleHome = async () => {
-  const posts = await getLocalizedPostIndex(5);
+const LocaleHome = async ({ params }: { params: Promise<{ locale: string }> }) => {
+  const { locale } = await params;
+  const posts = getAllPosts(URL_TO_INTERNAL[locale as UrlLocale]).slice(0, 5);
 
   return (
-    <main>
-      <Navbar />
-      <HeroSection />
-      <ExperienceSection />
-      <SkillsSection />
-      <ProjectsSection />
-      <BlogSection posts={posts} />
-      <ContactSection />
-      <Footer />
-    </main>
+    <I18nProvider
+      key={locale}
+      language={URL_TO_INTERNAL[locale as UrlLocale]}
+      dictionary={getDictionary(locale as UrlLocale)}
+    >
+      <main>
+        <Navbar />
+        <HeroSection />
+        <ExperienceSection />
+        <SkillsSection />
+        <ProjectsSection />
+        <BlogSection posts={posts} />
+        <ContactSection />
+        <Footer />
+      </main>
+    </I18nProvider>
   );
 };
 

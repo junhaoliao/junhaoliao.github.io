@@ -8,6 +8,7 @@ const nextConfig: NextConfig = {
   },
   experimental: {
     inlineCss: true,
+    globalNotFound: true,
   },
   env: {
     NEXT_TELEMETRY_DISABLED: "1",

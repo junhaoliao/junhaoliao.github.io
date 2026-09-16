@@ -1,34 +1,18 @@
-"use client";
+import { createInstance, type ResourceLanguage } from "i18next";
 
-import i18n from "i18next";
-import { initReactI18next } from "react-i18next";
-import { DEFAULT_LOCALE, SUPPORTED_LANGS } from "@/lib/locales";
-
-// Import translations at build time — no HTTP backend, no network requests
-import en from "../../public/locales/en/translation.json";
-import fr from "../../public/locales/fr/translation.json";
-import zhCN from "../../public/locales/zh-CN/translation.json";
-import zhHK from "../../public/locales/zh-HK/translation.json";
-
-const resources = {
-  en: { translation: en },
-  fr: { translation: fr },
-  "zh-CN": { translation: zhCN },
-  "zh-HK": { translation: zhHK },
-};
-
-// Initialize with a fixed language ("en") so SSG HTML always matches the first
-// client render. Language detection happens after hydration in I18nProvider.
-if (!i18n.isInitialized) {
-  i18n.use(initReactI18next).init({
-    resources,
-    lng: DEFAULT_LOCALE,
-    fallbackLng: DEFAULT_LOCALE,
-    supportedLngs: [...SUPPORTED_LANGS],
+/** Create a render-local instance with all data needed for synchronous hydration. */
+export const createLocaleI18n = (language: string, dictionary: ResourceLanguage) => {
+  const instance = createInstance();
+  // I18nextProvider supplies the instance to useTranslation and Trans. No global
+  // language state is shared between concurrent static renders or route trees.
+  void instance.init({
+    resources: { [language]: { translation: dictionary } },
+    lng: language,
+    fallbackLng: false, // Missing keys are filled from English on the server.
+    initAsync: false,
     ns: ["translation"],
     defaultNS: "translation",
     interpolation: { escapeValue: false },
   });
-}
-
-export default i18n;
+  return instance;
+};

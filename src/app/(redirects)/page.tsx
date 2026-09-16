@@ -1,4 +1,3 @@
-import Script from "next/script";
 import type { Metadata } from "next";
 import { DEFAULT_LOCALE, INTERNAL_TO_URL, STORAGE_KEY, SUPPORTED_LANGS } from "@/lib/locales";
 
@@ -15,7 +14,8 @@ const REDIRECT_SCRIPT = `
   var MAP=${JSON.stringify(INTERNAL_TO_URL)};
   var SUPPORTED=${JSON.stringify(SUPPORTED_LANGS)};
   var FB=${FALLBACK};
-  var stored=localStorage.getItem(SK);
+  var stored;
+  try{stored=localStorage.getItem(SK);}catch(e){}
   if(stored&&SUPPORTED.indexOf(stored)!==-1){
     location.replace("/"+(MAP[stored]||FB)+"/");
     return;
@@ -33,10 +33,10 @@ const REDIRECT_SCRIPT = `
 const RootPage = () => {
   return (
     <>
-      <meta httpEquiv="refresh" content={`0; url=/${DEFAULT_LOCALE}/`} />
-      <Script id="locale-redirect" strategy="beforeInteractive">
-        {REDIRECT_SCRIPT}
-      </Script>
+      <noscript>
+        <meta httpEquiv="refresh" content={`0; url=/${DEFAULT_LOCALE}/`} />
+      </noscript>
+      <script dangerouslySetInnerHTML={{ __html: REDIRECT_SCRIPT }} />
     </>
   );
 };
