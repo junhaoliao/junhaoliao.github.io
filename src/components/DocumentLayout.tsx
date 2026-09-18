@@ -54,7 +54,7 @@ const DocumentLayout = ({
   locale: string;
 }>) => {
   return (
-    <html lang={locale} suppressHydrationWarning className={inter.variable}>
+    <html lang={locale} suppressHydrationWarning className={inter.variable} data-scroll-behavior="smooth">
       <body>
         <Script
           src="https://www.googletagmanager.com/gtag/js?id=G-2LPTE0G465"

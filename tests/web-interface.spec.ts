@@ -107,9 +107,10 @@ test("theme metadata follows system, manual override and client navigation", asy
   await expect.poll(colorsMatch).toBe(true);
 });
 
-test("language changes update document language without hydration errors", async ({ page }) => {
+test("language changes update document language without moving away from the hero", async ({ page }) => {
   const errors: string[] = [];
   page.on("pageerror", error => errors.push(error.message));
+  await page.emulateMedia({ reducedMotion: "no-preference" });
   await page.goto("/en/");
   for (const [name, lang] of [["Français", "fr"], ["简体中文", "zh"], ["繁體中文", "zh-Hant"]]) {
     await page.getByRole("button", { name: /Change language/ }).filter({visible:true}).focus();
@@ -117,6 +118,16 @@ test("language changes update document language without hydration errors", async
     await page.getByRole("menuitemradio", { name, exact: true }).focus();
     await page.keyboard.press("Enter");
     await expect(page.locator("html")).toHaveAttribute("lang", lang);
+    await page.evaluate(() => new Promise<void>((resolve) => {
+      let frames = 0;
+      const waitForFrame = () => {
+        frames += 1;
+        if (frames === 10) resolve();
+        else requestAnimationFrame(waitForFrame);
+      };
+      requestAnimationFrame(waitForFrame);
+    }));
+    expect(await page.evaluate(() => window.scrollY)).toBe(0);
   }
   expect(errors).toEqual([]);
 });
