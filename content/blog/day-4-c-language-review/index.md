@@ -1,12 +1,6 @@
 ---
 title: "Day 4 – C Language Review"
 lang: "en"
-author: "Junhao"
-authorUrl: "https://junhao.ca"
-sourceUrl: "https://junhao.ca/2021/10/28/day-4-c-language-review/"
-publishedAt: "2021-10-28T05:44:46Z"
-modifiedAt: "2022-11-04T04:11:43Z"
-categories: ["C Review 30 days"]
 date: "2021-10-28"
 lastModified: "2022-11-04"
 description: "C language exercises covering linked-list insertion, deletion, and hash-table operations."
