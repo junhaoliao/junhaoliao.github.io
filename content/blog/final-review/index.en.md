@@ -34,7 +34,7 @@ Every program consists of different segments. Each executable ELF has headers sp
 
 **Definition of each segment**
 
-![Memory Layout of C Programs](/images/blog/ece243-final-review/memory-layout.webp)
+![Memory Layout of C Programs](/images/blog/ece243-final-review/memory-layout.jpg)
 *(Source: GeeksforGeeks, [Memory Layout of C Programs](https://www.geeksforgeeks.org/memory-layout-of-c-program/))*
 
 )
