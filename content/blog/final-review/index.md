@@ -35,7 +35,7 @@ A: "Instruction fetched from a location outside of a code section (.text or .exc
 
 **各segment的定义**
 
-![C 程序内存布局](/images/blog/ece243-final-review/memory-layout.webp)
+![C 程序内存布局](/images/blog/ece243-final-review/memory-layout.jpg)
 *(来源：GeeksforGeeks，[Memory Layout of C Programs](https://www.geeksforgeeks.org/memory-layout-of-c-program/))*
 
 )
